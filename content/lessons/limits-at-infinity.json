@@ -1,0 +1,79 @@
+{
+  "intuition": "Imagine you are driving on a perfectly straight highway that never ends, glancing again and again at a speed reading. As you drive farther and farther out (as $x$ grows without bound, written $x \\to \\infty$), you want to know: does the reading settle toward a fixed number, does it keep climbing forever, or does it do something else? This is exactly what a limit at infinity (무한대에서의 극한) asks — not what happens near one particular finite point, but what happens to $f(x)$ in the long run as $x$ itself becomes enormous, in either the positive or negative direction.\n\n💡 For a rational function, the limit as $x \\to \\pm\\infty$ depends only on comparing the degrees of the numerator and denominator — never on trying to plug a huge number in by hand.",
+  "definition": "Formally we write\n\n$$\\lim_{x \\to \\infty} f(x) = L$$\n\n🗣 \"The limit of f of x, as x approaches infinity, equals L.\"\n\nto mean $f(x)$ gets arbitrarily close to the fixed number $L$ as $x$ grows without bound; we say the limit converges (수렴하다) to $L$, and the line $y=L$ is a horizontal asymptote (수평 점근선). If instead $f(x)$ itself grows without bound, the limit diverges (발산하다) to $\\infty$ or $-\\infty$, and there is no horizontal asymptote.\n\nFor a rational function $f(x) = \\dfrac{a_nx^n + \\cdots}{b_mx^m + \\cdots}$, the standard tool is the divide-by-highest-power technique: divide every term, top and bottom, by the highest power of $x$ in the denominator, then let every term of the form $\\frac{c}{x^k}$ shrink to $0$. This gives the degree-comparison rule:\n\n$$\\lim_{x\\to\\infty}\\frac{a_nx^n+\\cdots}{b_mx^m+\\cdots} = \\begin{cases} 0 & \\text{if } n<m \\\\[4pt] \\dfrac{a_n}{b_m} & \\text{if } n=m \\\\[4pt] \\pm\\infty & \\text{if } n>m \\end{cases}$$\n\n🗣 \"If the top degree is smaller, the limit is zero; if the degrees match, the limit is the ratio of the leading coefficients; if the top degree is bigger, the limit is plus or minus infinity.\"\n\nDo not confuse this with an infinite limit at a finite point (유한한 점에서의 무한 극한), such as $\\lim_{x\\to 2}\\frac{1}{x-2}$, where $x$ approaches one specific finite number but $f(x)$ itself blows up — that describes a vertical asymptote (수직 점근선) at $x=2$, a completely different situation from what happens as $x\\to\\pm\\infty$.",
+  "workedExample": "Evaluate\n\n$$\\lim_{x\\to\\infty}\\frac{3x^2+2x-1}{5x^2-x+4}$$\n\n🗣 \"Find the limit of three x squared plus two x minus one, over five x squared minus x plus four, as x approaches infinity.\"\n\nStep 1 — Compare degrees. The numerator has degree $2$ (from $3x^2$) and the denominator also has degree $2$ (from $5x^2$). Since the degrees are equal, we expect the limit to converge to the ratio of the leading coefficients — not to $0$, and not to $\\pm\\infty$.\n\nStep 2 — Divide every term, top and bottom, by $x^2$, the highest power present:\n\n$$\\frac{3x^2+2x-1}{5x^2-x+4} = \\frac{3 + \\frac{2}{x} - \\frac{1}{x^2}}{5 - \\frac{1}{x} + \\frac{4}{x^2}}$$\n\n🗣 \"Divide the top and bottom by x squared, turning every extra term into a fraction with x in the denominator.\"\n\nStep 3 — Let $x\\to\\infty$. Every term of the form $\\frac{c}{x^k}$ shrinks toward $0$, leaving only the leading coefficients:\n\n$$\\lim_{x\\to\\infty}\\frac{3 + \\frac{2}{x} - \\frac{1}{x^2}}{5 - \\frac{1}{x} + \\frac{4}{x^2}} = \\frac{3+0-0}{5-0+0} = \\frac{3}{5}$$\n\n🗣 \"As x approaches infinity, all the fraction terms vanish, leaving three fifths.\"\n\nStep 4 — Conclude. The limit equals $\\frac{3}{5}$, so the graph has a horizontal asymptote at $y=\\frac{3}{5}$ as $x\\to\\infty$, and by the same reasoning as $x\\to-\\infty$ too, since even powers of $x$ dominate the same way in both directions.",
+  "teachingNote": "The most common mistake is treating $\\infty$ as though it were an actual number that can be substituted directly into the function, leading to nonsense like $\\frac{\\infty}{\\infty}=1$. Remind students that $\\infty$ only describes unbounded growth, never a value to plug in — that is exactly why we divide by the highest power first, turning every troublesome term into a harmless $\\frac{c}{x^k}\\to 0$. A second frequent confusion is mixing up limits at infinity (horizontal asymptotes, found by comparing degrees as $x\\to\\pm\\infty$) with infinite limits at a finite point (vertical asymptotes, found where the denominator hits zero at some specific finite $x=c$) — always ask first whether $x$ is running off toward infinity or homing in on one fixed number.",
+  "note": "📌 A limit at infinity (무한대에서의 극한) is the value $L$ that a function approaches as $x$ grows without bound in either direction, written $\\lim_{x\\to\\pm\\infty}f(x)=L$; for rational functions, compare the numerator's degree $n$ to the denominator's degree $m$ using $$\\lim_{x\\to\\infty}\\frac{a_nx^n+\\cdots}{b_mx^m+\\cdots}=\\begin{cases}0 & n<m\\\\ a_n/b_m & n=m\\\\ \\pm\\infty & n>m\\end{cases}$$\n\n🗣 \"Compare the top degree and the bottom degree to find the limit at infinity.\"\n\nKey term pairs introduced here: limit (극한), converge (수렴하다), diverge (발산하다), limit at infinity (무한대에서의 극한), horizontal asymptote (수평 점근선), vertical asymptote (수직 점근선), and infinite limit at a finite point (유한한 점에서의 무한 극한).",
+  "practice": [
+    {
+      "id": "limit-infinity-num-lower-degree",
+      "type": "multiple_choice",
+      "prompt": "Evaluate $$\\lim_{x\\to\\infty}\\frac{5x+1}{x^2-3}$$",
+      "choices": [
+        "$0$",
+        "$5$",
+        "$\\infty$",
+        "The limit does not exist because it oscillates"
+      ],
+      "correctAnswer": "$0$",
+      "solution": "Step 1 — Compare degrees. The numerator $5x+1$ has degree $1$, and the denominator $x^2-3$ has degree $2$. Since the numerator's degree is smaller, the limit should be $0$.\n\nStep 2 — Confirm by dividing every term by $x^2$, the highest power in the denominator: $$\\frac{5x+1}{x^2-3}=\\frac{\\frac{5}{x}+\\frac{1}{x^2}}{1-\\frac{3}{x^2}}$$\n\n🗣 \"Divide top and bottom by x squared.\"\n\nAs $x\\to\\infty$, every term with $x$ in the denominator vanishes, giving $\\frac{0+0}{1-0}=0$."
+    },
+    {
+      "id": "limit-infinity-same-degree-negative",
+      "type": "numeric",
+      "prompt": "Find $$\\lim_{x \\to -\\infty}\\frac{4x^2-x}{2x^2+7}$$ Enter the value as a simplified number.",
+      "correctAnswer": "2",
+      "solution": "Step 1 — Compare degrees. Both the numerator $4x^2-x$ and the denominator $2x^2+7$ have degree $2$, so the limit converges to the ratio of the leading coefficients, $\\frac{4}{2}$.\n\nStep 2 — Divide every term by $x^2$: $$\\frac{4x^2-x}{2x^2+7}=\\frac{4-\\frac{1}{x}}{2+\\frac{7}{x^2}}$$\n\n🗣 \"Divide top and bottom by x squared.\"\n\nStep 3 — Let $x\\to -\\infty$. Terms like $\\frac{1}{x}$ and $\\frac{7}{x^2}$ still shrink to $0$ even though $x$ is negative, leaving $\\frac{4-0}{2+0}=2$."
+    },
+    {
+      "id": "limit-infinity-num-higher-degree",
+      "type": "multiple_choice",
+      "prompt": "What happens to $$\\lim_{x\\to\\infty}\\frac{x^3+1}{x^2-4}$$?",
+      "choices": [
+        "It converges to $0$",
+        "It converges to $1$",
+        "It diverges to $\\infty$",
+        "It diverges to $-\\infty$"
+      ],
+      "correctAnswer": "It diverges to $\\infty$",
+      "solution": "Step 1 — Compare degrees. The numerator $x^3+1$ has degree $3$, while the denominator $x^2-4$ has degree $2$. Since the numerator's degree is larger, the fraction does not settle to a finite value.\n\nStep 2 — Divide by $x^2$ to see the leftover growth: $$\\frac{x^3+1}{x^2-4}=\\frac{x+\\frac{1}{x^2}}{1-\\frac{4}{x^2}}$$\n\n🗣 \"After dividing, a leftover x remains in the numerator.\"\n\nAs $x\\to\\infty$, the leftover $x$ term grows without bound while the rest approaches $1$, so the whole expression diverges to $\\infty$."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "limit-infinity-quiz-num-lower-degree",
+      "type": "numeric",
+      "prompt": "Find $$\\lim_{x\\to\\infty}\\frac{7x^2+3}{2x^3-5}$$ Enter the value as a simplified number.",
+      "correctAnswer": "0",
+      "solution": "Step 1 — Compare degrees. The numerator $7x^2+3$ has degree $2$, and the denominator $2x^3-5$ has degree $3$, which is larger.\n\nStep 2 — Divide every term by $x^3$, the highest power in the denominator: $$\\frac{7x^2+3}{2x^3-5}=\\frac{\\frac{7}{x}+\\frac{3}{x^3}}{2-\\frac{5}{x^3}}$$\n\n🗣 \"Divide top and bottom by x cubed.\"\n\nAs $x\\to\\infty$, every term with $x$ in the denominator vanishes, leaving $\\frac{0+0}{2-0}=0$."
+    },
+    {
+      "id": "limit-infinity-quiz-horizontal-asymptote",
+      "type": "multiple_choice",
+      "prompt": "What is the horizontal asymptote of $$f(x)=\\frac{6x^3-2x+1}{3x^3+4x^2-9}$$ as $x\\to\\infty$?",
+      "choices": [
+        "$y=0$",
+        "$y=2$",
+        "$y=3$",
+        "The function has no horizontal asymptote"
+      ],
+      "correctAnswer": "$y=2$",
+      "solution": "Step 1 — Compare degrees. Both the numerator and denominator have degree $3$, so the limit converges to the ratio of the leading coefficients.\n\nStep 2 — Divide every term by $x^3$: $$\\frac{6x^3-2x+1}{3x^3+4x^2-9}=\\frac{6-\\frac{2}{x^2}+\\frac{1}{x^3}}{3+\\frac{4}{x}-\\frac{9}{x^3}}$$\n\n🗣 \"Divide top and bottom by x cubed.\"\n\nStep 3 — As $x\\to\\infty$, every fractional term vanishes, leaving $\\frac{6}{3}=2$, so the horizontal asymptote is $y=2$."
+    },
+    {
+      "id": "limit-infinity-quiz-conceptual-distinction",
+      "type": "multiple_choice",
+      "prompt": "Which statement correctly distinguishes a limit at infinity from an infinite limit at a finite point?",
+      "choices": [
+        "A limit at infinity examines behavior as $x$ approaches a specific finite number, while an infinite limit at a finite point examines behavior as $x$ grows without bound.",
+        "A limit at infinity examines behavior as $x$ grows without bound, while an infinite limit at a finite point occurs when $f(x)$ blows up as $x$ approaches a specific finite number.",
+        "Both describe the same phenomenon, just with different notation.",
+        "A limit at infinity always diverges, while an infinite limit at a finite point always converges."
+      ],
+      "correctAnswer": "A limit at infinity examines behavior as $x$ grows without bound, while an infinite limit at a finite point occurs when $f(x)$ blows up as $x$ approaches a specific finite number.",
+      "solution": "A limit at infinity, $\\lim_{x\\to\\pm\\infty}f(x)$, asks what value $f(x)$ trends toward (or whether it diverges) as the input $x$ itself grows without bound — this is connected to horizontal asymptotes. An infinite limit at a finite point, such as $\\lim_{x\\to 2}\\frac{1}{x-2}$, instead asks what happens as $x$ approaches one specific finite number while $f(x)$'s output blows up — this is connected to vertical asymptotes. These are two different questions about two different things (the input running to infinity versus the output running to infinity), so only the second choice states the distinction correctly."
+    }
+  ],
+  "lessonId": "limits-at-infinity",
+  "generatedAt": "2026-07-12T05:46:47.048Z"
+}

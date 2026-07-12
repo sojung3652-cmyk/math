@@ -1,0 +1,79 @@
+{
+  "intuition": "Imagine you are walking toward a friend who is standing at a specific spot on a path, but a rope blocks you from ever stepping exactly onto that spot. Even though you can never stand exactly there, you can still say with confidence where you are heading — that destination is the limit (극한) of your walk. In math, a limit describes the value a function $f(x)$ approaches (접근하다) as $x$ gets closer and closer to some point $a$, regardless of what happens (or doesn't happen) exactly at $a$.\n\n💡 A limit only describes the trend near a point — it never requires the function to actually reach that point.",
+  "definition": "Formally, we say the limit (극한) of $f(x)$ as $x$ approaches $a$ is $L$, written using the notation below, if the values of $f(x)$ get arbitrarily close to $L$ whenever $x$ gets arbitrarily close to $a$ — checking from both the left side and the right side of $a$ — without $x$ ever equaling $a$ itself. We call this behavior converging (수렴하다) to $L$.\n\n$$\\lim_{x \\to a} f(x) = L$$\n\n🗣 \"The limit of f of x, as x approaches a, equals L.\"\n\nThe key restriction is $x \\neq a$: we only look at values of $x$ near $a$, never at $a$ itself. This means $f(a)$ can be undefined (정의되지 않다), or it can even differ from $L$ — neither fact changes the limit, because a limit is a statement about the trend of nearby values, checked using a table of values (값의 표) or a graph approached from both sides.",
+  "workedExample": "Find $\\lim_{x \\to 1} \\dfrac{x^2 - 1}{x - 1}$.\n\nStep 1 — First check what happens if we simply plug in $x = 1$: the denominator becomes $1 - 1 = 0$, so $f(1)$ is undefined (정의되지 않다). This does NOT mean the limit fails to exist — it only means we cannot use direct substitution here, so we must look at values near $x=1$ instead.\n\nStep 2 — Build a table of values approaching $x = 1$ from both sides.\n\n| $x$ | 0.9 | 0.99 | 0.999 | → 1 ← | 1.001 | 1.01 | 1.1 |\n|---|---|---|---|---|---|---|---|\n| $f(x)$ | 1.9 | 1.99 | 1.999 | ? | 2.001 | 2.01 | 2.1 |\n\nFrom the left ($x < 1$) and from the right ($x > 1$), the outputs both get closer and closer to $2$, even though the column at $x=1$ itself has no value.\n\nStep 3 — Confirm this algebraically. For $x \\neq 1$, we can factor and simplify:\n\n$$\\frac{x^2-1}{x-1} = \\frac{(x-1)(x+1)}{x-1} = x+1$$\n\n🗣 \"x squared minus one, over x minus one, simplifies to x plus one, as long as x is not one.\"\n\nAs $x \\to 1$, the simplified expression $x+1$ clearly approaches $1+1=2$, matching the table. So we conclude:\n\n$$\\lim_{x \\to 1} \\frac{x^2-1}{x-1} = 2$$\n\n🗣 \"The limit of x squared minus one over x minus one, as x approaches one, equals two.\"",
+  "teachingNote": "The most common misconception is thinking a limit doesn't exist (or can't be computed) whenever $f(a)$ is undefined, or assuming the limit must equal $f(a)$ when it IS defined. Correct this by repeating the core idea often: a limit only cares about the values of $f(x)$ for $x$ near $a$, approaching from both sides — it never asks what happens exactly at $a$. A helpful classroom check: cover up the point $x=a$ on the graph with your finger and ask 'where do the two sides seem to be heading?' — that hidden spot is irrelevant to the limit.",
+  "note": "📌 Note: the limit of $f(x)$ as $x$ approaches $a$ is the single value $L$ that $f(x)$ gets arbitrarily close to as $x$ gets arbitrarily close to $a$ from both sides, regardless of $f(a)$.\n\n$$\\lim_{x \\to a} f(x) = L$$\n\n🗣 \"The limit of f of x, as x approaches a, equals L.\"\n\nKey terms introduced: limit (극한), converge (수렴하다), approach (접근하다), undefined (정의되지 않다), and table of values (값의 표).",
+  "practice": [
+    {
+      "id": "limit-table-linear",
+      "type": "multiple_choice",
+      "prompt": "A table of values for $f(x) = 2x + 1$ near $x = 3$ shows: $f(2.9)=6.8$, $f(2.99)=6.98$, $f(3.01)=7.02$, $f(3.1)=7.2$. Based on this pattern, what is $\\lim_{x \\to 3} f(x)$?",
+      "choices": [
+        "6",
+        "7",
+        "8",
+        "It does not exist"
+      ],
+      "correctAnswer": "7",
+      "solution": "Step 1 — Look at the trend from the left side ($x = 2.9, 2.99$): the outputs $6.8, 6.98$ are getting closer and closer to $7$.\n\nStep 2 — Look at the trend from the right side ($x = 3.01, 3.1$): the outputs $7.02, 7.2$ are also getting closer and closer to $7$.\n\nStep 3 — Since both sides approach the same value, $\\lim_{x \\to 3} f(x) = 7$.\n\n$$\\lim_{x \\to 3} (2x+1) = 7$$\n\n🗣 \"The limit of two x plus one, as x approaches three, equals seven.\""
+    },
+    {
+      "id": "limit-factor-basic",
+      "type": "numeric",
+      "prompt": "Find $\\lim_{x \\to 2} \\dfrac{x^2 - 4}{x - 2}$.",
+      "correctAnswer": "4",
+      "solution": "Step 1 — Direct substitution gives $\\frac{0}{0}$, which is undefined (정의되지 않다), so we cannot evaluate this way. This does not mean the limit fails to exist; it only means we need another approach.\n\nStep 2 — Factor the numerator: $x^2 - 4 = (x-2)(x+2)$, so for $x \\neq 2$,\n\n$$\\frac{x^2-4}{x-2} = \\frac{(x-2)(x+2)}{x-2} = x+2$$\n\n🗣 \"x squared minus four, over x minus two, simplifies to x plus two, as long as x is not two.\"\n\nStep 3 — As $x \\to 2$, the simplified expression $x+2$ approaches $2+2=4$. So $\\lim_{x \\to 2} \\dfrac{x^2-4}{x-2} = 4$."
+    },
+    {
+      "id": "limit-undefined-point-concept",
+      "type": "multiple_choice",
+      "prompt": "Suppose $g(x)$ is undefined at $x = 5$, but as $x$ gets closer to $5$ from both sides, $g(x)$ gets closer and closer to $10$. Which statement is correct?",
+      "choices": [
+        "$\\lim_{x \\to 5} g(x)$ does not exist because $g(5)$ is undefined",
+        "$\\lim_{x \\to 5} g(x) = 10$, even though $g(5)$ is undefined",
+        "$\\lim_{x \\to 5} g(x) = 5$, matching the input value",
+        "We cannot say anything about the limit without knowing $g(5)$"
+      ],
+      "correctAnswer": "$\\lim_{x \\to 5} g(x) = 10$, even though $g(5)$ is undefined",
+      "solution": "Step 1 — Recall the key idea: a limit only describes the trend of $f(x)$ for $x$ near $a$, never what happens exactly at $a$.\n\nStep 2 — Since $g(x)$ approaches $10$ from both the left and right of $x=5$, the limit converges (수렴하다) to $10$ regardless of whether $g(5)$ itself has a value.\n\nStep 3 — Therefore $\\lim_{x \\to 5} g(x) = 10$, and the fact that $g(5)$ is undefined (정의되지 않다) is completely irrelevant to this conclusion."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "limit-table-quadratic",
+      "type": "multiple_choice",
+      "prompt": "A table of values for $f(x) = x^2$ near $x = 4$ shows: $f(3.9)=15.21$, $f(3.99)=15.9201$, $f(4.01)=16.0801$, $f(4.1)=16.81$. Based on this pattern, what is $\\lim_{x \\to 4} f(x)$?",
+      "choices": [
+        "15",
+        "16",
+        "17",
+        "It does not exist"
+      ],
+      "correctAnswer": "16",
+      "solution": "Step 1 — From the left side ($x=3.9, 3.99$), the outputs $15.21, 15.9201$ are getting closer and closer to $16$.\n\nStep 2 — From the right side ($x=4.01, 4.1$), the outputs $16.0801, 16.81$ are also getting closer and closer to $16$.\n\nStep 3 — Since both sides approach the same value, $\\lim_{x \\to 4} f(x) = 16$.\n\n$$\\lim_{x \\to 4} x^2 = 16$$\n\n🗣 \"The limit of x squared, as x approaches four, equals sixteen.\""
+    },
+    {
+      "id": "limit-factor-cubic",
+      "type": "numeric",
+      "prompt": "Find $\\lim_{x \\to 3} \\dfrac{x^2 - 9}{x - 3}$.",
+      "correctAnswer": "6",
+      "solution": "Step 1 — Plugging in $x=3$ directly gives $\\frac{0}{0}$, which is undefined (정의되지 않다), so direct substitution does not work here.\n\nStep 2 — Factor the numerator: $x^2 - 9 = (x-3)(x+3)$, so for $x \\neq 3$,\n\n$$\\frac{x^2-9}{x-3} = \\frac{(x-3)(x+3)}{x-3} = x+3$$\n\n🗣 \"x squared minus nine, over x minus three, simplifies to x plus three, as long as x is not three.\"\n\nStep 3 — As $x \\to 3$, the simplified expression $x+3$ approaches $3+3=6$. So $\\lim_{x \\to 3} \\dfrac{x^2-9}{x-3} = 6$."
+    },
+    {
+      "id": "limit-defined-vs-limit-concept",
+      "type": "multiple_choice",
+      "prompt": "Suppose $h(x)$ is defined at $x = 2$ with $h(2) = 100$, but as $x$ approaches $2$ from both sides, $h(x)$ gets closer and closer to $3$. What is $\\lim_{x \\to 2} h(x)$?",
+      "choices": [
+        "100, matching $h(2)$",
+        "3, even though $h(2) = 100$",
+        "It does not exist because $h(2)$ contradicts the trend",
+        "We cannot determine the limit since $h(2)$ is known"
+      ],
+      "correctAnswer": "3, even though $h(2) = 100$",
+      "solution": "Step 1 — Remember that the limit describes only the trend of $h(x)$ for $x$ near $2$, not the actual value $h(2)$.\n\nStep 2 — Since the values of $h(x)$ converge (수렴하다) to $3$ from both the left and right of $x=2$, the limit is $3$.\n\nStep 3 — The fact that $h(2)=100$ has no effect on this conclusion, because a limit never requires the function to actually reach or match that value at $a$. So $\\lim_{x \\to 2} h(x) = 3$."
+    }
+  ],
+  "lessonId": "what-is-a-limit",
+  "generatedAt": "2026-07-12T05:42:16.011Z"
+}

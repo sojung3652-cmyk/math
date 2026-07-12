@@ -1,0 +1,61 @@
+{
+  "intuition": "Think of a limit as the trend line each function follows as x gets close to a target value. When you combine two functions — by adding, subtracting, multiplying, or dividing them — their trends combine in the most natural way possible: you compute each function's limit on its own, then combine those two numbers with ordinary arithmetic.\n\n💡 If each piece of a combined function has a limit, you can compute the limit of the whole combination by combining those individual limits the same way you combined the functions — add, subtract, multiply, or divide them (division only needs the denominator's limit to be nonzero).",
+  "definition": "The limit laws (극한법칙) let you break a complicated limit into simpler pieces, evaluate each piece separately, then recombine the results with ordinary arithmetic. Suppose $\\lim_{x\\to a}f(x)=L$ and $\\lim_{x\\to a}g(x)=M$ both exist, and $c$ is a constant.\n\n**Sum rule (합의 법칙):**\n\n$$\\lim_{x\\to a}[f(x)+g(x)] = L+M$$\n\n🗣 \"The limit of f of x plus g of x, as x approaches a, equals L plus M.\"\n\n**Difference rule (차의 법칙):**\n\n$$\\lim_{x\\to a}[f(x)-g(x)] = L-M$$\n\n🗣 \"The limit of f of x minus g of x equals L minus M.\"\n\n**Constant multiple rule (상수배 법칙):**\n\n$$\\lim_{x\\to a}[c\\cdot f(x)] = c\\cdot L$$\n\n🗣 \"The limit of c times f of x equals c times L.\"\n\n**Product rule (곱의 법칙):**\n\n$$\\lim_{x\\to a}[f(x)\\cdot g(x)] = L\\cdot M$$\n\n🗣 \"The limit of f of x times g of x equals L times M.\"\n\n**Quotient rule (몫의 법칙):**\n\n$$\\lim_{x\\to a}\\frac{f(x)}{g(x)} = \\frac{L}{M}, \\quad M\\neq 0$$\n\n🗣 \"The limit of f of x over g of x equals L over M, provided M is not zero.\"\n\nBecause of these rules, every polynomial function (다항함수) can be evaluated by direct substitution (직접 대입):\n\n$$\\lim_{x\\to a}p(x) = p(a)$$\n\n🗣 \"The limit of p of x as x approaches a equals p of a.\"\n\nThe same goes for a rational function (유리함수) $\\frac{p(x)}{q(x)}$, as long as the denominator's value at $a$ is not zero:\n\n$$\\lim_{x\\to a}\\frac{p(x)}{q(x)} = \\frac{p(a)}{q(a)}, \\quad q(a)\\neq 0$$\n\n🗣 \"The limit of p of x over q of x, as x approaches a, equals p of a over q of a, provided q of a is not zero.\"",
+  "workedExample": "Evaluate $\\lim_{x\\to 2}\\dfrac{x^2-4}{x-2}$.\n\nStep 1 — Try direct substitution first. Plugging in $x=2$ gives $\\dfrac{2^2-4}{2-2}=\\dfrac{0}{0}$, an indeterminate form (부정형) — this tells you the quotient rule cannot be applied yet, because the denominator's limit is $0$.\n\nStep 2 — Factor (인수분해) the numerator to remove the common factor causing the $0/0$: $x^2-4=(x-2)(x+2)$, so for every $x\\neq 2$,\n\n$$\\frac{x^2-4}{x-2} = \\frac{(x-2)(x+2)}{x-2} = x+2$$\n\n🗣 \"x squared minus four, over x minus two, simplifies to x plus two.\"\n\nStep 3 — Since limits only care about values near $x=2$, not at $x=2$ itself, you may now apply direct substitution to the simplified expression:\n\n$$\\lim_{x\\to 2}\\frac{x^2-4}{x-2} = \\lim_{x\\to 2}(x+2) = 2+2 = 4$$\n\n🗣 \"The limit of x squared minus four over x minus two, as x approaches two, equals four.\"",
+  "teachingNote": "Many students see a $0/0$ result and immediately conclude the limit does not exist — but $0/0$ only means direct substitution failed, not that the limit is undefined. Remind students that $0/0$ is a signal to factor, rationalize, or simplify the expression first; the actual limit often exists once the problematic common factor is cancelled, as in the worked example above.",
+  "note": "📌 Note: The limit laws (극한법칙) say that if $\\lim_{x\\to a}f(x)=L$ and $\\lim_{x\\to a}g(x)=M$ exist, then $\\lim_{x\\to a}[f(x)\\pm g(x)]=L\\pm M$, $\\lim_{x\\to a}[cf(x)]=cL$, $\\lim_{x\\to a}[f(x)g(x)]=LM$, and $\\lim_{x\\to a}\\frac{f(x)}{g(x)}=\\frac{L}{M}$ when $M\\neq0$; for polynomial (다항함수) and rational functions (유리함수) with nonzero denominator, this reduces to plugging in the value directly, $\\lim_{x\\to a}p(x)=p(a)$.\n\n🗣 \"The limit of f of x over g of x equals L over M, as long as M is not zero.\"\n\nKey English–Korean pairs from this lesson: limit laws (극한법칙), sum rule (합의 법칙), difference rule (차의 법칙), constant multiple rule (상수배 법칙), product rule (곱의 법칙), quotient rule (몫의 법칙), direct substitution (직접 대입), polynomial function (다항함수), rational function (유리함수), factoring (인수분해), and indeterminate form (부정형).",
+  "practice": [
+    {
+      "id": "limit-laws-poly-direct-sub",
+      "type": "numeric",
+      "prompt": "Evaluate $\\lim_{x\\to 3}(2x^2 - x + 1)$.",
+      "correctAnswer": "16",
+      "solution": "Since $2x^2-x+1$ is a polynomial function (다항함수), you may use direct substitution (직접 대입) right away.\n\n$$\\lim_{x\\to 3}(2x^2-x+1) = 2(3)^2 - 3 + 1 = 18-3+1 = 16$$\n\n🗣 \"The limit of two x squared minus x plus one, as x approaches three, equals sixteen.\""
+    },
+    {
+      "id": "limit-laws-rational-direct-sub",
+      "type": "numeric",
+      "prompt": "Evaluate $\\lim_{x\\to 1}\\dfrac{x^2+3x}{x+2}$.",
+      "correctAnswer": "4/3",
+      "solution": "Step 1 — Check the denominator's value at $x=1$: $1+2=3\\neq 0$, so direct substitution (직접 대입) is valid here by the quotient rule (몫의 법칙).\n\nStep 2 — Substitute $x=1$ into both numerator and denominator.\n\n$$\\lim_{x\\to 1}\\frac{x^2+3x}{x+2} = \\frac{1^2+3(1)}{1+2} = \\frac{4}{3}$$\n\n🗣 \"The limit of x squared plus three x, over x plus two, as x approaches one, equals four thirds.\""
+    },
+    {
+      "id": "limit-laws-factoring-0-0",
+      "type": "numeric",
+      "prompt": "Evaluate $\\lim_{x\\to -3}\\dfrac{x^2-9}{x+3}$.",
+      "correctAnswer": "-6",
+      "solution": "Step 1 — Direct substitution gives $\\dfrac{(-3)^2-9}{-3+3}=\\dfrac{0}{0}$, an indeterminate form (부정형), so factor (인수분해) first.\n\nStep 2 — Factor the numerator: $x^2-9=(x-3)(x+3)$, so for $x\\neq -3$,\n\n$$\\frac{x^2-9}{x+3} = \\frac{(x-3)(x+3)}{x+3} = x-3$$\n\n🗣 \"x squared minus nine, over x plus three, simplifies to x minus three.\"\n\nStep 3 — Apply direct substitution to the simplified expression.\n\n$$\\lim_{x\\to -3}\\frac{x^2-9}{x+3} = \\lim_{x\\to -3}(x-3) = -3-3 = -6$$\n\n🗣 \"The limit equals negative six.\""
+    }
+  ],
+  "quiz": [
+    {
+      "id": "limit-laws-quiz-poly",
+      "type": "multiple_choice",
+      "prompt": "Evaluate $\\lim_{x\\to -1}(3x^3 - 2x + 5)$.",
+      "choices": [
+        "4",
+        "-4",
+        "2",
+        "6"
+      ],
+      "correctAnswer": "4",
+      "solution": "Since $3x^3-2x+5$ is a polynomial function (다항함수), direct substitution (직접 대입) applies immediately.\n\n$$\\lim_{x\\to -1}(3x^3-2x+5) = 3(-1)^3 - 2(-1) + 5 = -3+2+5 = 4$$\n\n🗣 \"The limit of three x cubed minus two x plus five, as x approaches negative one, equals four.\""
+    },
+    {
+      "id": "limit-laws-quiz-rational",
+      "type": "numeric",
+      "prompt": "Evaluate $\\lim_{x\\to 2}\\dfrac{x^2+1}{x-5}$.",
+      "correctAnswer": "-5/3",
+      "solution": "Step 1 — At $x=2$ the denominator is $2-5=-3\\neq 0$, so the quotient rule (몫의 법칙) allows direct substitution (직접 대입).\n\nStep 2 — Substitute $x=2$.\n\n$$\\lim_{x\\to 2}\\frac{x^2+1}{x-5} = \\frac{2^2+1}{2-5} = \\frac{5}{-3} = -\\frac{5}{3}$$\n\n🗣 \"The limit of x squared plus one, over x minus five, as x approaches two, equals negative five thirds.\""
+    },
+    {
+      "id": "limit-laws-quiz-factoring",
+      "type": "numeric",
+      "prompt": "Evaluate $\\lim_{x\\to 5}\\dfrac{x^2-25}{x-5}$.",
+      "correctAnswer": "10",
+      "solution": "Step 1 — Direct substitution gives $\\dfrac{0}{0}$, an indeterminate form (부정형), so factor (인수분해) the numerator first.\n\nStep 2 — Factor: $x^2-25=(x-5)(x+5)$, so for $x\\neq 5$,\n\n$$\\frac{x^2-25}{x-5} = x+5$$\n\n🗣 \"x squared minus twenty-five, over x minus five, simplifies to x plus five.\"\n\nStep 3 — Apply direct substitution to the simplified form.\n\n$$\\lim_{x\\to 5}\\frac{x^2-25}{x-5} = 5+5 = 10$$\n\n🗣 \"The limit equals ten.\""
+    }
+  ],
+  "lessonId": "limit-laws",
+  "generatedAt": "2026-07-12T05:43:30.850Z"
+}

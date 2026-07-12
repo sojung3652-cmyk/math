@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local progress store (Phase 4 swaps this for real D1)
+/data/progress.json
+
+# local Claude Code tool state, not part of the app
+/.claude/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

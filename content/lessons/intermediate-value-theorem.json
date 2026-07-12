@@ -1,0 +1,79 @@
+{
+  "intuition": "Imagine you are walking along a hiking trail that rises and falls without ever jumping or teleporting — since your elevation changes continuously, you must pass through every height between your starting point and your ending point; you can never skip one. This is the everyday picture behind the Intermediate Value Theorem (중간값 정리): if a function's graph is drawn as one unbroken curve from one point to another, it cannot skip over any height (value) that lies between where it started and where it ended.\n\n💡 If a continuous function goes from one value to another, it must pass through every value in between — it can never skip one.\n\nThis simple fact becomes a powerful proof tool: it lets us guarantee that an equation has a solution somewhere in an interval, even when we cannot solve the equation exactly.",
+  "definition": "Let $f$ be a continuous function (연속함수) on the closed interval $[a, b]$. The Intermediate Value Theorem (중간값 정리, IVT) states that for any value $k$ between $f(a)$ and $f(b)$, there exists at least one point $c$ in $[a, b]$ such that $f(c) = k$.\n\n$$f \\text{ continuous on } [a,b], \\quad k \\text{ between } f(a) \\text{ and } f(b) \\ \\Longrightarrow\\ \\exists\\, c \\in [a,b] \\text{ with } f(c) = k$$\n\n🗣 \"If f is continuous on the closed interval from a to b, and k is between f of a and f of b, then there exists some c in that interval such that f of c equals k.\"\n\nNotice that the theorem only guarantees existence (존재) of such a $c$ — it says nothing about how many such points exist, or how to find the exact value of $c$.",
+  "workedExample": "**Show that $f(x) = x^3 - x - 1$ has a root (근, a solution of $f(x)=0$) in the interval $[1, 2]$.**\n\nStep 1 — Confirm that $f$ is continuous on $[1,2]$. Since $f(x) = x^3 - x - 1$ is a polynomial, it is continuous everywhere, so in particular it is continuous on the closed interval $[1,2]$. This is exactly the hypothesis the IVT requires.\n\nStep 2 — Evaluate $f$ at both endpoints.\n\n$$f(1) = 1^3 - 1 - 1 = -1, \\qquad f(2) = 2^3 - 2 - 1 = 5$$\n\n🗣 \"f of one equals negative one, and f of two equals five.\"\n\nStep 3 — Apply the IVT. We want $k = 0$, and since $f(1) = -1$ and $f(2) = 5$, we have $-1 < 0 < 5$, so $k=0$ lies between $f(1)$ and $f(2)$. Because $f$ is continuous on $[1,2]$, the IVT guarantees some $c \\in [1,2]$ with $f(c) = 0$.\n\nTherefore, $f(x) = x^3 - x - 1$ has at least one root in $[1, 2]$ — and we proved this without ever solving the cubic equation directly.",
+  "teachingNote": "A common mistake is to think the IVT tells you the exact value of $c$, or that it proves there is only one such $c$ — it does neither. The theorem only proves existence: somewhere in $[a,b]$ a point $c$ exists with $f(c)=k$, but actually locating that $c$ usually needs a separate method, such as graphing, bisection, or numerical approximation. Also remind students that continuity on the entire closed interval is essential — if $f$ has even one break or jump between $a$ and $b$, the theorem simply does not apply, and a value really can be skipped.",
+  "note": "📌 The Intermediate Value Theorem (중간값 정리) says that if $f$ is continuous (연속인) on $[a,b]$, then for every $k$ between $f(a)$ and $f(b)$, some point $c \\in [a,b]$ satisfies $f(c) = k$.\n\n$$f(c) = k, \\quad k \\text{ between } f(a) \\text{ and } f(b)$$\n\n🗣 \"f of c equals k, where k is between f of a and f of b.\"\n\nKey terms from this lesson: continuous function (연속함수), Intermediate Value Theorem (중간값 정리), root (근), sign change (부호 변화), and interval (구간).",
+  "practice": [
+    {
+      "id": "ivt-conceptual-yes-no",
+      "type": "multiple_choice",
+      "prompt": "A function $f$ is continuous on $[0,3]$, with $f(0) = -2$ and $f(3) = 4$. Does the Intermediate Value Theorem guarantee some $c \\in [0,3]$ with $f(c) = 1$?",
+      "choices": [
+        "Yes, because 1 is between -2 and 4, and f is continuous on [0,3]",
+        "No, because f might not reach exactly 1",
+        "Not enough information, since we don't know f(1) or f(2)",
+        "Only if f is also differentiable on [0,3]"
+      ],
+      "correctAnswer": "Yes, because 1 is between -2 and 4, and f is continuous on [0,3]",
+      "solution": "Since $f$ is continuous on $[0,3]$ and $-2 < 1 < 4$, the value $k=1$ lies between $f(0)=-2$ and $f(3)=4$. By the Intermediate Value Theorem, this is exactly the condition needed to guarantee some $c \\in [0,3]$ with $f(c) = 1$."
+    },
+    {
+      "id": "ivt-quadratic-sign-product",
+      "type": "numeric",
+      "prompt": "Let $f(x) = x^2 - 5$, which is continuous on $[2,3]$. Evaluate $f(2)$ and $f(3)$, then find the value of $f(2) \\cdot f(3)$. (A negative product signals a sign change, which by the IVT guarantees a root of $f(x)=0$ somewhere in $(2,3)$.)",
+      "correctAnswer": "-4",
+      "solution": "Step 1 — Evaluate $f(2) = 2^2 - 5 = -1$.\n\nStep 2 — Evaluate $f(3) = 3^2 - 5 = 4$.\n\nStep 3 — Multiply: $f(2)\\cdot f(3) = (-1)(4) = -4$. Since the product is negative, $f(2)$ and $f(3)$ have opposite signs, so $0$ lies between them; by the IVT, $f$ must have a root in $(2,3)$."
+    },
+    {
+      "id": "ivt-table-interval",
+      "type": "multiple_choice",
+      "prompt": "A continuous function $f$ has the values shown below.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $f(x)$ | 3 | 1 | 2 | -4 |\n\nBy the Intermediate Value Theorem, which interval is guaranteed to contain a root of $f(x) = 0$?",
+      "choices": [
+        "[0,1]",
+        "[1,2]",
+        "[2,3]",
+        "[0,3] only"
+      ],
+      "correctAnswer": "[2,3]",
+      "solution": "Step 1 — Check $[0,1]$: $f(0)=3$ and $f(1)=1$ are both positive, so there is no sign change and the IVT gives no guarantee here.\n\nStep 2 — Check $[1,2]$: $f(1)=1$ and $f(2)=2$ are both positive, so again there is no sign change.\n\nStep 3 — Check $[2,3]$: $f(2)=2$ is positive and $f(3)=-4$ is negative, so $0$ lies between them. Since $f$ is continuous, the IVT guarantees a root in $(2,3)$."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "ivt-conceptual-quiz",
+      "type": "multiple_choice",
+      "prompt": "A function $g$ is continuous on $[2,5]$, with $g(2) = 10$ and $g(5) = -2$. Does the Intermediate Value Theorem guarantee some $c \\in [2,5]$ with $g(c) = 3$?",
+      "choices": [
+        "Yes, because 3 is between -2 and 10, and g is continuous on [2,5]",
+        "No, because g(3) and g(4) are unknown",
+        "Not enough information, since g might not be differentiable",
+        "No, because 3 is not the average of g(2) and g(5)"
+      ],
+      "correctAnswer": "Yes, because 3 is between -2 and 10, and g is continuous on [2,5]",
+      "solution": "Since $g$ is continuous on $[2,5]$ and $-2 < 3 < 10$, the value $k=3$ lies between $g(2)=10$ and $g(5)=-2$. This is exactly the hypothesis of the IVT, so it guarantees some $c \\in [2,5]$ with $g(c)=3$."
+    },
+    {
+      "id": "ivt-cubic-sign-product",
+      "type": "numeric",
+      "prompt": "Let $g(x) = x^3 + x - 4$, which is continuous on $[1,2]$. Evaluate $g(1)$ and $g(2)$, then find $g(1)\\cdot g(2)$.",
+      "correctAnswer": "-12",
+      "solution": "Step 1 — Evaluate $g(1) = 1^3 + 1 - 4 = -2$.\n\nStep 2 — Evaluate $g(2) = 2^3 + 2 - 4 = 6$.\n\nStep 3 — Multiply: $g(1)\\cdot g(2) = (-2)(6) = -12$. Since the product is negative, $g(1)$ and $g(2)$ have opposite signs, so $0$ lies between them; by the IVT, $g$ must have a root in $(1,2)$."
+    },
+    {
+      "id": "ivt-table-interval-quiz",
+      "type": "multiple_choice",
+      "prompt": "A continuous function $h$ has the values shown below.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $h(x)$ | -4 | -1 | 2 | 6 |\n\nBy the Intermediate Value Theorem, which interval is guaranteed to contain a root of $h(x) = 0$?",
+      "choices": [
+        "[0,1]",
+        "[1,2]",
+        "[2,3]",
+        "[0,3] only"
+      ],
+      "correctAnswer": "[1,2]",
+      "solution": "Step 1 — Check $[0,1]$: $h(0)=-4$ and $h(1)=-1$ are both negative, so there is no sign change here.\n\nStep 2 — Check $[1,2]$: $h(1)=-1$ is negative and $h(2)=2$ is positive, so $0$ lies between them. Since $h$ is continuous, the IVT guarantees a root in $(1,2)$.\n\nStep 3 — Check $[2,3]$: $h(2)=2$ and $h(3)=6$ are both positive, so there is no sign change there. The guaranteed interval is $[1,2]$."
+    }
+  ],
+  "lessonId": "intermediate-value-theorem",
+  "generatedAt": "2026-07-12T05:50:12.027Z"
+}

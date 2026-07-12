@@ -1,0 +1,79 @@
+{
+  "intuition": "Imagine walking down a hallway toward a wall with a number painted on it. If you approach from the left, you might see the number $3$ painted near the wall's edge; if you approach from the right, you might see a completely different number, like $7$. A one-sided limit (편측극한) captures exactly this kind of situation for a function $f(x)$: it tells us what value $f(x)$ seems to be heading toward as $x$ gets close to some point $a$, but only from one particular direction — either from values less than $a$ (approaching from the left) or from values greater than $a$ (approaching from the right).",
+  "definition": "The left-hand limit (좌극한), written $\\lim_{x\\to a^-} f(x)$, is the value that $f(x)$ approaches as $x$ gets closer and closer to $a$ while staying less than $a$. The right-hand limit (우극한), written $\\lim_{x\\to a^+} f(x)$, is the value that $f(x)$ approaches as $x$ approaches $a$ while staying greater than $a$.\n\nThe two-sided limit (양쪽에서의 극한) $\\lim_{x\\to a} f(x)$ exists and equals some value $L$ exactly when both one-sided limits exist and agree with each other:\n\n$$\\lim_{x\\to a} f(x) = L \\iff \\lim_{x\\to a^-} f(x) = \\lim_{x\\to a^+} f(x) = L$$\n\n🗣 \"The limit of f of x as x approaches a equals L, if and only if the left-hand limit and the right-hand limit both equal L.\"\n\n💡 A two-sided limit exists only when both one-sided limits exist and agree — if the left-hand and right-hand limits give different values, the limit does not exist (극한이 존재하지 않는다), written DNE.",
+  "workedExample": "Let\n\n$$f(x) = \\begin{cases} x + 3, & x < 1 \\\\ x^2, & x \\ge 1 \\end{cases}$$\n\n🗣 \"f of x equals x plus three when x is less than one, and x squared when x is greater than or equal to one.\"\n\nWe want to determine whether $\\lim_{x\\to 1} f(x)$ exists.\n\nStep 1 — Find the left-hand limit. For $x$ near $1$ but less than $1$, the applicable piece is $f(x) = x+3$, so substitute $x=1$ into that formula:\n\n$$\\lim_{x\\to 1^-} f(x) = 1 + 3 = 4$$\n\n🗣 \"The left-hand limit as x approaches one equals four.\"\n\nStep 2 — Find the right-hand limit. For $x$ near $1$ but greater than or equal to $1$, the applicable piece is $f(x) = x^2$, so substitute $x=1$:\n\n$$\\lim_{x\\to 1^+} f(x) = 1^2 = 1$$\n\n🗣 \"The right-hand limit as x approaches one equals one.\"\n\nStep 3 — Compare the two one-sided limits. Since $4 \\neq 1$, the left-hand and right-hand limits disagree, so the two-sided limit does not exist:\n\n$$\\lim_{x\\to 1} f(x) \\text{ DNE}$$\n\n🗣 \"The limit of f of x as x approaches one does not exist.\"",
+  "teachingNote": "A very common mistake is substituting $x=a$ into whichever formula \"looks easier\" regardless of direction — for example, using the $x\\ge 1$ piece to compute the left-hand limit. Always check which piece of the definition actually applies for $x$ slightly less than $a$ versus $x$ slightly greater than $a$ before substituting; the direction of approach, not the value at $x=a$ itself, determines which formula you are allowed to use.",
+  "note": "📌 One-sided limits describe what value $f(x)$ approaches as $x$ nears $a$ from only one side, and the full two-sided limit exists only when both sides agree: $\\lim_{x\\to a^-} f(x) = \\lim_{x\\to a^+} f(x) = L \\iff \\lim_{x\\to a} f(x) = L$.\n\n🗣 \"The left-hand limit and the right-hand limit both equal L, if and only if the limit as x approaches a equals L.\"\n\nKey terms introduced in this lesson: limit (극한), left-hand limit (좌극한), right-hand limit (우극한), converge (수렴하다), does not exist / DNE (존재하지 않다), and piecewise function (조각별로 정의된 함수).",
+  "practice": [
+    {
+      "id": "one-sided-limit-basic-substitution",
+      "type": "numeric",
+      "prompt": "Let $f(x) = x^2+1$ for $x<3$. Find $\\lim_{x\\to 3^-} f(x)$.",
+      "correctAnswer": "10",
+      "solution": "Since $x<3$ is exactly the domain where $f(x)=x^2+1$ applies, substitute $x=3$ directly into that formula:\n\n$$\\lim_{x\\to 3^-} f(x) = 3^2+1 = 10$$\n\n🗣 \"The left-hand limit as x approaches three equals ten.\""
+    },
+    {
+      "id": "one-sided-limit-piecewise-left",
+      "type": "multiple_choice",
+      "prompt": "Let\n\n$$f(x) = \\begin{cases} 2x, & x < -1 \\\\ x+5, & x \\ge -1 \\end{cases}$$\n\nFind $\\lim_{x\\to -1^-} f(x)$.",
+      "choices": [
+        "$-2$",
+        "$4$",
+        "$6$",
+        "$-1$"
+      ],
+      "correctAnswer": "$-2$",
+      "solution": "For $x$ approaching $-1$ from the left, $x<-1$, so the applicable piece is $f(x)=2x$. Substitute $x=-1$:\n\n$$\\lim_{x\\to -1^-} f(x) = 2(-1) = -2$$\n\n🗣 \"The left-hand limit as x approaches negative one equals negative two.\""
+    },
+    {
+      "id": "one-sided-limit-existence-check",
+      "type": "multiple_choice",
+      "prompt": "Using the same function $$f(x) = \\begin{cases} 2x, & x < -1 \\\\ x+5, & x \\ge -1 \\end{cases}$$ from the previous problem, does $\\lim_{x\\to -1} f(x)$ exist? If so, what is its value?",
+      "choices": [
+        "Yes, it equals $-2$",
+        "Yes, it equals $4$",
+        "No, it does not exist (DNE)",
+        "Yes, it equals $2$"
+      ],
+      "correctAnswer": "No, it does not exist (DNE)",
+      "solution": "Step 1 — Find the left-hand limit. For $x<-1$, $f(x)=2x$, so\n\n$$\\lim_{x\\to -1^-} f(x) = 2(-1) = -2$$\n\n🗣 \"The left-hand limit equals negative two.\"\n\nStep 2 — Find the right-hand limit. For $x\\ge -1$, $f(x)=x+5$, so\n\n$$\\lim_{x\\to -1^+} f(x) = -1+5 = 4$$\n\n🗣 \"The right-hand limit equals four.\"\n\nStep 3 — Compare the two values. Since $-2 \\neq 4$, the one-sided limits disagree, so the two-sided limit does not exist."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "one-sided-limit-quiz-basic-substitution",
+      "type": "numeric",
+      "prompt": "Let $f(x)=3x-2$ for $x>5$. Find $\\lim_{x\\to 5^+} f(x)$.",
+      "correctAnswer": "13",
+      "solution": "Since $x>5$ is the domain where $f(x)=3x-2$ applies, substitute $x=5$:\n\n$$\\lim_{x\\to 5^+} f(x) = 3(5)-2 = 13$$\n\n🗣 \"The right-hand limit as x approaches five equals thirteen.\""
+    },
+    {
+      "id": "one-sided-limit-quiz-piecewise-right",
+      "type": "multiple_choice",
+      "prompt": "Let\n\n$$f(x) = \\begin{cases} x^2-1, & x < 2 \\\\ 3x-5, & x \\ge 2 \\end{cases}$$\n\nFind $\\lim_{x\\to 2^+} f(x)$.",
+      "choices": [
+        "$1$",
+        "$3$",
+        "$4$",
+        "$-1$"
+      ],
+      "correctAnswer": "$1$",
+      "solution": "For $x$ approaching $2$ from the right, $x\\ge 2$, so the applicable piece is $f(x)=3x-5$. Substitute $x=2$:\n\n$$\\lim_{x\\to 2^+} f(x) = 3(2)-5 = 1$$\n\n🗣 \"The right-hand limit as x approaches two equals one.\""
+    },
+    {
+      "id": "one-sided-limit-quiz-existence-check",
+      "type": "multiple_choice",
+      "prompt": "Using the same function $$f(x) = \\begin{cases} x^2-1, & x < 2 \\\\ 3x-5, & x \\ge 2 \\end{cases}$$ from the previous problem, does $\\lim_{x\\to 2} f(x)$ exist?",
+      "choices": [
+        "Yes, it equals $1$",
+        "Yes, it equals $3$",
+        "No, it does not exist (DNE)",
+        "Yes, it equals $2$"
+      ],
+      "correctAnswer": "No, it does not exist (DNE)",
+      "solution": "Step 1 — Find the left-hand limit. For $x<2$, $f(x)=x^2-1$, so\n\n$$\\lim_{x\\to 2^-} f(x) = 2^2-1 = 3$$\n\n🗣 \"The left-hand limit equals three.\"\n\nStep 2 — Find the right-hand limit. From the previous problem, for $x\\ge 2$, $f(x)=3x-5$, so\n\n$$\\lim_{x\\to 2^+} f(x) = 3(2)-5 = 1$$\n\n🗣 \"The right-hand limit equals one.\"\n\nStep 3 — Compare the two values. Since $3 \\neq 1$, the one-sided limits disagree, so the two-sided limit does not exist."
+    }
+  ],
+  "lessonId": "one-sided-limits",
+  "generatedAt": "2026-07-12T05:45:15.741Z"
+}

@@ -1,0 +1,79 @@
+{
+  "intuition": "Imagine tracing a graph with your pencil without ever lifting it off the paper — that's continuity (연속) in a nutshell: no holes, no jumps, no breaks in the path.\n\n💡 A function is continuous at a point only when its actual value there matches the value the trend is heading toward — the definition, the limit, and the equality must all line up.\n\nWe already know a limit (극한) describes where a function is heading; continuity asks the stricter question of whether the function actually arrives there and lands exactly on that value.",
+  "definition": "A function $f$ is continuous (연속) at $x=a$ when all three conditions hold together:\n\n$$\\text{(1) } f(a) \\text{ is defined} \\qquad \\text{(2) } \\lim_{x\\to a} f(x) \\text{ exists} \\qquad \\text{(3) } \\lim_{x\\to a} f(x) = f(a)$$\n\n🗣 \"F of A is defined, the limit as x approaches A exists, and that limit equals F of A.\"\n\nAll three must hold at the same time — if even one fails, $f$ is discontinuous (불연속) at $a$. When condition (2) fails because the left-hand limit (좌극한) and right-hand limit (우극한) disagree, the break is called a jump discontinuity (도약 불연속). When conditions (1) or (3) fail but the limit itself still exists — often because just one point is missing or misplaced — the break is called a removable discontinuity (제거 가능한 불연속), since redefining that single point would fix it.\n\nA function is continuous on an interval (구간에서 연속) when it is continuous at every point inside that interval; on a closed interval $[a,b]$ we also require the function to match its one-sided limit from inside at each endpoint.",
+  "workedExample": "Classify the discontinuities (if any) of the piecewise function below.\n\n$$f(x) = \\begin{cases} x^2 & x < 1 \\\\ x+3 & 1 \\le x < 3 \\\\ 2 & x = 3 \\\\ x+3 & x > 3 \\end{cases}$$\n\n🗣 \"F of x equals x squared for x less than one, x plus three for x between one and three, two at x equals three, and x plus three for x greater than three.\"\n\nStep 1 — Check the point $x=1$. First confirm $f(1)$ is defined: using the middle piece, $f(1) = 1+3 = 4$. Now compute the two one-sided limits (편측 극한).\n\n$$\\lim_{x\\to 1^-} f(x) = 1^2 = 1, \\qquad \\lim_{x\\to 1^+} f(x) = 1+3 = 4$$\n\n🗣 \"The left-hand limit at one is one, but the right-hand limit at one is four.\"\n\nSince the left-hand and right-hand limits disagree, $\\lim_{x\\to 1} f(x)$ does not exist, so condition (2) fails. This is a jump discontinuity (도약 불연속) at $x=1$ — the graph physically jumps from height $1$ to height $4$.\n\nStep 2 — Check the point $x=3$. Here $f(3) = 2$ by the given piece, so condition (1) holds. Now compute both one-sided limits using the pieces on either side.\n\n$$\\lim_{x\\to 3^-} f(x) = 3+3 = 6, \\qquad \\lim_{x\\to 3^+} f(x) = 3+3 = 6$$\n\n🗣 \"Both the left-hand and right-hand limits at three equal six.\"\n\nStep 3 — Compare the limit to the function value. Since both one-sided limits equal $6$, $\\lim_{x\\to 3} f(x) = 6$ exists, so condition (2) holds. But $f(3) = 2 \\neq 6$, so condition (3) fails. Because the limit exists and only the single value $f(3)$ is \"out of place,\" this is a removable discontinuity (제거 가능한 불연속) at $x=3$ — patching in $f(3)=6$ would make $f$ continuous there.",
+  "teachingNote": "Many students stop checking as soon as they find that a limit exists, and conclude the function must be continuous there — but they skip condition (3): the limit must also equal $f(a)$, not just exist. Train students to always ask the three questions in the same fixed order — is $f(a)$ defined? does the limit exist? do they match? — and remind them that a removable discontinuity often looks perfectly smooth except for one lonely point sitting off the curve, so \"the limit exists\" is never the whole story.",
+  "note": "📌 A function $f$ is continuous at $x=a$ exactly when $f(a)$ is defined, $\\lim_{x\\to a} f(x)$ exists, and $\\lim_{x\\to a} f(x) = f(a)$.\n\n$$\\lim_{x\\to a} f(x) = f(a)$$\n\n🗣 \"The limit of f of x as x approaches a equals f of a.\"\n\nKey terms introduced: continuity/continuous (연속), discontinuity (불연속), removable discontinuity (제거 가능한 불연속), jump discontinuity (도약 불연속), one-sided limit (편측 극한), left-hand limit (좌극한), right-hand limit (우극한), and continuity on an interval (구간에서 연속).",
+  "practice": [
+    {
+      "id": "continuity-check-basic",
+      "type": "multiple_choice",
+      "prompt": "Let $f(x) = x^2 - 1$ for $x \\neq 2$, with $f(2) = 5$. Which statement best describes the continuity of $f$ at $x=2$?",
+      "choices": [
+        "$f$ is continuous at $x=2$",
+        "$f$ is discontinuous at $x=2$ because $f(2)$ is undefined",
+        "$f$ is discontinuous at $x=2$ because the limit does not exist",
+        "$f$ is discontinuous at $x=2$ because the limit does not equal $f(2)$"
+      ],
+      "correctAnswer": "$f$ is discontinuous at $x=2$ because the limit does not equal $f(2)$",
+      "solution": "Step 1 — Compute the limit as $x\\to 2$: $\\lim_{x\\to 2}(x^2-1) = 4-1 = 3$.\n\nStep 2 — Compare to the given value: $f(2) = 5$, but the limit equals $3$, so $\\lim_{x\\to 2} f(x) \\neq f(2)$.\n\nSince the limit exists but doesn't match $f(2)$, condition (3) of continuity fails, making $f$ discontinuous at $x=2$ (in fact, this is a removable discontinuity, 제거 가능한 불연속)."
+    },
+    {
+      "id": "continuity-find-k-piecewise",
+      "type": "numeric",
+      "prompt": "Find the value of $k$ that makes the following function continuous at $x=3$.\n\n$$f(x) = \\begin{cases} 2x+1 & x<3 \\\\ x^2+k & x \\ge 3 \\end{cases}$$",
+      "correctAnswer": "-2",
+      "solution": "Step 1 — For continuity at $x=3$, the left-hand limit must equal the function's value at $x=3$ (which uses the second piece, since $x \\ge 3$). Compute the left-hand limit: $\\lim_{x\\to 3^-}(2x+1) = 2(3)+1 = 7$.\n\nStep 2 — Compute $f(3)$ using the second piece: $f(3) = 3^2+k = 9+k$.\n\nStep 3 — Set the two equal and solve: $9+k = 7 \\Rightarrow k = -2$."
+    },
+    {
+      "id": "continuity-classify-removable",
+      "type": "multiple_choice",
+      "prompt": "Let $f(x) = \\begin{cases} x-1 & x<4 \\\\ 10 & x=4 \\\\ x-1 & x>4 \\end{cases}$. What type of discontinuity, if any, does $f$ have at $x=4$?",
+      "choices": [
+        "No discontinuity — $f$ is continuous at $x=4$",
+        "Removable discontinuity",
+        "Jump discontinuity",
+        "$f(4)$ is undefined, so continuity cannot be checked"
+      ],
+      "correctAnswer": "Removable discontinuity",
+      "solution": "Step 1 — Compute both one-sided limits: $\\lim_{x\\to 4^-}(x-1)=3$ and $\\lim_{x\\to 4^+}(x-1)=3$, so $\\lim_{x\\to 4} f(x)=3$ exists.\n\nStep 2 — Compare to $f(4)=10$. Since $3 \\neq 10$, condition (3) fails even though the limit exists — this is exactly the pattern of a removable discontinuity (제거 가능한 불연속)."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "continuity-check-matching",
+      "type": "multiple_choice",
+      "prompt": "Let $f(x) = x^2+1$ for $x \\neq 1$, with $f(1) = 2$. Which statement best describes the continuity of $f$ at $x=1$?",
+      "choices": [
+        "$f$ is continuous at $x=1$",
+        "$f$ is discontinuous at $x=1$ because $f(1)$ is undefined",
+        "$f$ is discontinuous at $x=1$ because the limit does not exist",
+        "$f$ is discontinuous at $x=1$ because the limit does not equal $f(1)$"
+      ],
+      "correctAnswer": "$f$ is continuous at $x=1$",
+      "solution": "Step 1 — Compute the limit as $x\\to 1$: $\\lim_{x\\to 1}(x^2+1) = 1+1 = 2$.\n\nStep 2 — Compare to the given value: $f(1) = 2$, which matches the limit exactly.\n\nAll three continuity conditions hold — $f(1)$ is defined, the limit exists, and they're equal — so $f$ is continuous at $x=1$."
+    },
+    {
+      "id": "continuity-find-k-linear",
+      "type": "numeric",
+      "prompt": "Find the value of $k$ that makes the following function continuous at $x=2$.\n\n$$f(x) = \\begin{cases} 3x-4 & x<2 \\\\ kx+1 & x \\ge 2 \\end{cases}$$",
+      "correctAnswer": "1/2",
+      "solution": "Step 1 — Compute the left-hand limit: $\\lim_{x\\to 2^-}(3x-4) = 3(2)-4 = 2$.\n\nStep 2 — Compute $f(2)$ from the second piece: $f(2) = 2k+1$.\n\nStep 3 — Set them equal: $2k+1=2 \\Rightarrow k = \\frac{1}{2}$."
+    },
+    {
+      "id": "continuity-classify-jump",
+      "type": "multiple_choice",
+      "prompt": "Let $f(x) = \\begin{cases} x+2 & x<0 \\\\ x-2 & x\\ge0 \\end{cases}$. What type of discontinuity, if any, does $f$ have at $x=0$?",
+      "choices": [
+        "No discontinuity — $f$ is continuous at $x=0$",
+        "Removable discontinuity",
+        "Jump discontinuity",
+        "$f(0)$ is undefined, so continuity cannot be checked"
+      ],
+      "correctAnswer": "Jump discontinuity",
+      "solution": "Step 1 — Compute both one-sided limits: $\\lim_{x\\to 0^-}(x+2)=2$ and $\\lim_{x\\to 0^+}(x-2)=-2$.\n\nStep 2 — Since $2 \\neq -2$, the left- and right-hand limits disagree, so $\\lim_{x\\to 0} f(x)$ does not exist — this is a jump discontinuity (도약 불연속), not removable."
+    }
+  ],
+  "lessonId": "continuity",
+  "generatedAt": "2026-07-12T05:48:39.845Z"
+}
