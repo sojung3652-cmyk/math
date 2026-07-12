@@ -1,8 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { CURRICULUM, type Lesson } from "@/lib/curriculum";
-import { buildGenerationPrompt } from "@/lib/generation-prompt";
-import { LessonContentBodySchema, contentExists, saveLessonContent } from "@/lib/lesson-content";
+import { buildAddGraphsPrompt } from "@/lib/add-graphs-prompt";
+import { AddGraphsResponseSchema } from "@/lib/graph-spec";
+import {
+  loadLessonContent,
+  saveLessonContent,
+  type LessonContentBody,
+} from "@/lib/lesson-content";
 import { relaxJSONSchema } from "@/lib/relax-schema";
 
 const MODEL = "claude-sonnet-5";
@@ -10,11 +15,10 @@ const MODEL = "claude-sonnet-5";
 const PRICE_PER_MTOK_INPUT = 2.0;
 const PRICE_PER_MTOK_OUTPUT = 10.0;
 
+const TEXT_FIELDS = ["intuition", "definition", "workedExample", "teachingNote", "note"] as const;
+
 const client = new Anthropic();
 
-// Carries token usage even on failure, so a truncated/refused/malformed
-// response still gets counted toward the cost report — you were billed for
-// it either way.
 class GenerationError extends Error {
   usage: Anthropic.Usage;
   constructor(message: string, usage: Anthropic.Usage) {
@@ -43,38 +47,48 @@ function selectLessons(unit?: string, lessonId?: string): Lesson[] {
   return lessons;
 }
 
-// The prompt asks for exactly 3 practice/quiz items and bounded graph
-// arrays; LessonContentBodySchema (with those constraints intact) still
-// validates the parsed response afterward via safeParse.
 function relaxedOutputSchema(): Record<string, unknown> {
-  return relaxJSONSchema(z.toJSONSchema(LessonContentBodySchema)) as Record<string, unknown>;
+  return relaxJSONSchema(z.toJSONSchema(AddGraphsResponseSchema)) as Record<string, unknown>;
 }
 
-async function generateOne(lesson: Lesson): Promise<Anthropic.Usage> {
-  const prompt = buildGenerationPrompt(lesson);
+function insertPlaceholders(
+  text: string,
+  insertions: { afterParagraph: number; placeholder: string }[],
+): string {
+  const paragraphs = text.split(/\n\n+/);
+  const byIndex = new Map<number, string[]>();
+  for (const ins of insertions) {
+    const idx = Math.min(Math.max(ins.afterParagraph, 0), paragraphs.length - 1);
+    if (!byIndex.has(idx)) byIndex.set(idx, []);
+    byIndex.get(idx)!.push(ins.placeholder);
+  }
+  const out: string[] = [];
+  paragraphs.forEach((p, i) => {
+    out.push(p);
+    const extra = byIndex.get(i);
+    if (extra) out.push(...extra);
+  });
+  return out.join("\n\n");
+}
 
-  // Pass a plain JSON schema (not the SDK's zodOutputFormat helper) — that
-  // helper attaches an auto-parse step that throws a bare AnthropicError
-  // with no usage info on malformed/truncated JSON, which defeats our own
-  // try/catch below and loses cost tracking on failure.
+async function addGraphsToOne(lesson: Lesson, content: LessonContentBody): Promise<Anthropic.Usage> {
+  const prompt = buildAddGraphsPrompt(lesson, content);
+
   const stream = client.messages.stream({
     model: MODEL,
-    max_tokens: 24000,
-    output_config: {
-      format: { type: "json_schema", schema: relaxedOutputSchema() },
-    },
+    max_tokens: 6000,
+    output_config: { format: { type: "json_schema", schema: relaxedOutputSchema() } },
     messages: [{ role: "user", content: prompt }],
   });
   const response = await stream.finalMessage();
-
   const usage = response.usage;
 
   if (response.stop_reason === "refusal") {
-    throw new GenerationError(`Model refused to generate content for "${lesson.id}".`, usage);
+    throw new GenerationError(`Model refused to add graphs for "${lesson.id}".`, usage);
   }
   if (response.stop_reason === "max_tokens") {
     throw new GenerationError(
-      `Response for "${lesson.id}" was truncated at the max_tokens limit — raise max_tokens further.`,
+      `Response for "${lesson.id}" was truncated at the max_tokens limit.`,
       usage,
     );
   }
@@ -94,7 +108,7 @@ async function generateOne(lesson: Lesson): Promise<Anthropic.Usage> {
     );
   }
 
-  const parsed = LessonContentBodySchema.safeParse(raw);
+  const parsed = AddGraphsResponseSchema.safeParse(raw);
   if (!parsed.success) {
     throw new GenerationError(
       `Response for "${lesson.id}" didn't match the expected shape: ${parsed.error.message}`,
@@ -102,15 +116,38 @@ async function generateOne(lesson: Lesson): Promise<Anthropic.Usage> {
     );
   }
 
-  for (const q of [...parsed.data.practice, ...parsed.data.quiz]) {
-    if (q.type === "multiple_choice" && !(q.choices ?? []).includes(q.correctAnswer)) {
-      console.warn(
-        `  ⚠ ${lesson.id} / ${q.id}: correctAnswer isn't an exact match to any choice — check by hand.`,
-      );
+  const placementsByField = new Map<string, { afterParagraph: number; placeholder: string }[]>();
+  const graphIds = new Set<string>();
+  for (const placement of parsed.data.placements) {
+    if (graphIds.has(placement.graph.id)) {
+      console.warn(`  ⚠ ${lesson.id}: duplicate graph id "${placement.graph.id}" — skipping.`);
+      continue;
+    }
+    graphIds.add(placement.graph.id);
+    const list = placementsByField.get(placement.field) ?? [];
+    list.push({
+      afterParagraph: placement.afterParagraph,
+      placeholder: `{{graph:${placement.graph.id}}}`,
+    });
+    placementsByField.set(placement.field, list);
+  }
+
+  const updated: LessonContentBody = {
+    ...content,
+    graphs: parsed.data.placements
+      .filter((p) => graphIds.has(p.graph.id))
+      .map((p) => p.graph)
+      .filter((g, i, arr) => arr.findIndex((g2) => g2.id === g.id) === i),
+  };
+  for (const field of TEXT_FIELDS) {
+    const insertions = placementsByField.get(field);
+    if (insertions) {
+      updated[field] = insertPlaceholders(content[field], insertions);
     }
   }
 
-  saveLessonContent(lesson.id, parsed.data);
+  saveLessonContent(lesson.id, updated);
+  console.log(`  -> ${updated.graphs.length} graph(s) placed`);
   return usage;
 }
 
@@ -123,25 +160,31 @@ async function main() {
     return;
   }
 
-  let generated = 0;
+  let processed = 0;
   let skipped = 0;
   let failed = 0;
   let totalInput = 0;
   let totalOutput = 0;
 
   for (const lesson of targets) {
-    if (!force && contentExists(lesson.id)) {
-      console.log(`skip   ${lesson.id} (content already exists — pass --force to regenerate)`);
+    const content = loadLessonContent(lesson.id);
+    if (!content) {
+      console.log(`skip   ${lesson.id} (no content file yet — generate it first)`);
+      skipped++;
+      continue;
+    }
+    if (!force && content.graphs.length > 0) {
+      console.log(`skip   ${lesson.id} (already has ${content.graphs.length} graph(s) — pass --force to redo)`);
       skipped++;
       continue;
     }
 
     console.log(`gen    ${lesson.id} ...`);
     try {
-      const usage = await generateOne(lesson);
+      const usage = await addGraphsToOne(lesson, content);
       totalInput += usage.input_tokens;
       totalOutput += usage.output_tokens;
-      generated++;
+      processed++;
       console.log(`  done  input=${usage.input_tokens} output=${usage.output_tokens} tokens`);
     } catch (err) {
       failed++;
@@ -162,11 +205,11 @@ async function main() {
     (totalOutput / 1_000_000) * PRICE_PER_MTOK_OUTPUT;
 
   console.log("\n--- summary ---");
-  console.log(`generated: ${generated}, skipped: ${skipped}, failed: ${failed}`);
+  console.log(`processed: ${processed}, skipped: ${skipped}, failed: ${failed}`);
   console.log(`tokens: input=${totalInput} output=${totalOutput}`);
   console.log(`cost for this run: $${cost.toFixed(4)} (model=${MODEL}, intro pricing)`);
-  if (generated > 0) {
-    console.log(`average cost per successfully generated lesson: $${(cost / generated).toFixed(4)}`);
+  if (processed > 0) {
+    console.log(`average cost per lesson: $${(cost / processed).toFixed(4)}`);
   }
 }
 

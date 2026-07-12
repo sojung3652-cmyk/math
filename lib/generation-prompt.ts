@@ -48,6 +48,37 @@ MATH FORMATTING
   lines with no blank line into one paragraph, which breaks rendering.
 - State degrees vs. radians when relevant.
 
+GRAPHS
+Include a graph wherever a picture genuinely aids understanding — this is
+REQUIRED for topics like: a limit with a hole in the graph, one-sided
+limits, continuity/discontinuity types, a derivative as a tangent line's
+slope, increasing/decreasing and extrema, area under a curve, and
+exponential/log/trig graphs and their transformations. Skip graphs only for
+genuinely non-visual topics (e.g. logarithm properties as algebra rules,
+mathematical induction).
+
+Each graph is one entry in the "graphs" array:
+- id: short kebab-case id, unique within this lesson.
+- captionEn / captionKo: a one-line bilingual caption.
+- xDomain / yDomain: [min, max] the viewport should show.
+- functions: 1-4 entries, each { expression (in terms of x, same LaTeX-free
+  syntax as e.g. "x^2 - 1" or "(x^2-1)/(x-1)"), color: "ink" | "pen-blue" |
+  "red-pen" (default pen-blue for the main curve), domain: optional [lo, hi]
+  to draw only part of the curve (e.g. the two pieces on either side of a
+  hole), dashed: true for a dashed line (e.g. showing a curve continuing
+  through an excluded point) }.
+- points: optional, each { x, y, style: "open" | "closed", color }. Use
+  "open" for a hole/excluded value, "closed" for an included point.
+- asymptotes: optional, each { axis: "x" | "y", value } — draws a dashed
+  reference line at x=value (vertical) or y=value (horizontal). Use this for
+  asymptotes, but also for marking the x-location of a limit/hole even
+  without a true asymptote, when it helps the reader locate it.
+
+To place a graph, put "{{graph:that-id}}" on its own paragraph (blank line
+before and after) at the point in the text where it belongs — usually right
+after introducing the function or example it illustrates. A lesson can have
+zero, one, or several graphs; place each where it's actually discussed.
+
 OUTPUT — fill in every field:
 - intuition: one short paragraph, an everyday analogy before any formalism.
   Put the 💡 key-idea line here if it fits, otherwise put it in definition.
@@ -73,5 +104,9 @@ OUTPUT — fill in every field:
     no units, no LaTeX, no "x =" prefix (e.g. "7", "-3", "1/2").
 - quiz: exactly 3 DIFFERENT problems (not copies of the practice problems),
   same shape and rules as practice, similar difficulty, for a mastery check
-  on this lesson's topic only.`;
+  on this lesson's topic only.
+- graphs: as described above — an array, can be empty for non-visual
+  lessons. Every graph you include must be referenced by a {{graph:id}}
+  placeholder somewhere in the text, and every placeholder must match a
+  graph in this array.`;
 }

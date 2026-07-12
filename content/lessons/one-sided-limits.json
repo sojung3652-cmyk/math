@@ -1,7 +1,7 @@
 {
-  "intuition": "Imagine walking down a hallway toward a wall with a number painted on it. If you approach from the left, you might see the number $3$ painted near the wall's edge; if you approach from the right, you might see a completely different number, like $7$. A one-sided limit (편측극한) captures exactly this kind of situation for a function $f(x)$: it tells us what value $f(x)$ seems to be heading toward as $x$ gets close to some point $a$, but only from one particular direction — either from values less than $a$ (approaching from the left) or from values greater than $a$ (approaching from the right).",
+  "intuition": "Imagine walking down a hallway toward a wall with a number painted on it. If you approach from the left, you might see the number $3$ painted near the wall's edge; if you approach from the right, you might see a completely different number, like $7$. A one-sided limit (편측극한) captures exactly this kind of situation for a function $f(x)$: it tells us what value $f(x)$ seems to be heading toward as $x$ gets close to some point $a$, but only from one particular direction — either from values less than $a$ (approaching from the left) or from values greater than $a$ (approaching from the right).\n\n{{graph:intuition-onesided}}",
   "definition": "The left-hand limit (좌극한), written $\\lim_{x\\to a^-} f(x)$, is the value that $f(x)$ approaches as $x$ gets closer and closer to $a$ while staying less than $a$. The right-hand limit (우극한), written $\\lim_{x\\to a^+} f(x)$, is the value that $f(x)$ approaches as $x$ approaches $a$ while staying greater than $a$.\n\nThe two-sided limit (양쪽에서의 극한) $\\lim_{x\\to a} f(x)$ exists and equals some value $L$ exactly when both one-sided limits exist and agree with each other:\n\n$$\\lim_{x\\to a} f(x) = L \\iff \\lim_{x\\to a^-} f(x) = \\lim_{x\\to a^+} f(x) = L$$\n\n🗣 \"The limit of f of x as x approaches a equals L, if and only if the left-hand limit and the right-hand limit both equal L.\"\n\n💡 A two-sided limit exists only when both one-sided limits exist and agree — if the left-hand and right-hand limits give different values, the limit does not exist (극한이 존재하지 않는다), written DNE.",
-  "workedExample": "Let\n\n$$f(x) = \\begin{cases} x + 3, & x < 1 \\\\ x^2, & x \\ge 1 \\end{cases}$$\n\n🗣 \"f of x equals x plus three when x is less than one, and x squared when x is greater than or equal to one.\"\n\nWe want to determine whether $\\lim_{x\\to 1} f(x)$ exists.\n\nStep 1 — Find the left-hand limit. For $x$ near $1$ but less than $1$, the applicable piece is $f(x) = x+3$, so substitute $x=1$ into that formula:\n\n$$\\lim_{x\\to 1^-} f(x) = 1 + 3 = 4$$\n\n🗣 \"The left-hand limit as x approaches one equals four.\"\n\nStep 2 — Find the right-hand limit. For $x$ near $1$ but greater than or equal to $1$, the applicable piece is $f(x) = x^2$, so substitute $x=1$:\n\n$$\\lim_{x\\to 1^+} f(x) = 1^2 = 1$$\n\n🗣 \"The right-hand limit as x approaches one equals one.\"\n\nStep 3 — Compare the two one-sided limits. Since $4 \\neq 1$, the left-hand and right-hand limits disagree, so the two-sided limit does not exist:\n\n$$\\lim_{x\\to 1} f(x) \\text{ DNE}$$\n\n🗣 \"The limit of f of x as x approaches one does not exist.\"",
+  "workedExample": "Let\n\n$$f(x) = \\begin{cases} x + 3, & x < 1 \\\\ x^2, & x \\ge 1 \\end{cases}$$\n\n🗣 \"f of x equals x plus three when x is less than one, and x squared when x is greater than or equal to one.\"\n\n{{graph:workedexample-piecewise}}\n\nWe want to determine whether $\\lim_{x\\to 1} f(x)$ exists.\n\nStep 1 — Find the left-hand limit. For $x$ near $1$ but less than $1$, the applicable piece is $f(x) = x+3$, so substitute $x=1$ into that formula:\n\n$$\\lim_{x\\to 1^-} f(x) = 1 + 3 = 4$$\n\n🗣 \"The left-hand limit as x approaches one equals four.\"\n\nStep 2 — Find the right-hand limit. For $x$ near $1$ but greater than or equal to $1$, the applicable piece is $f(x) = x^2$, so substitute $x=1$:\n\n$$\\lim_{x\\to 1^+} f(x) = 1^2 = 1$$\n\n🗣 \"The right-hand limit as x approaches one equals one.\"\n\nStep 3 — Compare the two one-sided limits. Since $4 \\neq 1$, the left-hand and right-hand limits disagree, so the two-sided limit does not exist:\n\n$$\\lim_{x\\to 1} f(x) \\text{ DNE}$$\n\n🗣 \"The limit of f of x as x approaches one does not exist.\"",
   "teachingNote": "A very common mistake is substituting $x=a$ into whichever formula \"looks easier\" regardless of direction — for example, using the $x\\ge 1$ piece to compute the left-hand limit. Always check which piece of the definition actually applies for $x$ slightly less than $a$ versus $x$ slightly greater than $a$ before substituting; the direction of approach, not the value at $x=a$ itself, determines which formula you are allowed to use.",
   "note": "📌 One-sided limits describe what value $f(x)$ approaches as $x$ nears $a$ from only one side, and the full two-sided limit exists only when both sides agree: $\\lim_{x\\to a^-} f(x) = \\lim_{x\\to a^+} f(x) = L \\iff \\lim_{x\\to a} f(x) = L$.\n\n🗣 \"The left-hand limit and the right-hand limit both equal L, if and only if the limit as x approaches a equals L.\"\n\nKey terms introduced in this lesson: limit (극한), left-hand limit (좌극한), right-hand limit (우극한), converge (수렴하다), does not exist / DNE (존재하지 않다), and piecewise function (조각별로 정의된 함수).",
   "practice": [
@@ -74,6 +74,100 @@
       "solution": "Step 1 — Find the left-hand limit. For $x<2$, $f(x)=x^2-1$, so\n\n$$\\lim_{x\\to 2^-} f(x) = 2^2-1 = 3$$\n\n🗣 \"The left-hand limit equals three.\"\n\nStep 2 — Find the right-hand limit. From the previous problem, for $x\\ge 2$, $f(x)=3x-5$, so\n\n$$\\lim_{x\\to 2^+} f(x) = 3(2)-5 = 1$$\n\n🗣 \"The right-hand limit equals one.\"\n\nStep 3 — Compare the two values. Since $3 \\neq 1$, the one-sided limits disagree, so the two-sided limit does not exist."
     }
   ],
+  "graphs": [
+    {
+      "id": "intuition-onesided",
+      "captionEn": "Approaching from the left gives 2; approaching from the right gives 4 — the two sides disagree.",
+      "captionKo": "왼쪽에서 다가가면 2, 오른쪽에서 다가가면 4로 서로 다른 값에 접근한다.",
+      "xDomain": [
+        -3,
+        3
+      ],
+      "yDomain": [
+        -1,
+        6
+      ],
+      "functions": [
+        {
+          "expression": "-x+2",
+          "color": "pen-blue",
+          "domain": [
+            -3,
+            0
+          ]
+        },
+        {
+          "expression": "x+4",
+          "color": "pen-blue",
+          "domain": [
+            0,
+            3
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 0,
+          "y": 2,
+          "style": "open",
+          "color": "red-pen"
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "style": "closed",
+          "color": "pen-blue"
+        }
+      ],
+      "asymptotes": []
+    },
+    {
+      "id": "workedexample-piecewise",
+      "captionEn": "Graph of f(x): left-hand limit is 4 (open circle), right-hand limit is 1 (closed dot) — they disagree, so the limit does not exist.",
+      "captionKo": "f(x)의 그래프: 좌극한은 4(빈 점), 우극한은 1(닫힌 점)로 서로 달라 극한이 존재하지 않는다.",
+      "xDomain": [
+        -2,
+        4
+      ],
+      "yDomain": [
+        -2,
+        6
+      ],
+      "functions": [
+        {
+          "expression": "x+3",
+          "color": "pen-blue",
+          "domain": [
+            -2,
+            1
+          ]
+        },
+        {
+          "expression": "x^2",
+          "color": "pen-blue",
+          "domain": [
+            1,
+            4
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 1,
+          "y": 4,
+          "style": "open",
+          "color": "red-pen"
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "style": "closed",
+          "color": "pen-blue"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
   "lessonId": "one-sided-limits",
-  "generatedAt": "2026-07-12T05:45:15.741Z"
+  "generatedAt": "2026-07-12T09:53:36.157Z"
 }

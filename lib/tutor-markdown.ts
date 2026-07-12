@@ -9,6 +9,10 @@ const TERM_PATTERN = /\b([A-Za-z][A-Za-z'-]*)\s\(([ㄱ-㆏가-힣]+)\)/g;
 const STEP_PATTERN = /^Step\s+(\d+)\s*[—-]\s*/i;
 const CIRCLED_DIGITS = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"];
 
+// A lesson content field can reference a graph spec with {{graph:some-id}},
+// which becomes its own <lesson-graph> element for the page to render.
+const GRAPH_PLACEHOLDER_PATTERN = /\{\{graph:([\w-]+)\}\}/g;
+
 function stepBadge(n: number): string {
   return CIRCLED_DIGITS[n - 1] ?? `(${n})`;
 }
@@ -42,6 +46,31 @@ function splitTerms(value: string): ElementContent[] {
   }
   if (cursor < value.length) {
     out.push({ type: "text", value: value.slice(cursor) });
+  }
+  return out;
+}
+
+function splitTextWithGraphs(value: string): ElementContent[] {
+  const matches = [...value.matchAll(GRAPH_PLACEHOLDER_PATTERN)];
+  if (matches.length === 0) return splitTerms(value);
+
+  const out: ElementContent[] = [];
+  let cursor = 0;
+  for (const match of matches) {
+    const start = match.index ?? 0;
+    if (start > cursor) {
+      out.push(...splitTerms(value.slice(cursor, start)));
+    }
+    out.push({
+      type: "element",
+      tagName: "lesson-graph",
+      properties: { "data-graph-id": match[1] },
+      children: [],
+    });
+    cursor = start + match[0].length;
+  }
+  if (cursor < value.length) {
+    out.push(...splitTerms(value.slice(cursor)));
   }
   return out;
 }
@@ -176,12 +205,26 @@ function walk(node: Root | Element): void {
       continue;
     }
     if (child.type === "text") {
-      next.push(...splitTerms(child.value));
+      next.push(...splitTextWithGraphs(child.value));
       continue;
     }
     if (child.type === "element") {
       if (child.tagName === "p") {
         const text = textOf(child).trim();
+
+        // A paragraph that is ONLY a graph placeholder unwraps to a bare
+        // <lesson-graph> — Graph's root is a <div>, which is invalid inside
+        // a <p> and would cause a hydration mismatch.
+        const soloGraphMatch = text.match(/^\{\{graph:([\w-]+)\}\}$/);
+        if (soloGraphMatch) {
+          next.push({
+            type: "element",
+            tagName: "lesson-graph",
+            properties: { "data-graph-id": soloGraphMatch[1] },
+            children: [],
+          });
+          continue;
+        }
 
         if (text.includes("🗣")) {
           const parts = splitReadAloudParagraph(child);

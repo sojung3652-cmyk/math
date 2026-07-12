@@ -1,7 +1,7 @@
 {
   "intuition": "Imagine tracing a graph with your pencil without ever lifting it off the paper — that's continuity (연속) in a nutshell: no holes, no jumps, no breaks in the path.\n\n💡 A function is continuous at a point only when its actual value there matches the value the trend is heading toward — the definition, the limit, and the equality must all line up.\n\nWe already know a limit (극한) describes where a function is heading; continuity asks the stricter question of whether the function actually arrives there and lands exactly on that value.",
-  "definition": "A function $f$ is continuous (연속) at $x=a$ when all three conditions hold together:\n\n$$\\text{(1) } f(a) \\text{ is defined} \\qquad \\text{(2) } \\lim_{x\\to a} f(x) \\text{ exists} \\qquad \\text{(3) } \\lim_{x\\to a} f(x) = f(a)$$\n\n🗣 \"F of A is defined, the limit as x approaches A exists, and that limit equals F of A.\"\n\nAll three must hold at the same time — if even one fails, $f$ is discontinuous (불연속) at $a$. When condition (2) fails because the left-hand limit (좌극한) and right-hand limit (우극한) disagree, the break is called a jump discontinuity (도약 불연속). When conditions (1) or (3) fail but the limit itself still exists — often because just one point is missing or misplaced — the break is called a removable discontinuity (제거 가능한 불연속), since redefining that single point would fix it.\n\nA function is continuous on an interval (구간에서 연속) when it is continuous at every point inside that interval; on a closed interval $[a,b]$ we also require the function to match its one-sided limit from inside at each endpoint.",
-  "workedExample": "Classify the discontinuities (if any) of the piecewise function below.\n\n$$f(x) = \\begin{cases} x^2 & x < 1 \\\\ x+3 & 1 \\le x < 3 \\\\ 2 & x = 3 \\\\ x+3 & x > 3 \\end{cases}$$\n\n🗣 \"F of x equals x squared for x less than one, x plus three for x between one and three, two at x equals three, and x plus three for x greater than three.\"\n\nStep 1 — Check the point $x=1$. First confirm $f(1)$ is defined: using the middle piece, $f(1) = 1+3 = 4$. Now compute the two one-sided limits (편측 극한).\n\n$$\\lim_{x\\to 1^-} f(x) = 1^2 = 1, \\qquad \\lim_{x\\to 1^+} f(x) = 1+3 = 4$$\n\n🗣 \"The left-hand limit at one is one, but the right-hand limit at one is four.\"\n\nSince the left-hand and right-hand limits disagree, $\\lim_{x\\to 1} f(x)$ does not exist, so condition (2) fails. This is a jump discontinuity (도약 불연속) at $x=1$ — the graph physically jumps from height $1$ to height $4$.\n\nStep 2 — Check the point $x=3$. Here $f(3) = 2$ by the given piece, so condition (1) holds. Now compute both one-sided limits using the pieces on either side.\n\n$$\\lim_{x\\to 3^-} f(x) = 3+3 = 6, \\qquad \\lim_{x\\to 3^+} f(x) = 3+3 = 6$$\n\n🗣 \"Both the left-hand and right-hand limits at three equal six.\"\n\nStep 3 — Compare the limit to the function value. Since both one-sided limits equal $6$, $\\lim_{x\\to 3} f(x) = 6$ exists, so condition (2) holds. But $f(3) = 2 \\neq 6$, so condition (3) fails. Because the limit exists and only the single value $f(3)$ is \"out of place,\" this is a removable discontinuity (제거 가능한 불연속) at $x=3$ — patching in $f(3)=6$ would make $f$ continuous there.",
+  "definition": "A function $f$ is continuous (연속) at $x=a$ when all three conditions hold together:\n\n$$\\text{(1) } f(a) \\text{ is defined} \\qquad \\text{(2) } \\lim_{x\\to a} f(x) \\text{ exists} \\qquad \\text{(3) } \\lim_{x\\to a} f(x) = f(a)$$\n\n🗣 \"F of A is defined, the limit as x approaches A exists, and that limit equals F of A.\"\n\nAll three must hold at the same time — if even one fails, $f$ is discontinuous (불연속) at $a$. When condition (2) fails because the left-hand limit (좌극한) and right-hand limit (우극한) disagree, the break is called a jump discontinuity (도약 불연속). When conditions (1) or (3) fail but the limit itself still exists — often because just one point is missing or misplaced — the break is called a removable discontinuity (제거 가능한 불연속), since redefining that single point would fix it.\n\n{{graph:removable-discontinuity-example}}\n\n{{graph:jump-discontinuity-example}}\n\nA function is continuous on an interval (구간에서 연속) when it is continuous at every point inside that interval; on a closed interval $[a,b]$ we also require the function to match its one-sided limit from inside at each endpoint.",
+  "workedExample": "Classify the discontinuities (if any) of the piecewise function below.\n\n$$f(x) = \\begin{cases} x^2 & x < 1 \\\\ x+3 & 1 \\le x < 3 \\\\ 2 & x = 3 \\\\ x+3 & x > 3 \\end{cases}$$\n\n🗣 \"F of x equals x squared for x less than one, x plus three for x between one and three, two at x equals three, and x plus three for x greater than three.\"\n\n{{graph:piecewise-discontinuities-worked-example}}\n\nStep 1 — Check the point $x=1$. First confirm $f(1)$ is defined: using the middle piece, $f(1) = 1+3 = 4$. Now compute the two one-sided limits (편측 극한).\n\n$$\\lim_{x\\to 1^-} f(x) = 1^2 = 1, \\qquad \\lim_{x\\to 1^+} f(x) = 1+3 = 4$$\n\n🗣 \"The left-hand limit at one is one, but the right-hand limit at one is four.\"\n\nSince the left-hand and right-hand limits disagree, $\\lim_{x\\to 1} f(x)$ does not exist, so condition (2) fails. This is a jump discontinuity (도약 불연속) at $x=1$ — the graph physically jumps from height $1$ to height $4$.\n\nStep 2 — Check the point $x=3$. Here $f(3) = 2$ by the given piece, so condition (1) holds. Now compute both one-sided limits using the pieces on either side.\n\n$$\\lim_{x\\to 3^-} f(x) = 3+3 = 6, \\qquad \\lim_{x\\to 3^+} f(x) = 3+3 = 6$$\n\n🗣 \"Both the left-hand and right-hand limits at three equal six.\"\n\nStep 3 — Compare the limit to the function value. Since both one-sided limits equal $6$, $\\lim_{x\\to 3} f(x) = 6$ exists, so condition (2) holds. But $f(3) = 2 \\neq 6$, so condition (3) fails. Because the limit exists and only the single value $f(3)$ is \"out of place,\" this is a removable discontinuity (제거 가능한 불연속) at $x=3$ — patching in $f(3)=6$ would make $f$ continuous there.",
   "teachingNote": "Many students stop checking as soon as they find that a limit exists, and conclude the function must be continuous there — but they skip condition (3): the limit must also equal $f(a)$, not just exist. Train students to always ask the three questions in the same fixed order — is $f(a)$ defined? does the limit exist? do they match? — and remind them that a removable discontinuity often looks perfectly smooth except for one lonely point sitting off the curve, so \"the limit exists\" is never the whole story.",
   "note": "📌 A function $f$ is continuous at $x=a$ exactly when $f(a)$ is defined, $\\lim_{x\\to a} f(x)$ exists, and $\\lim_{x\\to a} f(x) = f(a)$.\n\n$$\\lim_{x\\to a} f(x) = f(a)$$\n\n🗣 \"The limit of f of x as x approaches a equals f of a.\"\n\nKey terms introduced: continuity/continuous (연속), discontinuity (불연속), removable discontinuity (제거 가능한 불연속), jump discontinuity (도약 불연속), one-sided limit (편측 극한), left-hand limit (좌극한), right-hand limit (우극한), and continuity on an interval (구간에서 연속).",
   "practice": [
@@ -74,6 +74,166 @@
       "solution": "Step 1 — Compute both one-sided limits: $\\lim_{x\\to 0^-}(x+2)=2$ and $\\lim_{x\\to 0^+}(x-2)=-2$.\n\nStep 2 — Since $2 \\neq -2$, the left- and right-hand limits disagree, so $\\lim_{x\\to 0} f(x)$ does not exist — this is a jump discontinuity (도약 불연속), not removable."
     }
   ],
+  "graphs": [
+    {
+      "id": "removable-discontinuity-example",
+      "captionEn": "A removable discontinuity: the curve has a hole where the function's actual value is misplaced.",
+      "captionKo": "제거 가능한 불연속: 실제 함숫값이 어긋난 위치에 구멍이 생긴 그래프",
+      "xDomain": [
+        -3,
+        3
+      ],
+      "yDomain": [
+        -1,
+        9
+      ],
+      "functions": [
+        {
+          "expression": "x^2",
+          "color": "ink",
+          "domain": [
+            -3,
+            1.9
+          ]
+        },
+        {
+          "expression": "x^2",
+          "color": "ink",
+          "domain": [
+            2.1,
+            3
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 2,
+          "y": 4,
+          "style": "open",
+          "color": "red-pen"
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    },
+    {
+      "id": "jump-discontinuity-example",
+      "captionEn": "A jump discontinuity: the left- and right-hand limits disagree, so the graph physically jumps.",
+      "captionKo": "도약 불연속: 좌극한과 우극한이 다르므로 그래프가 실제로 뛰어오른다",
+      "xDomain": [
+        -3,
+        3
+      ],
+      "yDomain": [
+        -3,
+        5
+      ],
+      "functions": [
+        {
+          "expression": "x",
+          "color": "ink",
+          "domain": [
+            -3,
+            0
+          ]
+        },
+        {
+          "expression": "x+2",
+          "color": "ink",
+          "domain": [
+            0,
+            3
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 0,
+          "y": 0,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "style": "open",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    },
+    {
+      "id": "piecewise-discontinuities-worked-example",
+      "captionEn": "The piecewise function from the example: a jump discontinuity at x=1 and a removable discontinuity at x=3.",
+      "captionKo": "예제의 조각함수: x=1에서 도약 불연속, x=3에서 제거 가능한 불연속이 나타난다",
+      "xDomain": [
+        -1,
+        5
+      ],
+      "yDomain": [
+        -1,
+        8
+      ],
+      "functions": [
+        {
+          "expression": "x^2",
+          "color": "ink",
+          "domain": [
+            -1,
+            1
+          ]
+        },
+        {
+          "expression": "x+3",
+          "color": "pen-blue",
+          "domain": [
+            1,
+            3
+          ]
+        },
+        {
+          "expression": "x+3",
+          "color": "pen-blue",
+          "domain": [
+            3,
+            5
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 1,
+          "y": 1,
+          "style": "open",
+          "color": "red-pen"
+        },
+        {
+          "x": 1,
+          "y": 4,
+          "style": "closed",
+          "color": "ink"
+        },
+        {
+          "x": 3,
+          "y": 6,
+          "style": "open",
+          "color": "red-pen"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "style": "closed",
+          "color": "ink"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
   "lessonId": "continuity",
-  "generatedAt": "2026-07-12T05:48:39.845Z"
+  "generatedAt": "2026-07-12T09:54:06.734Z"
 }

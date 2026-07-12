@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
+import { GraphSpecSchema } from "@/lib/graph-spec";
 
 export const QuestionSchema = z.object({
   id: z.string(),
@@ -20,6 +21,7 @@ export const LessonContentBodySchema = z.object({
   note: z.string(),
   practice: z.array(QuestionSchema).length(3),
   quiz: z.array(QuestionSchema).length(3),
+  graphs: z.array(GraphSpecSchema).max(6).default([]),
 });
 export type LessonContentBody = z.infer<typeof LessonContentBodySchema>;
 
