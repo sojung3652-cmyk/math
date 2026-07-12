@@ -1,0 +1,79 @@
+{
+  "intuition": "Think of the derivative (도함수) as a machine that takes a position function and outputs a velocity function — it tells you the rate of change at every instant. An antiderivative (원시함수) runs that machine in reverse: you are given the rate and asked to reconstruct a possible original function that would produce it. But here's the catch — many different starting positions can produce the exact same velocity graph, because starting 3 meters ahead or 3 meters behind doesn't change how fast you're moving. That's exactly why antiderivatives are never unique.\n\n💡 If $F(x)$ is one antiderivative of $f(x)$, then every antiderivative of $f(x)$ has the form $F(x)+C$ for some constant $C$.",
+  "definition": "A function $F(x)$ is called an antiderivative (원시함수) of $f(x)$ on an interval if $F$ is differentiable there and its derivative (도함수) matches $f$ everywhere on that interval.\n\n$$F'(x) = f(x)$$\n\n🗣 \"F prime of x equals f of x.\"\n\nBecause the derivative of any constant (상수) is $0$, adding a constant to an antiderivative produces another antiderivative of the same function. This is why antiderivatives always come in families rather than as a single function.\n\n$$\\text{If } F'(x)=f(x), \\text{ then } (F(x)+C)' = f(x) \\text{ for any constant } C.$$\n\n🗣 \"If F prime of x equals f of x, then the derivative of F of x plus C also equals f of x, for any constant C.\"\n\nTo actually find an antiderivative of a power function, we reverse the power rule (거듭제곱 법칙) for differentiation. Since differentiating $x^{n+1}$ brings down a factor of $n+1$, we divide by $n+1$ to undo that step (for $n \\neq -1$).\n\n$$F(x) = \\frac{x^{n+1}}{n+1} + C \\quad \\text{is an antiderivative of} \\quad f(x) = x^n \\quad (n \\neq -1)$$\n\n🗣 \"F of x equals x to the n plus one, over n plus one, plus C, is an antiderivative of f of x equals x to the n.\"\n\nThe whole family $F(x)+C$, ranging over every possible constant, will later be named the indefinite integral (부정적분) of $f$ — but we'll wait to write it with its own symbol in the next lesson.",
+  "workedExample": "Find the general antiderivative of $f(x) = x^3$, and check the answer.\n\nStep 1 — Match the exponent to the reverse power rule. Here $n=3$, so $n+1=4$, meaning we expect an $x^4$ term divided by $4$.\n\nStep 2 — Apply the formula $F(x) = \\frac{x^{n+1}}{n+1}+C$ with $n=3$.\n\n$$F(x) = \\frac{x^4}{4} + C$$\n\n🗣 \"F of x equals x to the fourth over four, plus C.\"\n\nStep 3 — Verify by differentiating $F(x)$ and confirming it returns $f(x)=x^3$. The constant $C$ disappears since its derivative is $0$.\n\n$$F'(x) = \\frac{4x^3}{4} + 0 = x^3 = f(x)$$\n\n🗣 \"F prime of x equals four x cubed over four, plus zero, equals x cubed, which equals f of x.\"\n\nSince the check succeeds for every value of $C$, the entire family $\\frac{x^4}{4}+C$ — not just one function — is the answer.",
+  "teachingNote": "The most common mistake is dropping the constant of integration (적분상수) and writing a single function like $\\frac{x^4}{4}$ as \"the\" antiderivative. Remind students that any constant added to a correct antiderivative is still a correct antiderivative, because differentiation always sends a constant to $0$ — so unless extra information (like a specific point the function passes through) is given, the answer must be written as a whole family with $+C$.",
+  "note": "📌 Note: $F(x)$ is an antiderivative (원시함수) of $f(x)$ when $F'(x)=f(x)$, and reversing the power rule (거듭제곱 법칙) gives $F(x) = \\frac{x^{n+1}}{n+1}+C$ for $f(x)=x^n$ with $n\\neq -1$, where $C$ is the constant of integration (적분상수).\n\n🗣 \"F of x equals x to the n plus one over n plus one, plus C.\"\n\nKey terms introduced: antiderivative (원시함수), constant of integration (적분상수), power rule (거듭제곱 법칙), and the family name indefinite integral (부정적분), which will get its own notation in the next lesson.",
+  "practice": [
+    {
+      "id": "antideriv-basic-mc",
+      "type": "multiple_choice",
+      "prompt": "Which function is an antiderivative of $f(x) = 3x^2$?",
+      "choices": [
+        "$x^3$",
+        "$3x^3$",
+        "$x^3+2x$",
+        "$\\frac{x^3}{3}$"
+      ],
+      "correctAnswer": "$x^3$",
+      "solution": "Step 1 — Recall that an antiderivative $F(x)$ must satisfy $F'(x)=f(x)=3x^2$.\n\nStep 2 — Differentiate each choice: $(x^3)'=3x^2$ ✓, $(3x^3)'=9x^2$ ✗, $(x^3+2x)'=3x^2+2$ ✗, $\\left(\\frac{x^3}{3}\\right)'=x^2$ ✗.\n\nOnly $x^3$ differentiates back to $3x^2$, so it is the correct antiderivative."
+    },
+    {
+      "id": "antideriv-find-C",
+      "type": "numeric",
+      "prompt": "If $F(x) = x^3 - 5x + C$ is an antiderivative of $f(x) = 3x^2 - 5$ and $F(1) = 4$, find the value of $C$.",
+      "correctAnswer": "8",
+      "solution": "Step 1 — Since $F(x)=x^3-5x+C$ already has the right derivative for any $C$, use the condition $F(1)=4$ to pin down the specific value of $C$.\n\n$$F(1) = 1^3 - 5(1) + C = 4$$\n\n🗣 \"F of one equals one cubed minus five times one, plus C, equals four.\"\n\nStep 2 — Simplify and solve for $C$.\n\n$$1 - 5 + C = 4 \\implies C = 8$$\n\n🗣 \"One minus five plus C equals four, so C equals eight.\""
+    },
+    {
+      "id": "antideriv-family-mc",
+      "type": "multiple_choice",
+      "prompt": "Which expression represents **all** antiderivatives of $f(x) = 4x^3 - 6x$?",
+      "choices": [
+        "$x^4 - 3x^2 + C$",
+        "$x^4 - 3x^2$",
+        "$4x^4 - 6x^2 + C$",
+        "$x^4 - 3x^2 + 5$"
+      ],
+      "correctAnswer": "$x^4 - 3x^2 + C$",
+      "solution": "Step 1 — Reverse the power rule term by term: an antiderivative of $4x^3$ is $x^4$, and an antiderivative of $-6x$ is $-3x^2$.\n\nStep 2 — Combine these into one function and check by differentiating: $(x^4-3x^2)' = 4x^3-6x = f(x)$ ✓.\n\nStep 3 — Since the question asks for ALL antiderivatives, not just one, the answer must include the constant of integration, giving the full family $x^4-3x^2+C$. The other choices either fix a single constant or scale the coefficients incorrectly."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "antideriv-quiz-basic-mc",
+      "type": "multiple_choice",
+      "prompt": "Which function is an antiderivative of $f(x) = 4x^3$?",
+      "choices": [
+        "$x^4$",
+        "$4x^4$",
+        "$x^4+3x$",
+        "$\\frac{x^4}{4}$"
+      ],
+      "correctAnswer": "$x^4$",
+      "solution": "Step 1 — An antiderivative $F(x)$ must satisfy $F'(x) = 4x^3$.\n\nStep 2 — Differentiate each option: $(x^4)'=4x^3$ ✓, $(4x^4)'=16x^3$ ✗, $(x^4+3x)'=4x^3+3$ ✗, $\\left(\\frac{x^4}{4}\\right)'=x^3$ ✗.\n\nOnly $x^4$ gives back $4x^3$, so it is the correct antiderivative."
+    },
+    {
+      "id": "antideriv-quiz-find-C",
+      "type": "numeric",
+      "prompt": "If $F(x) = x^4 + 2x + C$ is an antiderivative of $f(x) = 4x^3 + 2$ and $F(0) = -3$, find the value of $C$.",
+      "correctAnswer": "-3",
+      "solution": "Step 1 — Use the condition $F(0)=-3$ to find $C$.\n\n$$F(0) = 0^4 + 2(0) + C = -3$$\n\n🗣 \"F of zero equals zero to the fourth plus two times zero, plus C, equals negative three.\"\n\nStep 2 — Simplify.\n\n$$0 + 0 + C = -3 \\implies C = -3$$\n\n🗣 \"Zero plus zero plus C equals negative three, so C equals negative three.\""
+    },
+    {
+      "id": "antideriv-quiz-family-mc",
+      "type": "multiple_choice",
+      "prompt": "Which expression represents **all** antiderivatives of $f(x) = 6x^2 - 4$?",
+      "choices": [
+        "$2x^3 - 4x + C$",
+        "$2x^3 - 4x$",
+        "$6x^3 - 4x + C$",
+        "$2x^3 - 4x + 7$"
+      ],
+      "correctAnswer": "$2x^3 - 4x + C$",
+      "solution": "Step 1 — Reverse the power rule term by term: an antiderivative of $6x^2$ is $2x^3$, and an antiderivative of $-4$ is $-4x$.\n\nStep 2 — Check by differentiating: $(2x^3-4x)' = 6x^2-4 = f(x)$ ✓.\n\nStep 3 — Because every constant works, the complete answer needs the constant of integration attached, giving $2x^3-4x+C$ as the family of all antiderivatives."
+    }
+  ],
+  "lessonId": "antiderivatives",
+  "generatedAt": "2026-07-12T06:18:13.755Z"
+}

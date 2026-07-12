@@ -1,0 +1,67 @@
+{
+  "intuition": "Imagine two hiking trails running side by side on a mountain — one always a little higher than the other. To find how much extra ground lies between them, you slice the strip into many thin vertical bands, measure the height of each band (the gap between the trails), and add them all up. That is exactly what the area (넓이) between two curves (곡선) means in calculus: the region (영역) trapped between $y=f(x)$ and $y=g(x)$ over an interval $[a,b]$, built from infinitely many infinitesimally thin rectangles.\n\n💡 The area between two curves on $[a,b]$ is the definite integral (정적분) of (top curve − bottom curve), and you must always check which curve is actually on top before integrating.",
+  "definition": "Formally, if a curve $y=f(x)$ lies above the x-axis (x축) on $[a,b]$ — meaning $f(x)\\ge 0$ there — the area between the curve and the x-axis is simply\n\n$$A=\\int_a^b f(x)\\,dx.$$\n\n🗣 \"A equals the integral from a to b of f of x, d x.\"\n\nIf instead the curve dips below the x-axis somewhere on $[a,b]$, a plain integral would let the negative part cancel the positive part, so you must use the absolute value (절댓값) of $f$, splitting the integral at every point where $f(x)=0$:\n\n$$A=\\int_a^b |f(x)|\\,dx,$$\n\n🗣 \"A equals the integral from a to b of the absolute value of f of x, d x, computed by splitting at each zero and adding the pieces as positive amounts.\"\n\nThe same idea extends to the region between two curves. If $f(x)\\ge g(x)$ for every $x$ in $[a,b]$ — that is, $f$ stays on top the whole way — then\n\n$$A=\\int_a^b \\big(f(x)-g(x)\\big)\\,dx.$$\n\n🗣 \"A equals the integral from a to b of f of x minus g of x, d x.\"\n\nIf the two curves cross inside $[a,b]$, find every intersection point (교점) first by solving $f(x)=g(x)$, then split the integral at those points and always subtract the lower curve from the upper curve on each piece.",
+  "workedExample": "Find the area of the region enclosed between $f(x)=8-x^2$ and $g(x)=x^2$.\n\nStep 1 — Find where the curves intersect by setting $f(x)=g(x)$:\n\n$$8-x^2=x^2 \\;\\Longrightarrow\\; 2x^2=8 \\;\\Longrightarrow\\; x^2=4 \\;\\Longrightarrow\\; x=-2,\\ 2.$$\n\n🗣 \"Eight minus x squared equals x squared gives x equals negative two or two.\"\n\nSo the enclosed region runs from $x=-2$ to $x=2$.\n\nStep 2 — Decide which curve is on top by testing a point inside the interval, say $x=0$: $f(0)=8$ and $g(0)=0$, so $f(x)\\ge g(x)$ on $[-2,2]$ — the downward-opening parabola $f$ sits above $g$ the whole way.\n\nStep 3 — Set up the integral of (top − bottom) and find the antiderivative (부정적분):\n\n$$A=\\int_{-2}^{2}\\big[(8-x^2)-x^2\\big]\\,dx=\\int_{-2}^{2}(8-2x^2)\\,dx=\\Big[8x-\\tfrac{2x^3}{3}\\Big]_{-2}^{2}.$$\n\n🗣 \"A equals the integral from negative two to two of eight minus two x squared, d x.\"\n\nStep 4 — Evaluate at both endpoints and subtract.\n\nAt $x=2$: $8(2)-\\tfrac{2(2)^3}{3}=16-\\tfrac{16}{3}=\\tfrac{32}{3}$.\n\nAt $x=-2$: $8(-2)-\\tfrac{2(-2)^3}{3}=-16+\\tfrac{16}{3}=-\\tfrac{32}{3}$.\n\n$$A=\\frac{32}{3}-\\left(-\\frac{32}{3}\\right)=\\frac{64}{3}.$$\n\n🗣 \"A equals thirty-two thirds minus negative thirty-two thirds, which is sixty-four thirds.\"\n\nSo the area enclosed between the two parabolas is $\\dfrac{64}{3}$ square units.",
+  "teachingNote": "A very common mistake is integrating $f(x)-g(x)$ without first checking which function is actually larger on the interval, which can produce a negative number that students then just report as the 'area' — or worse, cancel out entirely when the difference changes sign. Always find the intersection points first, test one sample x-value to see which curve is on top, and if the sign of $f(x)-g(x)$ changes anywhere inside $[a,b]$, split the integral at that point and take the absolute value of each piece before adding — the same rule that applies to a single curve dipping below the x-axis.",
+  "note": "📌 Note: The area (넓이) between $y=f(x)$ and $y=g(x)$ on $[a,b]$ is one number measuring how much region is trapped between the two curves (곡선), always found by integrating the top function minus the bottom function — never the reverse. Key formulas: $A=\\int_a^b f(x)\\,dx$ for a curve above the x-axis (x축); $A=\\int_a^b |f(x)|\\,dx$, splitting at each root, when it dips below; and $A=\\int_a^b (f(x)-g(x))\\,dx$ with $f(x)\\ge g(x)$ for the region between two curves, splitting at every intersection point (교점) if they cross.\n\n🗣 \"A equals the integral from a to b of f of x minus g of x, d x, whenever f is on top.\"\n\nTerms introduced in this lesson: area (넓이), curve (곡선), x-axis (x축), region (영역), absolute value (절댓값), definite integral (정적분), antiderivative (부정적분), and intersection point (교점).",
+  "practice": [
+    {
+      "id": "area-curve-xaxis-basic",
+      "type": "numeric",
+      "prompt": "Find the area between the curve $y=x^2$ and the x-axis on the interval $[0,3]$.",
+      "correctAnswer": "9",
+      "solution": "Since $y=x^2\\ge 0$ on $[0,3]$, the area is just the plain definite integral:\n\n$$A=\\int_0^3 x^2\\,dx=\\Big[\\tfrac{x^3}{3}\\Big]_0^3=\\frac{27}{3}-0=9.$$\n\n🗣 \"A equals the integral from zero to three of x squared, d x, which equals nine.\""
+    },
+    {
+      "id": "area-between-two-curves-line-parabola",
+      "type": "multiple_choice",
+      "prompt": "Find the area of the region enclosed between $f(x)=x+4$ and $g(x)=x^2-2$.",
+      "choices": [
+        "$\\dfrac{125}{6}$",
+        "$\\dfrac{64}{3}$",
+        "$\\dfrac{32}{3}$",
+        "$\\dfrac{27}{2}$"
+      ],
+      "correctAnswer": "$\\dfrac{125}{6}$",
+      "solution": "Step 1 — Find the intersection points by setting $f(x)=g(x)$:\n\n$$x+4=x^2-2 \\;\\Longrightarrow\\; x^2-x-6=0 \\;\\Longrightarrow\\; (x-3)(x+2)=0 \\;\\Longrightarrow\\; x=-2,\\ 3.$$\n\n🗣 \"x squared minus x minus six equals zero factors to x equals negative two or three.\"\n\nStep 2 — Test $x=0$: $f(0)=4$ and $g(0)=-2$, so $f(x)\\ge g(x)$ on $[-2,3]$ — the line stays above the parabola.\n\nStep 3 — Integrate (top − bottom) and evaluate:\n\n$$A=\\int_{-2}^{3}\\big[(x+4)-(x^2-2)\\big]\\,dx=\\int_{-2}^{3}(6+x-x^2)\\,dx=\\Big[6x+\\tfrac{x^2}{2}-\\tfrac{x^3}{3}\\Big]_{-2}^{3}.$$\n\n🗣 \"A equals the integral from negative two to three of six plus x minus x squared, d x.\"\n\nAt $x=3$: $18+4.5-9=13.5=\\tfrac{27}{2}$. At $x=-2$: $-12+2+\\tfrac{8}{3}=-\\tfrac{22}{3}$.\n\n$$A=\\frac{27}{2}-\\left(-\\frac{22}{3}\\right)=\\frac{81}{6}+\\frac{44}{6}=\\frac{125}{6}.$$\n\n🗣 \"A equals twenty-seven halves plus twenty-two thirds, which equals one hundred twenty-five sixths.\""
+    },
+    {
+      "id": "area-curve-xaxis-sign-change",
+      "type": "numeric",
+      "prompt": "Find the area between the curve $f(x)=x^2-4$ and the x-axis on $[-1,3]$. (The curve dips below the x-axis on part of this interval, so split the integral.)",
+      "correctAnswer": "34/3",
+      "solution": "Step 1 — Find where $f(x)=0$ inside the interval: $x^2-4=0 \\Rightarrow x=\\pm2$. Only $x=2$ lies in $[-1,3]$, so the curve is negative on $[-1,2]$ and positive on $[2,3]$.\n\n🗣 \"f of x equals zero at x equals negative two or two, and only two is inside negative one to three.\"\n\nStep 2 — On $[-1,2]$, $f(x)\\le 0$, so integrate $-f(x)$:\n\n$$\\int_{-1}^{2} -(x^2-4)\\,dx=\\int_{-1}^{2}(4-x^2)\\,dx=\\Big[4x-\\tfrac{x^3}{3}\\Big]_{-1}^{2}=\\frac{16}{3}-\\left(-\\frac{11}{3}\\right)=9.$$\n\n🗣 \"The integral of four minus x squared from negative one to two equals nine.\"\n\nStep 3 — On $[2,3]$, $f(x)\\ge 0$, so integrate $f(x)$ directly:\n\n$$\\int_{2}^{3}(x^2-4)\\,dx=\\Big[\\tfrac{x^3}{3}-4x\\Big]_{2}^{3}=-3-\\left(-\\frac{16}{3}\\right)=\\frac{7}{3}.$$\n\n🗣 \"The integral of x squared minus four from two to three equals seven thirds.\"\n\nStep 4 — Add the two pieces:\n\n$$A=9+\\frac{7}{3}=\\frac{27}{3}+\\frac{7}{3}=\\frac{34}{3}.$$\n\n🗣 \"A equals nine plus seven thirds, which is thirty-four thirds.\""
+    }
+  ],
+  "quiz": [
+    {
+      "id": "quiz-area-curve-xaxis-basic",
+      "type": "numeric",
+      "prompt": "Find the area between the curve $y=3x^2$ and the x-axis on $[0,2]$.",
+      "correctAnswer": "8",
+      "solution": "Since $y=3x^2\\ge0$ on $[0,2]$, integrate directly:\n\n$$A=\\int_0^2 3x^2\\,dx=\\Big[x^3\\Big]_0^2=8-0=8.$$\n\n🗣 \"A equals the integral from zero to two of three x squared, d x, which equals eight.\""
+    },
+    {
+      "id": "quiz-area-between-two-curves-line-parabola",
+      "type": "multiple_choice",
+      "prompt": "Find the area of the region enclosed between $f(x)=2x+3$ and $g(x)=x^2$.",
+      "choices": [
+        "$\\dfrac{32}{3}$",
+        "$\\dfrac{64}{3}$",
+        "$\\dfrac{125}{6}$",
+        "$\\dfrac{9}{2}$"
+      ],
+      "correctAnswer": "$\\dfrac{32}{3}$",
+      "solution": "Step 1 — Find the intersection points: $2x+3=x^2 \\Rightarrow x^2-2x-3=0 \\Rightarrow (x-3)(x+1)=0 \\Rightarrow x=-1,\\ 3$.\n\n🗣 \"x squared minus two x minus three equals zero factors to x equals negative one or three.\"\n\nStep 2 — Test $x=0$: $f(0)=3$ and $g(0)=0$, so $f(x)\\ge g(x)$ on $[-1,3]$.\n\nStep 3 — Integrate (top − bottom):\n\n$$A=\\int_{-1}^{3}\\big[(2x+3)-x^2\\big]\\,dx=\\int_{-1}^{3}(-x^2+2x+3)\\,dx=\\Big[-\\tfrac{x^3}{3}+x^2+3x\\Big]_{-1}^{3}.$$\n\n🗣 \"A equals the integral from negative one to three of negative x squared plus two x plus three, d x.\"\n\nAt $x=3$: $-9+9+9=9$. At $x=-1$: $\\tfrac{1}{3}+1-3=-\\tfrac{5}{3}$.\n\n$$A=9-\\left(-\\frac{5}{3}\\right)=\\frac{27}{3}+\\frac{5}{3}=\\frac{32}{3}.$$\n\n🗣 \"A equals nine plus five thirds, which equals thirty-two thirds.\""
+    },
+    {
+      "id": "quiz-area-curve-xaxis-sign-change",
+      "type": "numeric",
+      "prompt": "Find the area between the curve $f(x)=x^2-9$ and the x-axis on $[-2,4]$. (The curve dips below the x-axis on part of this interval, so split the integral.)",
+      "correctAnswer": "110/3",
+      "solution": "Step 1 — Find where $f(x)=0$ inside the interval: $x^2-9=0 \\Rightarrow x=\\pm3$. Only $x=3$ lies in $[-2,4]$, so $f(x)\\le0$ on $[-2,3]$ and $f(x)\\ge0$ on $[3,4]$.\n\n🗣 \"f of x equals zero at x equals negative three or three, and only three is inside negative two to four.\"\n\nStep 2 — On $[-2,3]$, integrate $-f(x)$:\n\n$$\\int_{-2}^{3}(9-x^2)\\,dx=\\Big[9x-\\tfrac{x^3}{3}\\Big]_{-2}^{3}=18-\\left(-\\frac{46}{3}\\right)=\\frac{100}{3}.$$\n\n🗣 \"The integral of nine minus x squared from negative two to three equals one hundred thirds.\"\n\nStep 3 — On $[3,4]$, integrate $f(x)$ directly:\n\n$$\\int_{3}^{4}(x^2-9)\\,dx=\\Big[\\tfrac{x^3}{3}-9x\\Big]_{3}^{4}=-\\frac{44}{3}-\\left(-\\frac{54}{3}\\right)=\\frac{10}{3}.$$\n\n🗣 \"The integral of x squared minus nine from three to four equals ten thirds.\"\n\nStep 4 — Add the two pieces:\n\n$$A=\\frac{100}{3}+\\frac{10}{3}=\\frac{110}{3}.$$\n\n🗣 \"A equals one hundred thirds plus ten thirds, which is one hundred ten thirds.\""
+    }
+  ],
+  "lessonId": "area",
+  "generatedAt": "2026-07-12T06:24:35.346Z"
+}

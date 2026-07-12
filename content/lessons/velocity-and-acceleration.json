@@ -1,0 +1,79 @@
+{
+  "intuition": "Think about driving a car and watching two gauges at once: the position (위치) is where you are on the road, the velocity (속도) is your speedometer reading combined with which way you're pointed, and the acceleration (가속도) is how hard you're pressing the gas or the brake — it tells you whether your speed is increasing or decreasing. Position, velocity, and acceleration are just three layers of the same story, each one the rate of change (변화율) of the one before it.\n\n💡 The sign of velocity tells you the direction of motion, but whether an object is speeding up or slowing down depends on comparing the signs of velocity and acceleration together — not on acceleration's sign alone.",
+  "definition": "For a position function (위치함수) $s(t)$ that gives an object's location along a line at time $t$, the velocity (속도) function is the derivative (도함수) of position with respect to time:\n\n$$v(t) = s'(t) = \\frac{ds}{dt}$$\n\n🗣 \"v of t equals s prime of t, the derivative of position with respect to time.\"\n\nThe acceleration (가속도) function is the derivative of velocity — equivalently, the second derivative (이차도함수) of position:\n\n$$a(t) = v'(t) = s''(t)$$\n\n🗣 \"a of t equals v prime of t, which is also s double-prime of t.\"\n\nThe sign of $v(t)$ gives the direction of motion (운동 방향): positive means moving in the positive direction, negative means moving in the negative direction. Whether the object is speeding up (속력 증가) or slowing down (속력 감소) depends on comparing signs — if $v(t)$ and $a(t)$ have the same sign, speed is increasing; if they have opposite signs, speed is decreasing.",
+  "workedExample": "A ball moves along a straight track so that its position in meters at time $t$ seconds ($t \\ge 0$) is given by\n\n$$s(t) = t^3 - 6t^2 + 9t$$\n\n🗣 \"s of t equals t cubed minus six t squared plus nine t.\"\n\nFind the velocity and acceleration functions, then determine the direction of motion and whether the ball is speeding up or slowing down at $t = 0.5$ seconds.\n\nStep 1 — Differentiate $s(t)$ to get the velocity function:\n\n$$v(t) = s'(t) = 3t^2 - 12t + 9$$\n\n🗣 \"v of t equals three t squared minus twelve t plus nine.\"\n\nStep 2 — Differentiate $v(t)$ to get the acceleration function:\n\n$$a(t) = v'(t) = 6t - 12$$\n\n🗣 \"a of t equals six t minus twelve.\"\n\nStep 3 — Evaluate both functions at $t = 0.5$:\n\n$$v(0.5) = 3(0.5)^2 - 12(0.5) + 9 = 3.75$$\n\n🗣 \"v of zero point five equals three point seven five.\"\n\n$$a(0.5) = 6(0.5) - 12 = -9$$\n\n🗣 \"a of zero point five equals negative nine.\"\n\nStep 4 — Interpret the signs. Since $v(0.5) = 3.75 > 0$, the ball is moving in the positive direction. Since $a(0.5) = -9 < 0$, velocity and acceleration have opposite signs, so the ball's speed is decreasing — it is slowing down while still moving in the positive direction.",
+  "teachingNote": "Many students assume that negative acceleration always means 'slowing down' and positive acceleration always means 'speeding up,' judging acceleration's sign in isolation. In reality, speeding up or slowing down depends on the relationship between the signs of $v(t)$ and $a(t)$: matching signs mean the speed is increasing, opposite signs mean the speed is decreasing — regardless of whether that sign is positive or negative. Always have students check both signs together, never acceleration alone.",
+  "note": "📌 Velocity (속도) is the rate of change of position, $v(t) = s'(t)$, and acceleration (가속도) is the rate of change of velocity, $a(t) = v'(t) = s''(t)$.\n\n🗣 \"Velocity is s prime of t; acceleration is v prime of t, or s double-prime of t.\"\n\nAn object moves in the direction given by the sign of $v(t)$, and it speeds up when $v(t)$ and $a(t)$ share the same sign, or slows down when they have opposite signs. Terms introduced in this lesson: velocity–속도, acceleration–가속도, position function–위치함수, second derivative–이차도함수, direction of motion–운동 방향, speeding up–속력 증가, and slowing down–속력 감소.",
+  "practice": [
+    {
+      "id": "velocity-basic-derivative",
+      "type": "multiple_choice",
+      "prompt": "A particle's position along a line is given by $s(t) = t^2 - 5t + 2$ (in meters, $t$ in seconds). What is the velocity function $v(t)$?",
+      "choices": [
+        "$v(t) = 2t - 5$",
+        "$v(t) = t^2 - 5$",
+        "$v(t) = 2t + 5$",
+        "$v(t) = t - 5$"
+      ],
+      "correctAnswer": "$v(t) = 2t - 5$",
+      "solution": "Differentiate $s(t) = t^2 - 5t + 2$ term by term: the derivative of $t^2$ is $2t$, the derivative of $-5t$ is $-5$, and the derivative of the constant $2$ is $0$. So $v(t) = s'(t) = 2t - 5$."
+    },
+    {
+      "id": "acceleration-evaluate",
+      "type": "numeric",
+      "prompt": "A particle moves so that its position is $s(t) = t^3 - 3t^2 + 2$ (meters, $t$ in seconds). Find its acceleration at $t = 3$ seconds.",
+      "correctAnswer": "12",
+      "solution": "Step 1 — Differentiate $s(t)$ twice: $v(t) = s'(t) = 3t^2 - 6t$, and $a(t) = v'(t) = 6t - 6$.\n\nStep 2 — Evaluate at $t = 3$: $a(3) = 6(3) - 6 = 12$."
+    },
+    {
+      "id": "speeding-up-or-slowing-down",
+      "type": "multiple_choice",
+      "prompt": "A particle's position is $s(t) = -t^3 + 3t^2$ (meters, $t$ in seconds). At $t = 0.5$ seconds, is the particle speeding up or slowing down, and in which direction is it moving?",
+      "choices": [
+        "Speeding up, moving in positive direction",
+        "Slowing down, moving in positive direction",
+        "Speeding up, moving in negative direction",
+        "Slowing down, moving in negative direction"
+      ],
+      "correctAnswer": "Speeding up, moving in positive direction",
+      "solution": "Step 1 — Differentiate $s(t) = -t^3 + 3t^2$ to get $v(t) = -3t^2 + 6t$, then differentiate again to get $a(t) = -6t + 6$.\n\nStep 2 — Evaluate at $t = 0.5$: $v(0.5) = -3(0.25) + 3 = 2.25$, and $a(0.5) = -6(0.5) + 6 = 3$.\n\nStep 3 — Since $v(0.5) = 2.25 > 0$, the particle moves in the positive direction. Since $a(0.5) = 3 > 0$ matches the sign of $v(0.5)$, the particle is speeding up. So the answer is 'Speeding up, moving in positive direction.'"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "velocity-at-instant",
+      "type": "numeric",
+      "prompt": "A particle's position is $s(t) = 4t^2 - 2t + 1$ (meters, $t$ in seconds). Find its velocity at $t = 1$ second.",
+      "correctAnswer": "6",
+      "solution": "Step 1 — Differentiate $s(t)$ to get $v(t) = s'(t) = 8t - 2$.\n\nStep 2 — Evaluate at $t=1$: $v(1) = 8(1) - 2 = 6$."
+    },
+    {
+      "id": "acceleration-function",
+      "type": "multiple_choice",
+      "prompt": "A particle's position is $s(t) = t^3 - 9t^2 + 15t$ (meters, $t$ in seconds). What is the acceleration function $a(t)$?",
+      "choices": [
+        "$a(t) = 6t - 18$",
+        "$a(t) = 3t - 18$",
+        "$a(t) = 6t + 18$",
+        "$a(t) = 6t^2 - 18$"
+      ],
+      "correctAnswer": "$a(t) = 6t - 18$",
+      "solution": "Step 1 — Differentiate $s(t)$ once to get the velocity function: $v(t) = s'(t) = 3t^2 - 18t + 15$.\n\nStep 2 — Differentiate $v(t)$ to get the acceleration function: $a(t) = v'(t) = 6t - 18$."
+    },
+    {
+      "id": "direction-and-speed-change",
+      "type": "multiple_choice",
+      "prompt": "A particle's position is $s(t) = t^3 - 12t$ (meters, $t$ in seconds). At $t = 1$ second, is the particle speeding up or slowing down, and in which direction is it moving?",
+      "choices": [
+        "Speeding up, moving in positive direction",
+        "Slowing down, moving in negative direction",
+        "Speeding up, moving in negative direction",
+        "Slowing down, moving in positive direction"
+      ],
+      "correctAnswer": "Slowing down, moving in negative direction",
+      "solution": "Step 1 — Differentiate $s(t) = t^3 - 12t$ to get $v(t) = 3t^2 - 12$, then differentiate again to get $a(t) = 6t$.\n\nStep 2 — Evaluate at $t = 1$: $v(1) = 3(1) - 12 = -9$, and $a(1) = 6(1) = 6$.\n\nStep 3 — Since $v(1) = -9 < 0$, the particle moves in the negative direction. Since $a(1) = 6 > 0$ has the opposite sign from $v(1)$, the particle is slowing down. So the answer is 'Slowing down, moving in negative direction.'"
+    }
+  ],
+  "lessonId": "velocity-and-acceleration",
+  "generatedAt": "2026-07-12T06:13:13.472Z"
+}

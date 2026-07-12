@@ -1,0 +1,67 @@
+{
+  "intuition": "Think about driving a car. Your average speed over a full hour might read 60 km/h, but the speedometer needle at any single instant shows something else — your instantaneous speed at that exact moment. If you shrink the time interval you're averaging over — from one hour to one minute to one second — that average speed calculation gets closer and closer to what the speedometer shows. The derivative (도함수) formalizes exactly this: shrink the interval $h$ toward zero, and the average rate of change becomes the instantaneous rate of change (순간변화율) at a single point.",
+  "definition": "The derivative (도함수) of a function $f$ at a point $x$ is defined as the limit (극한) of its difference quotient (차분) as $h$ approaches $0$:\n\n$$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$$\n\n🗣 \"f prime of x equals the limit, as h approaches zero, of f of x plus h, minus f of x, all over h.\"\n\nGeometrically, $\\frac{f(x+h)-f(x)}{h}$ is the slope (기울기) of the secant line (할선) through the two points $(x, f(x))$ and $(x+h, f(x+h))$ on the graph of $f$. As $h$ converges (수렴하다) to $0$, those two points slide together, the secant line rotates into the tangent line (접선) at $x$, and its slope becomes the instantaneous rate of change (순간변화율) of $f$ exactly at $x$.\n\n💡 The derivative at a point is the limiting slope of secant lines as the two points on the curve merge into one — it is an instantaneous rate of change, never an average over an interval.\n\nNote that the denominator must always be $h$, the change in the input — never $x$ itself; the whole expression measures how much $f$ changes per unit change in the input as that change shrinks to nothing.",
+  "workedExample": "Let's derive $f'(x)$ for $f(x) = x^2$ directly from the limit definition — no shortcut rules yet, just the definition itself.\n\nStep 1 — Write the difference quotient by substituting $x+h$ into $f$ wherever $x$ appeared:\n\n$$\\frac{f(x+h)-f(x)}{h} = \\frac{(x+h)^2 - x^2}{h}$$\n\n🗣 \"f of x plus h, minus f of x, over h, equals x plus h, squared, minus x squared, over h.\"\n\nStep 2 — Expand $(x+h)^2 = x^2 + 2xh + h^2$ and simplify the numerator; the $x^2$ terms cancel:\n\n$$\\frac{x^2+2xh+h^2-x^2}{h} = \\frac{2xh+h^2}{h}$$\n\n🗣 \"This simplifies to two x h plus h squared, over h.\"\n\nSince $h \\neq 0$ at this stage (the limit hasn't been taken yet), divide every term in the numerator by $h$:\n\n$$\\frac{2xh+h^2}{h} = 2x+h$$\n\n🗣 \"Two x h plus h squared, over h, equals two x plus h.\"\n\nStep 3 — Now let $h \\to 0$. Since $2x+h$ is just a simple expression in $h$, substitute $h=0$ directly:\n\n$$f'(x) = \\lim_{h\\to 0}(2x+h) = 2x$$\n\n🗣 \"f prime of x equals the limit, as h approaches zero, of two x plus h, which equals two x.\"\n\nSo $f'(x) = 2x$: at every point $x$, the tangent line to $y=x^2$ has slope exactly twice the $x$-value there — for example, the tangent at $x=3$ has slope $6$.",
+  "teachingNote": "The most common error is treating $f(x+h)$ as if it were $f(x)+h$ — for instance writing $(x+h)^2$ as $x^2+h$ instead of correctly expanding it as $x^2+2xh+h^2$. Remind students that $f(x+h)$ means \"plug the whole expression $x+h$ into every $x$ in the formula for $f$,\" not \"add $h$ to the output.\" A second frequent mistake is plugging $h=0$ into the original unsimplified fraction, which gives the meaningless form $\\frac{0}{0}$; the algebra in the numerator must always be simplified first so the $h$ in the denominator cancels before the limit is taken.",
+  "note": "📌 The derivative (도함수) of $f$ at $x$ is the limit (극한) of the difference quotient (차분) as the change in input shrinks to zero: $$f'(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}.$$\n\n🗣 \"f prime of x equals the limit, as h approaches zero, of f of x plus h minus f of x, over h.\"\n\nThis limit equals both the instantaneous rate of change (순간변화율) of $f$ at $x$ and the slope (기울기) of the tangent line (접선) at that point, obtained as the secant line (할선) through two nearby points converges (수렴하다) into that single tangent line.",
+  "practice": [
+    {
+      "id": "derivative-definition-linear",
+      "type": "numeric",
+      "prompt": "Using the limit definition of the derivative, find $f'(x)$ for $f(x) = 3x + 5$.",
+      "correctAnswer": "3",
+      "solution": "Step 1 — Set up the difference quotient by substituting $x+h$ into $f$: $$\\frac{f(x+h)-f(x)}{h} = \\frac{[3(x+h)+5] - [3x+5]}{h}$$\n\n🗣 \"f of x plus h minus f of x, over h, equals three times x plus h plus five, minus three x plus five, over h.\"\n\nStep 2 — Expand and simplify the numerator: $3x+3h+5-3x-5 = 3h$, so the quotient becomes $\\frac{3h}{h} = 3$ (valid since $h\\neq 0$).\n\nStep 3 — Take the limit as $h\\to 0$: since the quotient is already the constant $3$ with no $h$ left, $f'(x) = \\lim_{h\\to0} 3 = 3$."
+    },
+    {
+      "id": "derivative-definition-quadratic-eval",
+      "type": "numeric",
+      "prompt": "Using the limit definition, first find the general derivative $f'(x)$ for $f(x) = x^2 - 4x$, then evaluate $f'(3)$.",
+      "correctAnswer": "2",
+      "solution": "Step 1 — Write the difference quotient: $$\\frac{f(x+h)-f(x)}{h} = \\frac{[(x+h)^2-4(x+h)]-[x^2-4x]}{h}$$\n\n🗣 \"f of x plus h, minus f of x, over h, equals x plus h squared minus four times x plus h, minus x squared minus four x, over h.\"\n\nStep 2 — Expand: $(x+h)^2-4(x+h) = x^2+2xh+h^2-4x-4h$. Subtracting $x^2-4x$ leaves $2xh+h^2-4h$, so the quotient is $\\frac{2xh+h^2-4h}{h} = 2x+h-4$.\n\nStep 3 — Take the limit as $h\\to 0$: $f'(x) = \\lim_{h\\to0}(2x+h-4) = 2x-4$. Evaluating at $x=3$: $f'(3) = 2(3)-4 = 2$."
+    },
+    {
+      "id": "difference-quotient-meaning",
+      "type": "multiple_choice",
+      "prompt": "Before taking the limit as $h \\to 0$, what does the expression $\\dfrac{f(x+h)-f(x)}{h}$ represent geometrically?",
+      "choices": [
+        "The slope of the secant line through $(x, f(x))$ and $(x+h, f(x+h))$",
+        "The slope of the tangent line at $x$",
+        "The instantaneous rate of change at $x$",
+        "The area between the curve and the $x$-axis"
+      ],
+      "correctAnswer": "The slope of the secant line through $(x, f(x))$ and $(x+h, f(x+h))$",
+      "solution": "The unsimplified difference quotient is the average rate of change (평균변화율) between two distinct points on the curve, $(x, f(x))$ and $(x+h, f(x+h))$ — geometrically, that is exactly the slope of the secant line (할선) connecting them. Only after letting $h \\to 0$, so the second point slides onto the first, does that slope become the slope of the tangent line (접선) and the instantaneous rate of change."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "derivative-definition-linear-2",
+      "type": "numeric",
+      "prompt": "Using the limit definition of the derivative, find $f'(x)$ for $f(x) = 5x - 7$.",
+      "correctAnswer": "5",
+      "solution": "Step 1 — Set up the difference quotient: $$\\frac{f(x+h)-f(x)}{h} = \\frac{[5(x+h)-7]-[5x-7]}{h}$$\n\n🗣 \"f of x plus h minus f of x, over h, equals five times x plus h minus seven, minus five x minus seven, over h.\"\n\nStep 2 — Simplify the numerator: $5x+5h-7-5x+7 = 5h$, so the quotient is $\\frac{5h}{h} = 5$ (since $h \\neq 0$).\n\nStep 3 — Take the limit as $h \\to 0$: the expression is already the constant $5$, so $f'(x) = \\lim_{h\\to0} 5 = 5$."
+    },
+    {
+      "id": "derivative-definition-quadratic-eval-2",
+      "type": "numeric",
+      "prompt": "Using the limit definition, first find the general derivative $f'(x)$ for $f(x) = x^2 + 2x$, then evaluate $f'(-1)$.",
+      "correctAnswer": "0",
+      "solution": "Step 1 — Write the difference quotient: $$\\frac{f(x+h)-f(x)}{h} = \\frac{[(x+h)^2+2(x+h)]-[x^2+2x]}{h}$$\n\n🗣 \"f of x plus h, minus f of x, over h, equals x plus h squared plus two times x plus h, minus x squared plus two x, over h.\"\n\nStep 2 — Expand: $(x+h)^2+2(x+h) = x^2+2xh+h^2+2x+2h$. Subtracting $x^2+2x$ leaves $2xh+h^2+2h$, so the quotient is $\\frac{2xh+h^2+2h}{h} = 2x+h+2$.\n\nStep 3 — Take the limit as $h\\to 0$: $f'(x) = \\lim_{h\\to0}(2x+h+2) = 2x+2$. Evaluating at $x=-1$: $f'(-1) = 2(-1)+2 = 0$."
+    },
+    {
+      "id": "correct-limit-setup",
+      "type": "multiple_choice",
+      "prompt": "Which limit expression correctly defines $f'(2)$ using the definition of the derivative?",
+      "choices": [
+        "$\\lim_{h\\to0}\\dfrac{f(2+h)-f(2)}{h}$",
+        "$\\lim_{h\\to0}\\dfrac{f(2+h)-f(2)}{x}$",
+        "$\\lim_{x\\to0}\\dfrac{f(2+x)-f(2)}{2}$",
+        "$\\lim_{h\\to0}\\dfrac{f(2)-f(2+h)}{h}$"
+      ],
+      "correctAnswer": "$\\lim_{h\\to0}\\dfrac{f(2+h)-f(2)}{h}$",
+      "solution": "The definition requires the change in the input to be called $h$, and that same $h$ must appear in the denominator — never the variable $x$ itself, since $x$ is fixed at the point ($x=2$) where the derivative is being evaluated. The correct setup adds $h$ to the input, subtracts $f(2)$, and divides by that same $h$, giving $\\lim_{h\\to0}\\dfrac{f(2+h)-f(2)}{h}$. The other choices either put $x$ in the denominator, divide by the wrong constant, or reverse the subtraction order, all of which break the definition."
+    }
+  ],
+  "lessonId": "definition-of-the-derivative",
+  "generatedAt": "2026-07-12T06:04:35.196Z"
+}

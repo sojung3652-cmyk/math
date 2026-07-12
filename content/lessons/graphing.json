@@ -1,0 +1,67 @@
+{
+  "intuition": "Think of sketching a polynomial's graph like reading a hiker's trail log: you mark where the trail crosses sea level (the intercepts), note which stretches go uphill or downhill (the increasing/decreasing sign chart from the first derivative), pin down every peak and valley (the local extrema), and finally decide which way the trail is ultimately headed off into the horizon on both sides (the end behavior, decided by the leading term (최고차항)). Once you have all four clues, you connect them into one smooth, continuous curve.\n\n💡 To sketch a polynomial function (다항함수)'s graph, combine four pieces of information — intercepts, the increasing/decreasing sign chart (부호표), local extrema (극값), and end behavior (끝행동) from the leading term — into one continuous curve.",
+  "definition": "A polynomial function's graph can be assembled precisely from first-derivative analysis you already know, plus two extra ingredients. First, find the x-intercept(s) (x절편) by solving $f(x)=0$, and the y-intercept (y절편) by computing $f(0)$; if a zero has even multiplicity (중복도), the curve only touches the x-axis there, while an odd multiplicity means the curve crosses through. Second, build the sign chart (부호표) of $f'(x)$ to mark increasing (증가) and decreasing (감소) intervals, and read off each local maximum (극대) and local minimum (극소) — together called local extrema (극값) — at the sign changes. Third, determine the end behavior (끝행동): because lower-degree terms shrink in relative importance as $|x|$ grows, only the leading term (최고차항) $a_nx^n$ decides how the graph behaves far to the left and right.\n\n$$\\lim_{x\\to\\infty} f(x) = \\lim_{x\\to\\infty} a_n x^n, \\qquad \\lim_{x\\to -\\infty} f(x) = \\lim_{x\\to -\\infty} a_n x^n$$\n\n🗣 'The limit of f of x as x approaches infinity equals the limit of a sub n x to the n as x approaches infinity — and likewise as x approaches negative infinity.'\n\nFor a quick sanity check on the bend of the curve, you can also glance at the second derivative (이차도함수) $f''(x)$: where $f''(x)>0$ the curve is concave up (아래로 오목), where $f''(x)<0$ it is concave down (위로 오목), and a sign change marks an inflection point (변곡점) — but the overall shape is already fixed once you have intercepts, the sign chart, extrema, and end behavior.",
+  "workedExample": "Sketch the graph of $f(x) = x^3 - 3x + 2$.\n\nStep 1 — Find the intercepts. The y-intercept is $f(0) = 2$. For the x-intercepts, test $x=1$: $f(1) = 1-3+2 = 0$, so $(x-1)$ is a factor. Dividing gives $f(x) = (x-1)(x^2+x-2) = (x-1)^2(x+2)$.\n\n$$f(x) = (x-1)^2(x+2)$$\n\n🗣 'f of x equals the quantity x minus one, squared, times the quantity x plus two.'\n\nSo $x=1$ is a zero of even multiplicity (2) — the curve only touches the x-axis there — and $x=-2$ is a zero of odd multiplicity (1) — the curve crosses through.\n\nStep 2 — Build the sign chart of $f'(x)$. Differentiating, $f'(x) = 3x^2 - 3 = 3(x-1)(x+1)$, so the critical points (임계점) are $x=-1$ and $x=1$. Testing each interval: for $x<-1$, $f'(x)>0$ (increasing); for $-1<x<1$, $f'(x)<0$ (decreasing); for $x>1$, $f'(x)>0$ (increasing).\n\nStep 3 — Identify the local extrema. Since $f'$ changes from positive to negative at $x=-1$, there is a local maximum there: $f(-1) = -1+3+2 = 4$. Since $f'$ changes from negative to positive at $x=1$, there is a local minimum there: $f(1) = 1-3+2 = 0$ — matching the touch point found in Step 1, a nice consistency check.\n\nStep 4 — Determine end behavior. The leading term is $x^3$ (degree 3, odd, coefficient $+1$), so as $x\\to -\\infty$, $f(x)\\to -\\infty$, and as $x\\to \\infty$, $f(x)\\to \\infty$.\n\nStep 5 — Assemble the curve. Starting from the bottom left, the graph rises through $(-2,0)$, continues up to the local maximum at $(-1,4)$, turns and falls to the local minimum at $(1,0)$ where it just touches the x-axis, then rises again forever toward the top right. As a bonus check, $f''(x)=6x$ is negative for $x<0$ and positive for $x>0$, so the curve bends concave down then concave up, with an inflection point (변곡점) at $x=0$ — consistent with the peak-then-valley shape.",
+  "teachingNote": "The most common mistake is trusting only the peaks and valleys from the sign chart and forgetting to check the end behavior (끝행동) from the leading term (최고차항) — this leads students to draw both ends of the graph curving the 'safe,' symmetric way instead of following what the degree and leading coefficient actually require. A second frequent error is treating a local maximum/minimum as if it were the highest or lowest value of the entire function; for an unbounded polynomial, a local extremum is only a peak or valley relative to nearby points, not a global one. Always finish a sketch by explicitly running the leading-term end-behavior check, and remind students that 'local' extrema live inside the domain while the far left and right ends can still shoot off past them.",
+  "note": "📌 A polynomial function's graph is fully sketched by combining intercepts, the sign chart of $f'(x)$ for increasing/decreasing intervals, local extrema at sign changes, and end behavior from the leading term: $\\lim_{x\\to\\pm\\infty} f(x) = \\lim_{x\\to\\pm\\infty}a_nx^n$.\n\n🗣 'As x approaches plus or minus infinity, f of x behaves like a sub n times x to the n.'\n\nKey term pairs introduced here: polynomial function (다항함수), x-intercept (x절편), y-intercept (y절편), sign chart (부호표), increasing (증가), decreasing (감소), critical point (임계점), local maximum (극대), local minimum (극소), local extrema (극값), end behavior (끝행동), leading term (최고차항), multiplicity (중복도), concave up (아래로 오목), concave down (위로 오목), and inflection point (변곡점).",
+  "practice": [
+    {
+      "id": "poly-graph-end-behavior-basic",
+      "type": "multiple_choice",
+      "prompt": "As $x \\to \\infty$, what does $f(x) = -x^3 + 4x$ approach?",
+      "choices": [
+        "$\\infty$",
+        "$-\\infty$",
+        "$0$",
+        "$4$"
+      ],
+      "correctAnswer": "$-\\infty$",
+      "solution": "The leading term of $f(x)=-x^3+4x$ is $-x^3$: an odd degree with a negative coefficient. By the end-behavior rule, $\\lim_{x\\to\\infty} f(x) = \\lim_{x\\to\\infty}(-x^3) = -\\infty$, so the correct choice is $-\\infty$."
+    },
+    {
+      "id": "poly-graph-local-max-value",
+      "type": "numeric",
+      "prompt": "Find the local maximum value of $f(x) = x^3 - 3x$.",
+      "correctAnswer": "2",
+      "solution": "Step 1 — Find the critical points. $f'(x) = 3x^2-3 = 3(x-1)(x+1)$, so the critical points are $x=-1$ and $x=1$.\n\nStep 2 — Determine which is the local maximum using the sign chart. For $x<-1$, $f'(x)>0$ (increasing); for $-1<x<1$, $f'(x)<0$ (decreasing); for $x>1$, $f'(x)>0$ (increasing). Since $f'$ switches from positive to negative at $x=-1$, that is the local maximum.\n\nStep 3 — Evaluate. $f(-1) = (-1)^3-3(-1) = -1+3 = 2$, so the local maximum value is $2$."
+    },
+    {
+      "id": "poly-graph-local-min-value-cubic",
+      "type": "numeric",
+      "prompt": "Find the local minimum value of $f(x) = x^3 - 3x^2$.",
+      "correctAnswer": "-4",
+      "solution": "Step 1 — Find the critical points. $f'(x) = 3x^2-6x = 3x(x-2)$, so the critical points are $x=0$ and $x=2$.\n\nStep 2 — Build the sign chart. For $x<0$, $f'(x)>0$ (increasing); for $0<x<2$, $f'(x)<0$ (decreasing); for $x>2$, $f'(x)>0$ (increasing). So $f'$ switches from negative to positive at $x=2$, giving a local minimum there.\n\nStep 3 — Evaluate. $f(2) = 2^3-3(2)^2 = 8-12 = -4$, so the local minimum value is $-4$."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "poly-graph-end-behavior-quartic",
+      "type": "multiple_choice",
+      "prompt": "As $x \\to -\\infty$, what does $f(x) = -x^4 + 2x^2$ approach?",
+      "choices": [
+        "$\\infty$",
+        "$-\\infty$",
+        "$0$",
+        "$2$"
+      ],
+      "correctAnswer": "$-\\infty$",
+      "solution": "The leading term is $-x^4$, an even degree with a negative coefficient, so both ends of the graph point downward: $\\lim_{x\\to-\\infty} f(x) = \\lim_{x\\to-\\infty}(-x^4) = -\\infty$."
+    },
+    {
+      "id": "poly-graph-local-min-value-cubic2",
+      "type": "numeric",
+      "prompt": "Find the local minimum value of $f(x) = x^3 - 3x + 1$.",
+      "correctAnswer": "-1",
+      "solution": "Step 1 — Find the critical points. $f'(x)=3x^2-3=3(x-1)(x+1)$, so the critical points are $x=-1$ and $x=1$.\n\nStep 2 — Build the sign chart. For $x<-1$, $f'(x)>0$ (increasing); for $-1<x<1$, $f'(x)<0$ (decreasing); for $x>1$, $f'(x)>0$ (increasing). So $f'$ switches from negative to positive at $x=1$, giving a local minimum there.\n\nStep 3 — Evaluate. $f(1) = 1^3-3(1)+1 = 1-3+1=-1$, so the local minimum value is $-1$."
+    },
+    {
+      "id": "poly-graph-local-max-value-cubic2",
+      "type": "numeric",
+      "prompt": "Find the local maximum value of $f(x) = -x^3 + 3x + 2$.",
+      "correctAnswer": "4",
+      "solution": "Step 1 — Find the critical points. $f'(x) = -3x^2+3 = -3(x-1)(x+1)$, so the critical points are $x=-1$ and $x=1$.\n\nStep 2 — Build the sign chart. For $x<-1$, $f'(x)<0$ (decreasing); for $-1<x<1$, $f'(x)>0$ (increasing); for $x>1$, $f'(x)<0$ (decreasing). So $f'$ switches from positive to negative at $x=1$, giving a local maximum there.\n\nStep 3 — Evaluate. $f(1) = -(1)^3+3(1)+2 = -1+3+2=4$, so the local maximum value is $4$."
+    }
+  ],
+  "lessonId": "graphing",
+  "generatedAt": "2026-07-12T06:11:28.515Z"
+}

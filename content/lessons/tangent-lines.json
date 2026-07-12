@@ -1,0 +1,79 @@
+{
+  "intuition": "Think of a skateboarder gliding along a curved ramp. At the exact instant they pass one specific spot, if you freeze time, the direction they are moving in traces out a straight line that just grazes the ramp at that single point without crossing into it — nowhere else on the ramp does the line touch again. That straight line is the tangent line (접선) to the curve at that point, and its steepness is nothing other than the curve's instantaneous rate of change there.\n\n💡 The tangent line's slope (기울기) equals the derivative (도함수) evaluated at that exact point, so finding a tangent line is really just point-slope form with $m = f'(x_0)$.",
+  "definition": "Given a differentiable function $f(x)$ and a point $x = x_0$ on its domain, the tangent line (접선) to the graph of $f$ at the point $(x_0, f(x_0))$ is the unique straight line through that point whose slope (기울기) equals the derivative $f'(x_0)$. Because we already know one point and one slope, we can write the equation immediately using point-slope form (점-기울기 형태):\n\n$$y - f(x_0) = f'(x_0)(x - x_0)$$\n\n🗣 \"y minus f of x-naught equals f-prime of x-naught, times the quantity x minus x-naught.\"\n\nA closely related line is the normal line (법선) at the same point — the line perpendicular to the tangent line there. Since perpendicular slopes are negative reciprocals of each other, the normal line's slope is\n\n$$m_{\\text{normal}} = -\\dfrac{1}{f'(x_0)}, \\quad f'(x_0) \\neq 0$$\n\n🗣 \"The normal slope equals negative one over f-prime of x-naught.\"",
+  "workedExample": "Find the equation of the tangent line to $f(x) = x^3 - 3x + 2$ at $x_0 = 2$, and also state the slope of the normal line there.\n\nStep 1 — Find the point of tangency by evaluating $f$ at $x_0$.\n\n$$f(2) = 2^3 - 3(2) + 2 = 8 - 6 + 2 = 4$$\n\n🗣 \"f of two equals four.\"\n\nSo the tangent line must pass through the point $(2, 4)$.\n\nStep 2 — Differentiate $f(x)$ to get the slope formula, then plug in $x_0 = 2$.\n\n$$f'(x) = 3x^2 - 3 \\quad\\Rightarrow\\quad f'(2) = 3(4) - 3 = 9$$\n\n🗣 \"f-prime of two equals nine.\"\n\nThis $9$ is the actual slope of the curve — and therefore of the tangent line — at that single point.\n\nStep 3 — Substitute the point $(2,4)$ and slope $m=9$ into point-slope form, then simplify.\n\n$$y - 4 = 9(x - 2)$$\n\n🗣 \"y minus four equals nine times the quantity x minus two.\"\n\n$$y = 9x - 14$$\n\n🗣 \"y equals nine x minus fourteen.\"\n\nStep 4 — For the normal line at the same point, take the negative reciprocal of the tangent slope.\n\n$$m_{\\text{normal}} = -\\dfrac{1}{9}$$\n\n🗣 \"The normal slope is negative one ninth.\"\n\nSo the tangent line is $y = 9x - 14$, and any line through $(2,4)$ with slope $-\\frac{1}{9}$ would be its normal line.",
+  "teachingNote": "A very common mistake is plugging $x_0$ into $f(x)$ and calling that the slope, or plugging $x_0$ into $f'(x)$ and calling that the $y$-coordinate. Remind students that two separate numbers are needed: $f(x_0)$ gives the point's height (used in point-slope form as $y_0$), while $f'(x_0)$ gives the slope. Mixing these up produces a line that looks plausible but passes through the wrong point or has the wrong steepness.",
+  "note": "📌 A tangent line (접선) to $y=f(x)$ at $x=x_0$ is the line through $(x_0, f(x_0))$ with slope $f'(x_0)$, found from $$y - f(x_0) = f'(x_0)(x-x_0)$$\n\n🗣 \"y minus f of x-naught equals f-prime of x-naught times x minus x-naught.\"\n\nThe normal line (법선) at the same point is perpendicular to it, with slope $-\\dfrac{1}{f'(x_0)}$. New terms in this lesson: tangent line (접선), normal line (법선), slope (기울기), derivative (도함수), point-slope form (점-기울기 형태).",
+  "practice": [
+    {
+      "id": "tangent-slope-basic",
+      "type": "multiple_choice",
+      "prompt": "What is the slope of the tangent line to $f(x) = x^2$ at $x = 3$?",
+      "choices": [
+        "$3$",
+        "$6$",
+        "$9$",
+        "$12$"
+      ],
+      "correctAnswer": "$6$",
+      "solution": "The slope of a tangent line equals the derivative at that point.\n\n$$f'(x) = 2x \\quad\\Rightarrow\\quad f'(3) = 2(3) = 6$$\n\n🗣 \"f-prime of three equals six.\"\n\nSo the tangent slope is $6$."
+    },
+    {
+      "id": "tangent-equation-quadratic",
+      "type": "multiple_choice",
+      "prompt": "Find the equation of the tangent line to $f(x) = x^2 - 4x + 5$ at $x = 1$.",
+      "choices": [
+        "$y = -2x + 4$",
+        "$y = 2x - 4$",
+        "$y = -2x + 2$",
+        "$y = 2x + 2$"
+      ],
+      "correctAnswer": "$y = -2x + 4$",
+      "solution": "Step 1 — Find the point of tangency.\n\n$$f(1) = 1 - 4 + 5 = 2$$\n\n🗣 \"f of one equals two.\"\n\nStep 2 — Differentiate and evaluate the slope.\n\n$$f'(x) = 2x - 4 \\quad\\Rightarrow\\quad f'(1) = 2 - 4 = -2$$\n\n🗣 \"f-prime of one equals negative two.\"\n\nStep 3 — Plug $(1,2)$ and $m=-2$ into point-slope form.\n\n$$y - 2 = -2(x - 1) \\quad\\Rightarrow\\quad y = -2x + 4$$\n\n🗣 \"y equals negative two x plus four.\""
+    },
+    {
+      "id": "normal-slope-cubic",
+      "type": "numeric",
+      "prompt": "Find the slope of the normal line to $f(x) = x^3 + 1$ at $x = 1$. Give your answer as a fraction.",
+      "correctAnswer": "-1/3",
+      "solution": "Step 1 — Differentiate and evaluate the tangent slope at $x=1$.\n\n$$f'(x) = 3x^2 \\quad\\Rightarrow\\quad f'(1) = 3$$\n\n🗣 \"f-prime of one equals three.\"\n\nStep 2 — Take the negative reciprocal for the normal line's slope.\n\n$$m_{\\text{normal}} = -\\dfrac{1}{3}$$\n\n🗣 \"The normal slope is negative one third.\""
+    }
+  ],
+  "quiz": [
+    {
+      "id": "tangent-slope-negative-point",
+      "type": "multiple_choice",
+      "prompt": "What is the slope of the tangent line to $f(x) = x^2$ at $x = -2$?",
+      "choices": [
+        "$-4$",
+        "$-2$",
+        "$4$",
+        "$2$"
+      ],
+      "correctAnswer": "$-4$",
+      "solution": "$$f'(x) = 2x \\quad\\Rightarrow\\quad f'(-2) = 2(-2) = -4$$\n\n🗣 \"f-prime of negative two equals negative four.\"\n\nSo the tangent slope is $-4$."
+    },
+    {
+      "id": "tangent-equation-quadratic-2",
+      "type": "multiple_choice",
+      "prompt": "Find the equation of the tangent line to $f(x) = x^2 + 2x - 3$ at $x = 0$.",
+      "choices": [
+        "$y = 2x - 3$",
+        "$y = 2x + 3$",
+        "$y = -2x - 3$",
+        "$y = 2x$"
+      ],
+      "correctAnswer": "$y = 2x - 3$",
+      "solution": "Step 1 — Find the point of tangency.\n\n$$f(0) = 0 + 0 - 3 = -3$$\n\n🗣 \"f of zero equals negative three.\"\n\nStep 2 — Differentiate and evaluate the slope.\n\n$$f'(x) = 2x + 2 \\quad\\Rightarrow\\quad f'(0) = 2$$\n\n🗣 \"f-prime of zero equals two.\"\n\nStep 3 — Plug $(0,-3)$ and $m=2$ into point-slope form.\n\n$$y - (-3) = 2(x - 0) \\quad\\Rightarrow\\quad y = 2x - 3$$\n\n🗣 \"y equals two x minus three.\""
+    },
+    {
+      "id": "normal-slope-cubic-2",
+      "type": "numeric",
+      "prompt": "Find the slope of the normal line to $f(x) = x^3 - 2x$ at $x = 1$.",
+      "correctAnswer": "-1",
+      "solution": "Step 1 — Differentiate and evaluate the tangent slope at $x=1$.\n\n$$f'(x) = 3x^2 - 2 \\quad\\Rightarrow\\quad f'(1) = 3 - 2 = 1$$\n\n🗣 \"f-prime of one equals one.\"\n\nStep 2 — Take the negative reciprocal.\n\n$$m_{\\text{normal}} = -\\dfrac{1}{1} = -1$$\n\n🗣 \"The normal slope is negative one.\""
+    }
+  ],
+  "lessonId": "tangent-lines",
+  "generatedAt": "2026-07-12T06:08:02.197Z"
+}

@@ -1,0 +1,67 @@
+{
+  "intuition": "Imagine you drive from Seoul to Busan, 400 km, and the whole trip takes 4 hours. Your speedometer needle jumps around the whole time — sometimes 100 km/h, sometimes 0 km/h at a rest stop — but your average speed for the whole trip is just total distance divided by total time: 100 km/h. That single number doesn't tell you what the speedometer showed at any particular moment; it only captures the overall trend across the whole interval. This is exactly the idea behind rate of change (변화율) in math: no matter how a function wiggles up and down, its average behavior over an interval is just how much the output changed divided by how much the input changed.\n\n💡 The average rate of change (평균변화율) is the slope (기울기) of the secant line (할선) connecting two points on a curve — it describes the overall trend across an interval, not the behavior at any single instant.",
+  "definition": "For a function $f$ defined on the closed interval $[a,b]$, the average rate of change of $f$ over $[a,b]$ is defined as the change in output divided by the change in input:\n\n$$\\frac{f(b)-f(a)}{b-a}$$\n\n🗣 \"The average rate of change equals f of b minus f of a, all over b minus a.\"\n\nGeometrically, this quotient is exactly the slope of the secant line — the straight line connecting the two points $(a, f(a))$ and $(b, f(b))$ on the graph of $f$. As the interval $[a,b]$ shrinks — that is, as $b$ slides closer and closer to $a$ — the secant line rotates and starts to hug the curve more tightly at that single point. This is the intuition that later leads to the instantaneous rate of change (순간변화율), the rate of change at one exact point rather than across an interval, though we won't write that idea using limit notation yet.",
+  "workedExample": "A ball is dropped from a height, and its height above the ground is modeled by $h(t) = 45 - 5t^2$ (in meters), where $t$ is time in seconds. Find the average rate of change of height over the interval $[1,2]$, and interpret what the result means physically.\n\nStep 1 — Find $h(1)$ and $h(2)$, the heights at the start and end of the interval.\n\n$$h(1) = 45 - 5(1)^2 = 40, \\qquad h(2) = 45 - 5(2)^2 = 25$$\n\n🗣 \"h of one equals forty, and h of two equals twenty-five.\"\n\nStep 2 — Plug these values into the average rate of change formula.\n\n$$\\frac{h(2)-h(1)}{2-1} = \\frac{25-40}{1} = -15$$\n\n🗣 \"The average rate of change equals twenty-five minus forty, over one, which is negative fifteen.\"\n\nStep 3 — Interpret the result. The units are meters per second, so the ball's height dropped by an average of $15$ meters every second during this one-second interval — its average velocity was $-15$ m/s (negative because height is decreasing). If we shrank the interval to, say, $[1, 1.1]$, this average would land closer to the ball's actual falling speed at the instant $t=1$, which is the idea that eventually leads toward instantaneous rate of change.",
+  "teachingNote": "Students often assume that the average rate of change equals the function's actual rate of change at some specific point inside the interval, or that it must match what a 'speedometer' would show partway through. Remind students that the secant slope only measures net change divided by net time — it is a single average number for the whole interval, and the function could have sped up, slowed down, or even reversed direction in between while still producing that same average. Only by shrinking the interval toward a single point does this average start approaching the instantaneous rate at that point — but shrinking alone does not make them equal until a limit is actually taken.",
+  "note": "📌 Note: The average rate of change of $f$ over $[a,b]$ is $\\frac{f(b)-f(a)}{b-a}$, the slope of the secant line through $(a,f(a))$ and $(b,f(b))$.\n\n🗣 \"The average rate of change equals f of b minus f of a, over b minus a.\"\n\nKey terms introduced: rate of change (변화율), average rate of change (평균변화율), slope (기울기), secant line (할선), and instantaneous rate of change (순간변화율).",
+  "practice": [
+    {
+      "id": "avg-rate-linear-basic",
+      "type": "numeric",
+      "prompt": "For $f(x) = 2x+3$, find the average rate of change of $f$ over the interval $[1,4]$.",
+      "correctAnswer": "2",
+      "solution": "Step 1 — Find $f(1)$ and $f(4)$.\n\n$$f(1) = 2(1)+3 = 5, \\qquad f(4) = 2(4)+3 = 11$$\n\n🗣 \"f of one equals five, and f of four equals eleven.\"\n\nStep 2 — Apply the average rate of change formula.\n\n$$\\frac{f(4)-f(1)}{4-1} = \\frac{11-5}{3} = 2$$\n\n🗣 \"The average rate of change equals eleven minus five, over three, which is two.\"\n\nSince $f$ is a straight line, the average rate of change over any interval always equals the slope of the line itself, $2$."
+    },
+    {
+      "id": "avg-rate-quadratic-25",
+      "type": "numeric",
+      "prompt": "For $f(x) = x^2 - 1$, find the average rate of change of $f$ over the interval $[2,5]$.",
+      "correctAnswer": "7",
+      "solution": "Step 1 — Find $f(2)$ and $f(5)$.\n\n$$f(2) = 2^2-1 = 3, \\qquad f(5) = 5^2-1 = 24$$\n\n🗣 \"f of two equals three, and f of five equals twenty-four.\"\n\nStep 2 — Apply the average rate of change formula.\n\n$$\\frac{f(5)-f(2)}{5-2} = \\frac{24-3}{3} = 7$$\n\n🗣 \"The average rate of change equals twenty-four minus three, over three, which is seven.\""
+    },
+    {
+      "id": "avg-rate-ball-toss",
+      "type": "multiple_choice",
+      "prompt": "A tossed ball's height is modeled by $h(t) = -5t^2 + 20t$ (in meters), $t$ in seconds. What is the average rate of change of height over $[1,3]$?",
+      "choices": [
+        "0 m/s",
+        "5 m/s",
+        "-5 m/s",
+        "10 m/s"
+      ],
+      "correctAnswer": "0 m/s",
+      "solution": "Step 1 — Find $h(1)$ and $h(3)$.\n\n$$h(1) = -5(1)^2+20(1) = 15, \\qquad h(3) = -5(3)^2+20(3) = 15$$\n\n🗣 \"h of one equals fifteen, and h of three equals fifteen.\"\n\nStep 2 — Apply the average rate of change formula.\n\n$$\\frac{h(3)-h(1)}{3-1} = \\frac{15-15}{2} = 0$$\n\n🗣 \"The average rate of change equals fifteen minus fifteen, over two, which is zero.\"\n\nEven though the ball went up and came back down in between, its average rate of change over this interval is $0$ m/s — the two heights happen to match, so the secant line is horizontal."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "quiz-avg-rate-linear",
+      "type": "numeric",
+      "prompt": "For $f(x) = 3x-5$, find the average rate of change of $f$ over the interval $[0,2]$.",
+      "correctAnswer": "3",
+      "solution": "Step 1 — Find $f(0)$ and $f(2)$.\n\n$$f(0) = 3(0)-5 = -5, \\qquad f(2) = 3(2)-5 = 1$$\n\n🗣 \"f of zero equals negative five, and f of two equals one.\"\n\nStep 2 — Apply the average rate of change formula.\n\n$$\\frac{f(2)-f(0)}{2-0} = \\frac{1-(-5)}{2} = 3$$\n\n🗣 \"The average rate of change equals one minus negative five, over two, which is three.\""
+    },
+    {
+      "id": "quiz-avg-rate-quadratic",
+      "type": "numeric",
+      "prompt": "For $f(x) = x^2 + 2x$, find the average rate of change of $f$ over the interval $[1,4]$.",
+      "correctAnswer": "7",
+      "solution": "Step 1 — Find $f(1)$ and $f(4)$.\n\n$$f(1) = 1^2+2(1) = 3, \\qquad f(4) = 4^2+2(4) = 24$$\n\n🗣 \"f of one equals three, and f of four equals twenty-four.\"\n\nStep 2 — Apply the average rate of change formula.\n\n$$\\frac{f(4)-f(1)}{4-1} = \\frac{24-3}{3} = 7$$\n\n🗣 \"The average rate of change equals twenty-four minus three, over three, which is seven.\""
+    },
+    {
+      "id": "quiz-avg-speed-car",
+      "type": "multiple_choice",
+      "prompt": "A car's position along a road is modeled by $s(t) = t^2 + 3t$ (in kilometers), $t$ in hours. What is the car's average speed over the interval $[2,5]$?",
+      "choices": [
+        "5 km/h",
+        "10 km/h",
+        "15 km/h",
+        "20 km/h"
+      ],
+      "correctAnswer": "10 km/h",
+      "solution": "Step 1 — Find $s(2)$ and $s(5)$.\n\n$$s(2) = 2^2+3(2) = 10, \\qquad s(5) = 5^2+3(5) = 40$$\n\n🗣 \"s of two equals ten, and s of five equals forty.\"\n\nStep 2 — Apply the average rate of change formula.\n\n$$\\frac{s(5)-s(2)}{5-2} = \\frac{40-10}{3} = 10$$\n\n🗣 \"The average rate of change equals forty minus ten, over three, which is ten.\"\n\nSince position is in kilometers and time is in hours, this average rate of change represents an average speed of $10$ km/h."
+    }
+  ],
+  "lessonId": "rate-of-change",
+  "generatedAt": "2026-07-12T06:02:45.554Z"
+}

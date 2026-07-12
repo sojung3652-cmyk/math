@@ -1,0 +1,73 @@
+{
+  "intuition": "Imagine you're paid by the area under a speed-time graph — the faster and the longer you drove, the more distance (area) you rack up. A definite integral (정적분) is exactly this idea: it adds up infinitely many thin vertical strips under a curve to get the total signed area between the curve and the x-axis over an interval $[a,b]$. If the curve dips below the x-axis, that strip counts as negative area, so the integral can come out negative even though nothing is physically missing — the region is just below the axis.\n\n💡 A definite integral is the signed area between the curve and the x-axis, built by stacking infinitely many thin rectangles from $a$ to $b$.",
+  "definition": "The definite integral of a function $f$ from $x=a$ to $x=b$ is defined as the limit (극한) of a Riemann sum (리만 합): split $[a,b]$ into $n$ equal pieces of width $\\Delta x=\\frac{b-a}{n}$, pick a sample point $x_i^*$ in each piece, and let $n\\to\\infty$.\n\n$$\\int_a^b f(x)\\,dx = \\lim_{n\\to\\infty} \\sum_{i=1}^n f(x_i^*)\\,\\Delta x$$\n\n🗣 \"The definite integral from a to b of f of x, d x, equals the limit as n approaches infinity of the sum of f of x-star-i times delta x.\"\n\nHere $a$ is the lower bound (하한) and $b$ is the upper bound (상한); $f(x)$ is called the integrand (피적분함수). Geometrically, each term $f(x_i^*)\\Delta x$ is the signed area of one thin rectangle, and the sum's limit is the total signed area (부호 있는 넓이): positive where the curve is above the x-axis, negative where it dips below.\n\nTwo basic properties follow directly from this area picture. Reversing the bounds flips the sign, since walking the interval backward reverses every $\\Delta x$:\n\n$$\\int_b^a f(x)\\,dx = -\\int_a^b f(x)\\,dx$$\n\n🗣 \"The integral from b to a of f of x d x equals negative the integral from a to b of f of x d x.\"\n\nAdditivity (덧셈성) over adjacent intervals says the area over $[a,c]$ splits into the area over $[a,b]$ plus the area over $[b,c]$, for any point $b$ between $a$ and $c$:\n\n$$\\int_a^b f(x)\\,dx + \\int_b^c f(x)\\,dx = \\int_a^c f(x)\\,dx$$\n\n🗣 \"The integral from a to b of f of x d x, plus the integral from b to c of f of x d x, equals the integral from a to c of f of x d x.\"\n\nAlso note that $\\int_a^a f(x)\\,dx = 0$, since an interval of zero width has zero area.",
+  "workedExample": "Let $f(x) = x+1$ on the interval $[0,3]$. We'll compute $\\int_0^3 (x+1)\\,dx$ using the area picture, then check the additivity and reversed-bounds properties.\n\nStep 1 — Since $f$ is a straight line, the region under it from $x=0$ to $x=3$ is a trapezoid with parallel sides $f(0)=1$ and $f(3)=4$, and width $3$. Its area is\n\n$$\\int_0^3 (x+1)\\,dx = \\frac{f(0)+f(3)}{2}\\cdot 3 = \\frac{1+4}{2}\\cdot 3 = 7.5$$\n\n🗣 \"The integral from zero to three of x plus one d x equals seven point five.\"\n\nStep 2 — Now split $[0,3]$ at $x=1$ and compute each piece separately. On $[0,1]$: heights $f(0)=1$, $f(1)=2$, width $1$, so the area is $\\frac{1+2}{2}\\cdot 1 = 1.5$. On $[1,3]$: heights $f(1)=2$, $f(3)=4$, width $2$, so the area is $\\frac{2+4}{2}\\cdot 2 = 6$. Adding these gives $1.5+6=7.5$, matching Step 1 exactly — this confirms additivity:\n\n$$\\int_0^1 (x+1)\\,dx + \\int_1^3 (x+1)\\,dx = \\int_0^3 (x+1)\\,dx$$\n\n🗣 \"The integral from zero to one, plus the integral from one to three, equals the integral from zero to three.\"\n\nStep 3 — Finally, reverse the bounds. Walking from $x=3$ back to $x=0$ just flips the sign of every strip's contribution, so\n\n$$\\int_3^0 (x+1)\\,dx = -7.5$$\n\n🗣 \"The integral from three to zero of x plus one d x equals negative seven point five.\"\n\nNotice we never needed an antiderivative here — everything came from reading signed area directly off the graph.",
+  "teachingNote": "Many students assume a definite integral always returns a positive geometric area, so they get confused when $\\int_a^b f(x)\\,dx$ comes out negative or when swapping the bounds flips its sign. Emphasize that the integral is a signed area — area above the axis counts positive, area below counts negative — and that the direction of travel from $a$ to $b$ is baked into the definition, so reversing it is a bookkeeping rule, not a claim that the region itself shrank or grew. If a student wants an actual, always-positive area, they must integrate $|f(x)|$ or split at the roots of $f$ first, but that technique belongs to a later lesson.",
+  "note": "📌 Note: The definite integral (정적분) $\\int_a^b f(x)\\,dx$ is the signed area (부호 있는 넓이) between $f$ and the x-axis over $[a,b]$, defined as the limit of a Riemann sum (리만 합): $\\int_a^b f(x)\\,dx = \\lim_{n\\to\\infty}\\sum_{i=1}^n f(x_i^*)\\Delta x$.\n\n🗣 \"The definite integral from a to b of f of x d x is the limit of the sum of f of x-star-i times delta x.\"\n\nKey properties: $\\int_b^a f(x)\\,dx = -\\int_a^b f(x)\\,dx$ (reversing the bounds negates it) and $\\int_a^b f(x)\\,dx+\\int_b^c f(x)\\,dx=\\int_a^c f(x)\\,dx$ (additivity over adjacent intervals, 덧셈성), with $\\int_a^a f(x)\\,dx=0$. New terms introduced: definite integral (정적분), integrand (피적분함수), lower bound / upper bound (하한/상한), Riemann sum (리만 합), signed area (부호 있는 넓이), and additivity (덧셈성).",
+  "practice": [
+    {
+      "id": "constant-rectangle-area",
+      "type": "multiple_choice",
+      "prompt": "A function is constant, $f(x)=3$, on $[2,5]$. What is $\\int_2^5 3\\,dx$?",
+      "choices": [
+        "3",
+        "6",
+        "9",
+        "15"
+      ],
+      "correctAnswer": "9",
+      "solution": "Since $f(x)=3$ is constant, the region under it from $x=2$ to $x=5$ is a rectangle of height $3$ and width $5-2=3$. Its area is $3\\times 3 = 9$, so $\\int_2^5 3\\,dx = 9$."
+    },
+    {
+      "id": "triangle-area-line",
+      "type": "numeric",
+      "prompt": "Compute $\\int_0^4 x\\,dx$ by finding the area under $f(x)=x$ from $x=0$ to $x=4$.",
+      "correctAnswer": "8",
+      "solution": "The graph of $f(x)=x$ from $0$ to $4$ is a right triangle with base $4$ and height $f(4)=4$. Its area is $\\frac{1}{2}\\cdot 4\\cdot 4 = 8$, so $\\int_0^4 x\\,dx = 8$."
+    },
+    {
+      "id": "reverse-bounds-property",
+      "type": "multiple_choice",
+      "prompt": "If $\\int_1^5 f(x)\\,dx = 12$, what is $\\int_5^1 f(x)\\,dx$?",
+      "choices": [
+        "12",
+        "-12",
+        "0",
+        "1/12"
+      ],
+      "correctAnswer": "-12",
+      "solution": "Reversing the bounds negates the integral: $\\int_5^1 f(x)\\,dx = -\\int_1^5 f(x)\\,dx = -12$."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "constant-rectangle-symmetric",
+      "type": "numeric",
+      "prompt": "Compute $\\int_{-2}^{2} 4\\,dx$.",
+      "correctAnswer": "16",
+      "solution": "$f(x)=4$ is constant, so the region is a rectangle of height $4$ and width $2-(-2)=4$. Its area is $4\\times 4 = 16$, so $\\int_{-2}^{2} 4\\,dx = 16$."
+    },
+    {
+      "id": "additivity-adjacent-intervals",
+      "type": "multiple_choice",
+      "prompt": "If $\\int_0^3 f(x)\\,dx = 5$ and $\\int_3^7 f(x)\\,dx = 9$, what is $\\int_0^7 f(x)\\,dx$?",
+      "choices": [
+        "4",
+        "-4",
+        "14",
+        "45"
+      ],
+      "correctAnswer": "14",
+      "solution": "By additivity over adjacent intervals, $\\int_0^7 f(x)\\,dx = \\int_0^3 f(x)\\,dx + \\int_3^7 f(x)\\,dx = 5+9=14$."
+    },
+    {
+      "id": "trapezoid-area-line",
+      "type": "numeric",
+      "prompt": "Compute $\\int_1^4 2x\\,dx$ by finding the area under $f(x)=2x$ from $x=1$ to $x=4$.",
+      "correctAnswer": "15",
+      "solution": "Step 1 — The graph of $f(x)=2x$ is a straight line, so the region under it from $x=1$ to $x=4$ is a trapezoid with parallel sides $f(1)=2$ and $f(4)=8$, and width $4-1=3$.\n\nStep 2 — Its area is $\\frac{f(1)+f(4)}{2}\\cdot 3 = \\frac{2+8}{2}\\cdot 3 = 15$, so $\\int_1^4 2x\\,dx = 15$."
+    }
+  ],
+  "lessonId": "definite-integrals",
+  "generatedAt": "2026-07-12T06:20:41.966Z"
+}

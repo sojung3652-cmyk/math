@@ -1,0 +1,73 @@
+{
+  "intuition": "Imagine your car's odometer (주행거리계) at the start and end of a road trip. You don't need to record every mile along the way — the total distance traveled is just the ending reading minus the starting reading. The Fundamental Theorem of Calculus (미적분의 기본정리) does the same job for area: instead of slicing a region into infinitely many thin rectangles and adding them all up, you can find any antiderivative (부정적분) $F$ of the function, then simply subtract its value at the start from its value at the end.\n\n💡 To compute a definite integral (정적분), find any antiderivative $F$ of $f$, then compute $F(b)$ minus $F(a)$ — no summing of rectangles required.",
+  "definition": "Let $f$ be continuous (연속) on the closed interval $[a,b]$, and let $F$ be any antiderivative of $f$, meaning $F'(x)=f(x)$ for every $x$ in that interval. The Fundamental Theorem of Calculus (미적분의 기본정리) states that the definite integral of $f$ from $a$ to $b$ equals the total change in $F$ over that interval:\n\n$$\\int_a^b f(x)\\,dx = F(b) - F(a)$$\n\n🗣 \"The integral from a to b of f of x dx equals F of b minus F of a.\"\n\nThis difference is often written using the bracket notation $\\big[F(x)\\big]_a^b$, read as 'F of x, evaluated from a to b.' Because any two antiderivatives of $f$ differ only by a constant $C$, and that constant cancels when you subtract $F(a)$ from $F(b)$, it doesn't matter which particular antiderivative you pick — the result is always the same.",
+  "workedExample": "Evaluate $\\int_1^3 (3x^2 - 4x + 5)\\,dx$ using the Fundamental Theorem of Calculus.\n\nStep 1 — Find an antiderivative $F(x)$ of the integrand $f(x) = 3x^2 - 4x + 5$. Applying the power rule for antiderivatives term by term gives $F(x) = x^3 - 2x^2 + 5x$ (the $+C$ can be dropped since it will cancel in the next step).\n\nStep 2 — Evaluate $F$ at the upper bound $b=3$ and the lower bound $a=1$.\n\n$$F(3) = 3^3 - 2(3)^2 + 5(3) = 27 - 18 + 15 = 24$$\n\n🗣 \"F of three equals twenty-seven minus eighteen plus fifteen, which is twenty-four.\"\n\n$$F(1) = 1^3 - 2(1)^2 + 5(1) = 1 - 2 + 5 = 4$$\n\n🗣 \"F of one equals one minus two plus five, which is four.\"\n\nStep 3 — Subtract $F(1)$ from $F(3)$: $F(3) - F(1) = 24 - 4 = 20$. So,\n\n$$\\int_1^3 (3x^2 - 4x + 5)\\,dx = 20$$\n\n🗣 \"The integral from one to three of three x squared minus four x plus five dx equals twenty.\"\n\nThis value, 20, is exactly the net signed area between the curve and the x-axis on $[1,3]$ — the theorem let us find it instantly, without ever slicing the region into rectangles.",
+  "teachingNote": "A common misconception is thinking you must find 'the' antiderivative and worry about which constant $C$ to use. In fact any antiderivative works, because when you compute $F(b)-F(a)$ the constants always cancel — so for definite integrals it's safe (and standard) to simply set $C=0$. A second frequent slip is subtracting in the wrong order, computing $F(a)-F(b)$ instead of $F(b)-F(a)$; always plug in the upper bound first and the lower bound second.",
+  "note": "📌 Note: The Fundamental Theorem of Calculus (미적분의 기본정리) says that if $F$ is an antiderivative (부정적분) of a continuous function $f$, then the definite integral (정적분) of $f$ from $a$ to $b$ equals $F(b)-F(a)$:\n\n$$\\int_a^b f(x)\\,dx = F(b) - F(a) = \\big[F(x)\\big]_a^b$$\n\n🗣 \"The integral from a to b of f of x dx equals F of b minus F of a.\"\n\nKey term pairs introduced here include Fundamental Theorem of Calculus (미적분의 기본정리), antiderivative (부정적분), definite integral (정적분), evaluate (계산하다), and the upper and lower bounds of integration (적분의 상한과 하한).",
+  "practice": [
+    {
+      "id": "ftc-basic-power",
+      "type": "multiple_choice",
+      "prompt": "Evaluate $\\int_0^2 x^2\\,dx$ using the Fundamental Theorem of Calculus.",
+      "choices": [
+        "$\\frac{8}{3}$",
+        "$4$",
+        "$2$",
+        "$8$"
+      ],
+      "correctAnswer": "$\\frac{8}{3}$",
+      "solution": "Step 1 — Find an antiderivative $F(x)$ of $f(x)=x^2$. Using the power rule, $F(x) = \\frac{x^3}{3}$.\n\nStep 2 — Evaluate $F(2) - F(0)$.\n\n$$F(2) = \\frac{2^3}{3} = \\frac{8}{3}, \\qquad F(0) = \\frac{0^3}{3} = 0$$\n\n🗣 \"F of two equals eight thirds, and F of zero equals zero.\"\n\nSo $\\int_0^2 x^2\\,dx = \\frac{8}{3} - 0 = \\frac{8}{3}$."
+    },
+    {
+      "id": "ftc-linear-integral",
+      "type": "numeric",
+      "prompt": "Evaluate $\\int_1^2 (4x - 1)\\,dx$ using the Fundamental Theorem of Calculus. Give your answer as an integer.",
+      "correctAnswer": "5",
+      "solution": "Step 1 — Find an antiderivative $F(x)$ of $f(x)=4x-1$: $F(x) = 2x^2 - x$.\n\nStep 2 — Evaluate at the bounds.\n\n$$F(2) = 2(2)^2 - 2 = 8 - 2 = 6, \\qquad F(1) = 2(1)^2 - 1 = 2 - 1 = 1$$\n\n🗣 \"F of two equals six, and F of one equals one.\"\n\nStep 3 — Subtract: $\\int_1^2 (4x-1)\\,dx = F(2) - F(1) = 6 - 1 = 5$."
+    },
+    {
+      "id": "ftc-quadratic-negative-bound",
+      "type": "multiple_choice",
+      "prompt": "Evaluate $\\int_{-1}^{2} (3x^2 - 2x + 4)\\,dx$ using the Fundamental Theorem of Calculus.",
+      "choices": [
+        "$18$",
+        "$6$",
+        "$24$",
+        "$12$"
+      ],
+      "correctAnswer": "$18$",
+      "solution": "Step 1 — Find an antiderivative $F(x)$ of $f(x) = 3x^2 - 2x + 4$: $F(x) = x^3 - x^2 + 4x$.\n\nStep 2 — Evaluate at the bounds.\n\n$$F(2) = 2^3 - 2^2 + 4(2) = 8 - 4 + 8 = 12$$\n\n🗣 \"F of two equals eight minus four plus eight, which is twelve.\"\n\n$$F(-1) = (-1)^3 - (-1)^2 + 4(-1) = -1 - 1 - 4 = -6$$\n\n🗣 \"F of negative one equals negative one minus one minus four, which is negative six.\"\n\nStep 3 — Subtract: $\\int_{-1}^{2} (3x^2 - 2x + 4)\\,dx = F(2) - F(-1) = 12 - (-6) = 18$."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "ftc-quiz-linear-x",
+      "type": "numeric",
+      "prompt": "Evaluate $\\int_0^3 x\\,dx$ using the Fundamental Theorem of Calculus. Give your answer as a fraction in lowest terms.",
+      "correctAnswer": "9/2",
+      "solution": "Step 1 — Find an antiderivative $F(x)$ of $f(x) = x$: $F(x) = \\frac{x^2}{2}$.\n\nStep 2 — Evaluate at the bounds.\n\n$$F(3) = \\frac{3^2}{2} = \\frac{9}{2}, \\qquad F(0) = \\frac{0^2}{2} = 0$$\n\n🗣 \"F of three equals nine halves, and F of zero equals zero.\"\n\nSo $\\int_0^3 x\\,dx = \\frac{9}{2} - 0 = \\frac{9}{2}$."
+    },
+    {
+      "id": "ftc-quiz-cubic-antiderivative",
+      "type": "multiple_choice",
+      "prompt": "Evaluate $\\int_1^4 (3x^2 - 6x + 2)\\,dx$ using the Fundamental Theorem of Calculus.",
+      "choices": [
+        "$24$",
+        "$20$",
+        "$16$",
+        "$28$"
+      ],
+      "correctAnswer": "$24$",
+      "solution": "Step 1 — Find an antiderivative $F(x)$ of $f(x) = 3x^2 - 6x + 2$: $F(x) = x^3 - 3x^2 + 2x$.\n\nStep 2 — Evaluate at the bounds.\n\n$$F(4) = 4^3 - 3(4)^2 + 2(4) = 64 - 48 + 8 = 24$$\n\n🗣 \"F of four equals sixty-four minus forty-eight plus eight, which is twenty-four.\"\n\n$$F(1) = 1^3 - 3(1)^2 + 2(1) = 1 - 3 + 2 = 0$$\n\n🗣 \"F of one equals one minus three plus two, which is zero.\"\n\nStep 3 — Subtract: $\\int_1^4 (3x^2 - 6x + 2)\\,dx = F(4) - F(1) = 24 - 0 = 24$."
+    },
+    {
+      "id": "ftc-quiz-mixed-terms",
+      "type": "numeric",
+      "prompt": "Evaluate $\\int_0^2 (x^2 + 3x - 1)\\,dx$ using the Fundamental Theorem of Calculus. Give your answer as a fraction in lowest terms.",
+      "correctAnswer": "20/3",
+      "solution": "Step 1 — Find an antiderivative $F(x)$ of $f(x) = x^2 + 3x - 1$: $F(x) = \\frac{x^3}{3} + \\frac{3x^2}{2} - x$.\n\nStep 2 — Evaluate at the bounds.\n\n$$F(2) = \\frac{2^3}{3} + \\frac{3(2)^2}{2} - 2 = \\frac{8}{3} + 6 - 2 = \\frac{8}{3} + 4 = \\frac{20}{3}$$\n\n🗣 \"F of two equals eight thirds plus four, which is twenty thirds.\"\n\n$$F(0) = 0 + 0 - 0 = 0$$\n\n🗣 \"F of zero equals zero.\"\n\nStep 3 — Subtract: $\\int_0^2 (x^2+3x-1)\\,dx = F(2) - F(0) = \\frac{20}{3} - 0 = \\frac{20}{3}$."
+    }
+  ],
+  "lessonId": "fundamental-theorem-of-calculus",
+  "generatedAt": "2026-07-12T06:21:44.666Z"
+}

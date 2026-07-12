@@ -1,0 +1,73 @@
+{
+  "intuition": "Think of a car's trip computer: the speedometer only shows your speed (속도) at each instant, but the odometer needs to accumulate all of that speed information over time to tell you how far you've traveled. Differentiation (미분) moves you from position to velocity to acceleration; integration (적분) runs that whole process backward, rebuilding velocity from acceleration and position from velocity — you just need one extra piece of information, an initial condition (초기조건), to pin down the exact starting value.\n\n💡 Integrating velocity gives displacement (a signed number), but integrating the absolute value of velocity gives the total distance traveled — and the two numbers can be very different.",
+  "definition": "If the acceleration $a(t)$ is known, then velocity $v(t)$ is an antiderivative (역도함수) of $a(t)$, since $v'(t) = a(t)$:\n\n$$v(t) = \\int a(t)\\, dt + C$$\n\n🗣 \"v of t equals the integral of a of t, dt, plus C.\"\n\nYou solve for the constant $C$ using an initial condition (초기조건) such as $v(t_0) = v_0$. In the same way, if $v(t)$ is known, then position $s(t)$ satisfies $s'(t) = v(t)$:\n\n$$s(t) = \\int v(t)\\, dt + C$$\n\n🗣 \"s of t equals the integral of v of t, dt, plus C.\"\n\nOver an interval $[a,b]$, the displacement (변위) is the plain, signed definite integral (정적분):\n\n$$\\text{Displacement} = \\int_a^b v(t)\\, dt = s(b) - s(a)$$\n\n🗣 \"Displacement equals the integral from a to b of v of t dt, which equals s of b minus s of a.\"\n\nBut the total distance traveled (이동 거리) — the actual length of the path, counting backward motion as positive length too — is the integral of the absolute value of $v(t)$:\n\n$$\\text{Total distance} = \\int_a^b |v(t)|\\, dt$$\n\n🗣 \"Total distance equals the integral from a to b of the absolute value of v of t, dt.\"\n\nWhenever $v(t)$ changes sign (부호) inside $[a,b]$ — meaning the particle reverses direction (방향을 바꾸다) — you must split the integral at those zeros and add the absolute values of each piece to get the correct total distance.",
+  "workedExample": "**Problem.** A particle moves along a line with acceleration $a(t) = 2t - 4$ (m/s$^2$). At $t=0$ its velocity is $v(0) = 3$ m/s and its position is $s(0) = 0$ m. Find (a) $v(t)$, (b) $s(t)$, (c) the displacement, and (d) the total distance traveled, over $[0,3]$.\n\nStep 1 — Integrate $a(t)$ to recover $v(t)$.\n\n$$v(t) = \\int (2t - 4)\\, dt = t^2 - 4t + C$$\n\n🗣 \"v of t equals t squared minus four t plus C.\"\n\nUsing $v(0) = 3$: $0 - 0 + C = 3$, so $C = 3$. Thus $v(t) = t^2 - 4t + 3 = (t-1)(t-3)$.\n\nStep 2 — Integrate $v(t)$ to recover $s(t)$.\n\n$$s(t) = \\int (t^2 - 4t + 3)\\, dt = \\frac{t^3}{3} - 2t^2 + 3t + C$$\n\n🗣 \"s of t equals t cubed over three minus two t squared plus three t plus C.\"\n\nUsing $s(0) = 0$ gives $C = 0$, so $s(t) = \\dfrac{t^3}{3} - 2t^2 + 3t$.\n\nStep 3 — Find where $v(t)$ changes sign inside $[0,3]$, because a sign change means the particle reversed direction.\n\nSetting $(t-1)(t-3) = 0$ gives $t = 1$ and $t = 3$. On $[0,3]$, $v(t) > 0$ on $[0,1)$ and $v(t) < 0$ on $(1,3)$, so $t=1$ is the interior point where direction reverses.\n\nStep 4 — Compute the displacement as the plain signed integral.\n\nDisplacement $= s(3) - s(0) = \\left(\\dfrac{27}{3} - 18 + 9\\right) - 0 = 0$ m — the particle ends up exactly back at its starting point.\n\nStep 5 — Compute the total distance by splitting at $t=1$ and adding the absolute value of each piece.\n\n$\\int_0^1 v(t)\\,dt = s(1) - s(0) = \\dfrac{4}{3}$, and $\\int_1^3 v(t)\\,dt = s(3) - s(1) = -\\dfrac{4}{3}$, so its absolute value is $\\dfrac{4}{3}$. Total distance $= \\dfrac{4}{3} + \\dfrac{4}{3} = \\dfrac{8}{3}$ m $\\approx 2.67$ m.\n\nSo even though the net displacement is $0$, the particle actually traveled $\\dfrac{8}{3}$ m — this is exactly why displacement and total distance are different questions.",
+  "teachingNote": "A very common mistake is computing $\\int_a^b v(t)\\, dt$ and calling the result 'total distance.' That integral only gives displacement (the net, signed change in position); if the velocity crosses zero inside the interval, positive and negative pieces cancel out, sometimes hiding a large amount of actual back-and-forth motion. Always check first whether $v(t) = 0$ for some $t$ inside $(a,b)$; if it does, split the integral at that point, take the absolute value of each piece, and add — only then do you have the true total distance traveled.",
+  "note": "📌 Note: Integration reverses differentiation in motion problems — $v(t) = \\int a(t)\\,dt + C$ recovers velocity from acceleration, and $s(t) = \\int v(t)\\,dt + C$ recovers position from velocity, with each constant $C$ fixed by an initial condition (초기조건); over $[a,b]$, displacement (변위) is $\\int_a^b v(t)\\,dt = s(b)-s(a)$ while total distance (이동 거리) is $\\int_a^b |v(t)|\\,dt$, and the two disagree whenever $v(t)$ changes sign (부호) inside the interval.\n\n🗣 \"Total distance equals the integral from a to b of the absolute value of v of t, dt.\"\n\nKey terms from this lesson: antiderivative (역도함수), initial condition (초기조건), definite integral (정적분), displacement (변위), total distance / distance traveled (이동 거리), and reverse direction (방향을 바꾸다).",
+  "practice": [
+    {
+      "id": "velocity-from-acceleration-basic",
+      "type": "multiple_choice",
+      "prompt": "A particle has acceleration $a(t) = 4t$ (m/s$^2$) and initial velocity $v(0) = 2$ m/s. Find $v(2)$.",
+      "choices": [
+        "10",
+        "8",
+        "6",
+        "18"
+      ],
+      "correctAnswer": "10",
+      "solution": "Step 1 — Integrate $a(t)=4t$ to find $v(t)$: $v(t) = \\int 4t\\,dt = 2t^2 + C$. Using $v(0)=2$ gives $C=2$, so $v(t) = 2t^2+2$.\n\nStep 2 — Evaluate at $t=2$: $v(2) = 2(2)^2+2 = 8+2 = 10$ m/s."
+    },
+    {
+      "id": "position-from-velocity-basic",
+      "type": "numeric",
+      "prompt": "A particle moves with velocity $v(t) = 3t^2 - 6t$ (m/s) and starts at position $s(0) = 1$ m. Find $s(2)$ (in meters).",
+      "correctAnswer": "-3",
+      "solution": "Step 1 — Integrate $v(t) = 3t^2-6t$ to find $s(t)$: $s(t) = \\int (3t^2-6t)\\,dt = t^3-3t^2+C$. Using $s(0)=1$ gives $C=1$, so $s(t) = t^3-3t^2+1$.\n\nStep 2 — Evaluate at $t=2$: $s(2) = 8-12+1 = -3$ m."
+    },
+    {
+      "id": "displacement-vs-distance-linear",
+      "type": "numeric",
+      "prompt": "A particle's velocity is $v(t) = t - 2$ (m/s) on the interval $[0,4]$. Find the total distance traveled (not the displacement) over this interval, in meters.",
+      "correctAnswer": "4",
+      "solution": "Step 1 — Find where $v(t)=t-2$ changes sign on $[0,4]$: $v(t)=0$ at $t=2$, with $v(t)<0$ on $[0,2)$ and $v(t)>0$ on $(2,4]$.\n\nStep 2 — Find an antiderivative: $\\int (t-2)\\,dt = \\dfrac{t^2}{2}-2t$ (call it $S(t)$, taking the constant as $0$ since only differences are needed).\n\nStep 3 — Compute each piece's absolute value: $\\left|S(2)-S(0)\\right| = |(2-4)-0| = 2$, and $\\left|S(4)-S(2)\\right| = |(8-8)-(2-4)| = |0-(-2)| = 2$.\n\nStep 4 — Add the pieces: total distance $= 2+2 = 4$ m."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "velocity-from-acceleration-quiz",
+      "type": "multiple_choice",
+      "prompt": "A particle has acceleration $a(t) = 6t - 6$ (m/s$^2$) and initial velocity $v(0)=0$. Find $v(3)$.",
+      "choices": [
+        "9",
+        "12",
+        "3",
+        "0"
+      ],
+      "correctAnswer": "9",
+      "solution": "Step 1 — Integrate $a(t)=6t-6$: $v(t) = \\int (6t-6)\\,dt = 3t^2-6t+C$. Using $v(0)=0$ gives $C=0$, so $v(t)=3t^2-6t$.\n\nStep 2 — Evaluate at $t=3$: $v(3) = 3(9)-18 = 27-18 = 9$ m/s."
+    },
+    {
+      "id": "position-from-velocity-quiz",
+      "type": "numeric",
+      "prompt": "A particle moves with velocity $v(t) = 2t - 4$ (m/s) and starts at position $s(0)=5$ m. Find $s(3)$ (in meters).",
+      "correctAnswer": "2",
+      "solution": "Step 1 — Integrate $v(t)=2t-4$: $s(t) = \\int (2t-4)\\,dt = t^2-4t+C$. Using $s(0)=5$ gives $C=5$, so $s(t)=t^2-4t+5$.\n\nStep 2 — Evaluate at $t=3$: $s(3) = 9-12+5 = 2$ m."
+    },
+    {
+      "id": "displacement-vs-distance-quadratic",
+      "type": "multiple_choice",
+      "prompt": "A particle's velocity is $v(t) = t^2 - 3t + 2$ (m/s) on the interval $[0,3]$. Find the total distance traveled over this interval, in meters.",
+      "choices": [
+        "11/6",
+        "3/2",
+        "7/6",
+        "2"
+      ],
+      "correctAnswer": "11/6",
+      "solution": "Step 1 — Find an antiderivative of $v(t)=t^2-3t+2$: $V(t) = \\dfrac{t^3}{3}-\\dfrac{3t^2}{2}+2t$.\n\nStep 2 — Find where $v(t)$ changes sign on $[0,3]$: $v(t)=(t-1)(t-2)=0$ at $t=1,2$, with $v>0$ on $[0,1)$, $v<0$ on $(1,2)$, and $v>0$ on $(2,3)$.\n\nStep 3 — Evaluate $V$ at the split points: $V(0)=0$, $V(1)=\\dfrac{5}{6}$, $V(2)=\\dfrac{2}{3}$, $V(3)=\\dfrac{3}{2}$.\n\nStep 4 — Add the absolute value of each piece: $|V(1)-V(0)| = \\dfrac{5}{6}$, $|V(2)-V(1)| = \\left|\\dfrac{2}{3}-\\dfrac{5}{6}\\right| = \\dfrac{1}{6}$, $|V(3)-V(2)| = \\dfrac{5}{6}$. Total distance $= \\dfrac{5}{6}+\\dfrac{1}{6}+\\dfrac{5}{6} = \\dfrac{11}{6}$ m."
+    }
+  ],
+  "lessonId": "motion-problems",
+  "generatedAt": "2026-07-12T06:26:34.575Z"
+}
