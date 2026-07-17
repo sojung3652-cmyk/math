@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "generate:content": "tsx scripts/generate-lesson-content.ts",
-    "add:graphs": "tsx scripts/add-graphs-to-lessons.ts"
+    "add:graphs": "tsx scripts/add-graphs-to-lessons.ts",
+    "add:depth": "tsx scripts/add-depth-to-lessons.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

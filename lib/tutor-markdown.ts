@@ -151,6 +151,13 @@ function stripLeadingText(p: Element, length: number): void {
   }
 }
 
+function addClassName(el: Element, className: string): void {
+  const existing = Array.isArray(el.properties?.className)
+    ? (el.properties.className as string[])
+    : [];
+  el.properties = { ...el.properties, className: [...existing, className] };
+}
+
 function buildStepBlock(n: number, content: Element): Element {
   return {
     type: "element",
@@ -244,6 +251,20 @@ function walk(node: Root | Element): void {
         if (text.startsWith("💡")) {
           walk(child);
           next.push(buildKeyIdea(child));
+          continue;
+        }
+
+        if (text.startsWith("❌")) {
+          addClassName(child, "mistake-wrong");
+          walk(child);
+          next.push(child);
+          continue;
+        }
+
+        if (text.startsWith("✅")) {
+          addClassName(child, "mistake-correct");
+          walk(child);
+          next.push(child);
           continue;
         }
       }

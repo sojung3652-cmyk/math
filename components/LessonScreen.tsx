@@ -8,7 +8,7 @@ import rehypeKatex from "rehype-katex";
 import { rehypeInlineFormatting } from "@/lib/tutor-markdown";
 import Graph from "@/components/Graph";
 import type { Lesson } from "@/lib/curriculum";
-import type { LessonContent, Question } from "@/lib/lesson-content";
+import type { AdvancedSection as AdvancedSectionData, LessonContent, Question } from "@/lib/lesson-content";
 import type { GraphSpec } from "@/lib/graph-spec";
 
 const CHOICE_LETTERS = ["A", "B", "C", "D", "E", "F"];
@@ -125,10 +125,12 @@ function PracticeItem({
   question,
   index,
   graphs,
+  labelPrefix = "문제",
 }: {
   question: Question;
   index: number;
   graphs?: GraphSpec[];
+  labelPrefix?: string;
 }) {
   const [value, setValue] = useState("");
   const [checked, setChecked] = useState(false);
@@ -137,7 +139,9 @@ function PracticeItem({
 
   return (
     <div className="question-card">
-      <span className="label">문제 {index + 1}</span>
+      <span className="label">
+        {labelPrefix} {index + 1}
+      </span>
       <div className="question-prompt">
         <Prose graphs={graphs}>{question.prompt}</Prose>
       </div>
@@ -295,6 +299,58 @@ function QuizSection({
   );
 }
 
+function GoingDeeperSection({ content, graphs }: { content: string; graphs?: GraphSpec[] }) {
+  return (
+    <div className="going-deeper-section">
+      <div className="going-deeper-header">
+        🔍 <b>더 알아보기 · Going deeper</b>
+      </div>
+      <div className="going-deeper-body">
+        <Prose graphs={graphs}>{content}</Prose>
+      </div>
+    </div>
+  );
+}
+
+function AdvancedSection({
+  advanced,
+  graphs,
+}: {
+  advanced: AdvancedSectionData;
+  graphs?: GraphSpec[];
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="advanced-section">
+      <button
+        type="button"
+        className="advanced-toggle"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <b>심화 · Advanced</b>
+        <span className="advanced-sub">CHALLENGE</span>
+        <span className="advanced-chevron">▶</span>
+      </button>
+      {open && (
+        <div className="advanced-body">
+          <Prose graphs={graphs}>{advanced.content}</Prose>
+          {advanced.practice.map((q, i) => (
+            <PracticeItem
+              key={q.id}
+              question={q}
+              index={i}
+              graphs={graphs}
+              labelPrefix="심화 문제"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function LessonScreen({
   lesson,
   content,
@@ -345,6 +401,14 @@ export default function LessonScreen({
       {content.practice.map((q, i) => (
         <PracticeItem key={q.id} question={q} index={i} graphs={content.graphs} />
       ))}
+
+      {content.goingDeeper && (
+        <GoingDeeperSection content={content.goingDeeper} graphs={content.graphs} />
+      )}
+
+      {content.advanced && (
+        <AdvancedSection advanced={content.advanced} graphs={content.graphs} />
+      )}
 
       <h2 className="section-heading">Mastery quiz · 단원 평가</h2>
       <QuizSection lessonId={lesson.id} questions={content.quiz} graphs={content.graphs} />

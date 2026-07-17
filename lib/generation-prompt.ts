@@ -39,6 +39,16 @@ follow them precisely:
 
   💡 A limit only describes the trend near a point — it never requires the
   function to actually reach that point.
+- A common-mistake pair (오답노트 style, used in goingDeeper — see below):
+  the wrong step on its own paragraph starting with ❌, immediately followed
+  by the correction on its own paragraph starting with ✅, each separated
+  by blank lines, e.g.:
+
+  ❌ $\\frac{d}{dx}[x^2 \\cdot x^3] = 2x \\cdot 3x^2$ (multiplying the
+  derivatives directly)
+
+  ✅ Use the product rule instead: $\\frac{d}{dx}[x^2 \\cdot x^3] =
+  2x \\cdot x^3 + x^2 \\cdot 3x^2 = 5x^4$
 
 MATH FORMATTING
 - Write ALL math in LaTeX: $...$ inline, $$...$$ for display. Never plain-text
@@ -108,5 +118,28 @@ OUTPUT — fill in every field:
 - graphs: as described above — an array, can be empty for non-visual
   lessons. Every graph you include must be referenced by a {{graph:id}}
   placeholder somewhere in the text, and every placeholder must match a
-  graph in this array.`;
+  graph in this array.
+- goingDeeper ("더 알아보기 · Going deeper" — extends the basics, shown
+  right after Practice): a second fully worked example of a DIFFERENT
+  problem type than the main worked example (same "Step N — " narration
+  style), then one or two ❌/✅ common-mistake pairs (오답노트 style, as
+  described above) for mistakes students actually make on this exact
+  topic, then a short paragraph on edge cases of the concept (e.g. what
+  happens at a boundary, an undefined case, or a special value). Use
+  read-aloud lines and graphs the same way as the rest of the lesson where
+  they help.
+- advanced ("심화 · Advanced" — a collapsed challenge section after Going
+  deeper): an object with:
+  - content: one harder, exam-style worked example in the flavor of a
+    Korean 수능/모의고사 problem on this topic (more steps, less hand-holding
+    than the main example), followed by one paragraph of deeper theoretical
+    insight — the "why" behind a related fact a curious student would ask
+    about (e.g. for limits: why a two-sided limit requires the one-sided
+    limits to agree; for derivatives: why differentiability implies
+    continuity but not the reverse). Same formatting rules as everywhere
+    else (Step N —, read-aloud, LaTeX).
+  - practice: exactly 2 harder problems, same Question shape as practice/
+    quiz, with full solutions. These are graded locally like the others but
+    are NOT part of the mastery quiz score — make them noticeably harder
+    than the practice/quiz problems above.`;
 }

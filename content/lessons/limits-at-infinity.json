@@ -74,6 +74,59 @@
       "solution": "A limit at infinity, $\\lim_{x\\to\\pm\\infty}f(x)$, asks what value $f(x)$ trends toward (or whether it diverges) as the input $x$ itself grows without bound — this is connected to horizontal asymptotes. An infinite limit at a finite point, such as $\\lim_{x\\to 2}\\frac{1}{x-2}$, instead asks what happens as $x$ approaches one specific finite number while $f(x)$'s output blows up — this is connected to vertical asymptotes. These are two different questions about two different things (the input running to infinity versus the output running to infinity), so only the second choice states the distinction correctly."
     }
   ],
+  "graphs": [
+    {
+      "id": "limit-infty-cubic-quadratic",
+      "captionEn": "y = (2x³ − x)/(x² + 1): the same function diverges to −∞ as x→−∞ but to +∞ as x→∞.",
+      "captionKo": "y = (2x³ − x)/(x² + 1): x→−∞일 때는 −∞로, x→∞일 때는 +∞로 발산한다.",
+      "xDomain": [
+        -6,
+        6
+      ],
+      "yDomain": [
+        -15,
+        15
+      ],
+      "functions": [
+        {
+          "expression": "(2*x^3 - x)/(x^2 + 1)",
+          "color": "pen-blue",
+          "domain": [
+            -6,
+            6
+          ]
+        }
+      ],
+      "points": [],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "### A second worked example: divergence with a sign\n\nEvaluate\n\n$$\\lim_{x\\to -\\infty}\\frac{2x^3-x}{x^2+1}$$\n\n🗣 \"Find the limit of two x cubed minus x, over x squared plus one, as x approaches negative infinity.\"\n\nStep 1 — Compare degrees. The numerator $2x^3-x$ has degree $3$, while the denominator $x^2+1$ has degree $2$. Since $3>2$, the limit will not converge to a finite number — it diverges (발산하다) to either $\\infty$ or $-\\infty$, and the remaining work is to pin down the sign.\n\nStep 2 — Divide every term, top and bottom, by $x^2$, the highest power in the denominator:\n\n$$\\frac{2x^3-x}{x^2+1} = \\frac{2x - \\frac{1}{x}}{1+\\frac{1}{x^2}}$$\n\n🗣 \"Divide the top and bottom by x squared, leaving a bare two x on top and a constant on the bottom.\"\n\nStep 3 — Let $x\\to-\\infty$. The terms $\\frac{1}{x}$ and $\\frac{1}{x^2}$ both shrink to $0$, so the denominator settles toward $1$, while the numerator behaves like $2x$, which itself grows without bound in the negative direction as $x\\to-\\infty$:\n\n$$\\lim_{x\\to-\\infty}\\frac{2x-\\frac{1}{x}}{1+\\frac{1}{x^2}} = \\frac{2x-0}{1+0} \\to -\\infty$$\n\n🗣 \"As x approaches negative infinity, the fraction behaves like two x over one, which itself heads to negative infinity.\"\n\nStep 4 — Conclude. The limit diverges to $-\\infty$, so there is no horizontal asymptote on this side; the graph plunges downward without bound as $x\\to-\\infty$, even though the same function climbs to $+\\infty$ as $x\\to\\infty$.\n\n{{graph:limit-infty-cubic-quadratic}}\n\n❌ A very common error is assuming that because $\\lim_{x\\to\\infty}f(x)=\\infty$ for some rational function, the limit as $x\\to-\\infty$ must also be $\\infty$ — as if only the size of $x$ mattered, not its sign.\n\n✅ Whenever the degree difference $n-m$ is odd, the two infinite limits at $+\\infty$ and at $-\\infty$ point in opposite directions, exactly like the odd function $x^3$ flips sign; only when $n-m$ is even do both directions diverge the same way. Always redo the sign check separately for $x\\to-\\infty$ rather than copying the $x\\to\\infty$ answer.\n\n❌ Another frequent slip is stopping at \"the degrees don't match, so the limit doesn't exist\" and leaving it there, without ever stating whether the function diverges to $+\\infty$ or to $-\\infty$ — on an exam this counts as an incomplete answer.\n\n✅ Whenever $n>m$, finish the job: divide by the highest power in the denominator as above, then read off the sign of the surviving leading term (combining the sign of the leading coefficient with the direction $x\\to\\infty$ or $x\\to-\\infty$) to state the complete answer.\n\nEdge cases worth noticing: if the denominator is just a nonzero constant (so $f$ is really a polynomial), then $n>m$ automatically unless $f$ itself is a constant function — a nonconstant polynomial always diverges to $\\pm\\infty$ as $x\\to\\pm\\infty$ and never has a horizontal asymptote. On the other hand, whenever $n\\le m$, the limit as $x\\to\\infty$ and the limit as $x\\to-\\infty$ always agree (both $0$ if $n<m$, both $\\frac{a_n}{b_m}$ if $n=m$), because every term that could carry a sign difference is one of the vanishing $\\frac{c}{x^k}$ terms; sign only becomes an issue for direction once $n>m$, since then a surviving power of $x$ is left over to carry the sign of $x$ itself.",
+  "advanced": {
+    "content": "### Exam-style problem: combining a limit at infinity with a limit at a finite point\n\nLet $f(x)=\\dfrac{ax^2+bx-3}{x-1}$, and suppose the constants $a$ and $b$ satisfy both of the following conditions at once:\n\n$$\\lim_{x\\to\\infty}\\frac{f(x)}{x}=2 \\qquad\\text{and}\\qquad \\lim_{x\\to 1}f(x)\\ \\text{is a finite real number.}$$\n\n🗣 \"The limit of f of x over x, as x approaches infinity, equals two, and the limit of f of x as x approaches one is a finite real number.\"\n\nStep 1 — Use the infinity condition to find $a$. Write $\\frac{f(x)}{x}=\\dfrac{ax^2+bx-3}{x^2-x}$; numerator and denominator both have degree $2$, so by the degree-comparison rule the limit as $x\\to\\infty$ equals the ratio of leading coefficients, $\\frac{a}{1}$. Setting $\\frac{a}{1}=2$ gives $a=2$.\n\nStep 2 — Use the finite-limit condition to find $b$. As $x\\to 1$, the denominator $x-1\\to 0$; if the numerator did not also approach $0$ at $x=1$, the fraction would blow up, giving an infinite limit at that finite point — a vertical asymptote, not a finite value. So the numerator must vanish at $x=1$: $a(1)^2+b(1)-3=0$, and with $a=2$ this gives $2+b-3=0$, so $b=1$.\n\nStep 3 — Factor and cancel. With $a=2,\\ b=1$, the numerator is $2x^2+x-3$. Since $x=1$ is a root, the factor theorem (인수정리) guarantees $(x-1)$ divides it exactly:\n\n$$2x^2+x-3=(x-1)(2x+3)$$\n\n🗣 \"Two x squared plus x minus three factors as x minus one, times two x plus three.\"\n\nStep 4 — Cancel and evaluate. For $x\\ne 1$, $f(x)=\\dfrac{(x-1)(2x+3)}{x-1}=2x+3$, and since this simplified expression is continuous at $x=1$, the limit is found by direct substitution: $\\lim_{x\\to 1}f(x)=2(1)+3=5$.\n\nWhy does a finite limit at a zero of the denominator always force a shared factor like this? Because a rational function is continuous everywhere its denominator is nonzero, and near an isolated zero $x=c$ of the denominator there are only two possibilities: either the numerator also vanishes at $c$, in which case $(x-c)$ cancels and the resulting \"hole\" is removable — the limit exists and equals whatever the simplified expression gives — or the numerator stays nonzero at $c$, in which case the fraction genuinely blows up and $x=c$ is a true vertical asymptote. There is no third option, which is exactly why demanding \"the limit is finite\" is mathematically equivalent to demanding the factor cancellation, letting a problem-setter convert a limit condition into a clean algebraic equation.",
+    "practice": [
+      {
+        "id": "li-adv-1",
+        "type": "multiple_choice",
+        "prompt": "Evaluate $\\lim_{x\\to-\\infty}\\dfrac{-3x^3+2x}{x^2+4x-1}$.",
+        "choices": [
+          "It converges to $-3$",
+          "It diverges to $\\infty$",
+          "It diverges to $-\\infty$",
+          "It converges to $0$"
+        ],
+        "correctAnswer": "It diverges to $\\infty$",
+        "solution": "Step 1 — The numerator has degree $3$ and the denominator has degree $2$, so $n>m$: the limit diverges rather than converging to a finite number, ruling out both 'converges' choices.\n\nStep 2 — Divide top and bottom by $x^2$: $\\frac{-3x^3+2x}{x^2+4x-1}=\\frac{-3x+\\frac{2}{x}}{1+\\frac{4}{x}-\\frac{1}{x^2}}$; as $x\\to-\\infty$ the extra fractional terms vanish, leaving essentially $\\frac{-3x}{1}=-3x$.\n\nStep 3 — As $x\\to-\\infty$, $-3x\\to -3\\cdot(-\\infty)=+\\infty$, so the limit diverges to $\\infty$."
+      },
+      {
+        "id": "li-adv-2",
+        "type": "numeric",
+        "prompt": "Suppose $a$ and $b$ are constants for which $$\\lim_{x\\to\\infty}\\frac{ax^3+bx^2+x-1}{x^2+2x-5}=4.$$ Find the value of $a+b$.",
+        "correctAnswer": "4",
+        "solution": "Step 1 — If $a\\neq 0$, the numerator would have degree $3$ while the denominator has degree $2$, forcing the limit to diverge to $\\pm\\infty$ rather than equal the finite value $4$; so we must have $a=0$.\n\nStep 2 — With $a=0$, the numerator becomes $bx^2+x-1$, now matching the denominator's degree $2$, so by the degree-comparison rule the limit equals the ratio of leading coefficients, $\\frac{b}{1}=b$.\n\nStep 3 — Setting $b=4$ satisfies the given condition, so $a=0$ and $b=4$, giving $a+b=0+4=4$."
+      }
+    ]
+  },
   "lessonId": "limits-at-infinity",
-  "generatedAt": "2026-07-12T05:46:47.048Z"
+  "generatedAt": "2026-07-17T04:08:42.102Z"
 }

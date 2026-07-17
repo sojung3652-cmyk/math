@@ -13,6 +13,12 @@ export const QuestionSchema = z.object({
 });
 export type Question = z.infer<typeof QuestionSchema>;
 
+export const AdvancedSectionSchema = z.object({
+  content: z.string(),
+  practice: z.array(QuestionSchema).length(2),
+});
+export type AdvancedSection = z.infer<typeof AdvancedSectionSchema>;
+
 export const LessonContentBodySchema = z.object({
   intuition: z.string(),
   definition: z.string(),
@@ -22,8 +28,22 @@ export const LessonContentBodySchema = z.object({
   practice: z.array(QuestionSchema).length(3),
   quiz: z.array(QuestionSchema).length(3),
   graphs: z.array(GraphSpecSchema).max(6).default([]),
+  // Added by the depth pass (scripts/add-depth-to-lessons.ts) after the
+  // base lesson exists — empty/null on lessons that haven't been upgraded
+  // yet, so old content files keep loading fine in the meantime.
+  goingDeeper: z.string().default(""),
+  advanced: AdvancedSectionSchema.nullable().default(null),
 });
 export type LessonContentBody = z.infer<typeof LessonContentBodySchema>;
+
+// The response shape for scripts/add-depth-to-lessons.ts — new graphs are
+// additive (merged into the existing graphs array), never a replacement.
+export const DepthResponseSchema = z.object({
+  goingDeeper: z.string(),
+  advanced: AdvancedSectionSchema,
+  graphs: z.array(GraphSpecSchema).max(4).default([]),
+});
+export type DepthResponse = z.infer<typeof DepthResponseSchema>;
 
 export type LessonContent = LessonContentBody & {
   lessonId: string;

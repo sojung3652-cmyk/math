@@ -166,8 +166,68 @@
         }
       ],
       "asymptotes": []
+    },
+    {
+      "id": "goingdeeper-removable-point",
+      "captionEn": "The line y=x+3 shows the simplified form of f(x) for x≠3; the open circle marks the excluded point, while the closed dot shows the separately defined value f(3)=10 — the limit only cares about the open circle's height.",
+      "captionKo": "y=x+3 직선은 x≠3일 때 f(x)의 단순화된 형태를 보여줍니다. 빈 원은 제외된 점을, 채워진 점은 별도로 정의된 f(3)=10 값을 나타내며, 극한은 빈 원의 높이만 신경 씁니다.",
+      "xDomain": [
+        -1,
+        7
+      ],
+      "yDomain": [
+        -1,
+        12
+      ],
+      "functions": [
+        {
+          "expression": "x+3",
+          "color": "ink"
+        }
+      ],
+      "points": [
+        {
+          "x": 3,
+          "y": 6,
+          "style": "open",
+          "color": "red-pen"
+        },
+        {
+          "x": 3,
+          "y": 10,
+          "style": "closed",
+          "color": "pen-blue"
+        }
+      ],
+      "asymptotes": []
     }
   ],
+  "goingDeeper": "A second example shows the same idea in a setting where the two pieces of the formula aren't separated by an inequality on $x$, but instead come from simplifying an algebraic expression by factoring (인수분해하다, to factor) — and where the function's defined value at the point in question turns out to be completely irrelevant to the limit.\n\nLet\n\n$$f(x) = \\begin{cases} \\dfrac{x^2-9}{x-3}, & x \\neq 3 \\\\ 10, & x = 3 \\end{cases}$$\n\n🗣 \"f of x equals x squared minus nine, over x minus three, when x is not equal to three, and ten when x equals three.\"\n\nWe want to determine $\\lim_{x\\to 3} f(x)$.\n\nStep 1 — Simplify the formula for $x \\neq 3$ by factoring the numerator and cancelling (약분하다, to cancel) the common factor:\n\n$$\\frac{x^2-9}{x-3} = \\frac{(x-3)(x+3)}{x-3} = x+3 \\quad (x\\neq 3)$$\n\n🗣 \"x squared minus nine over x minus three simplifies to x plus three, for x not equal to three.\"\n\nStep 2 — Find the left-hand limit using this simplified form:\n\n$$\\lim_{x\\to 3^-} f(x) = \\lim_{x\\to 3^-}(x+3) = 6$$\n\n🗣 \"The left-hand limit as x approaches three equals six.\"\n\nStep 3 — Find the right-hand limit the same way:\n\n$$\\lim_{x\\to 3^+} f(x) = \\lim_{x\\to 3^+}(x+3) = 6$$\n\n🗣 \"The right-hand limit as x approaches three equals six.\"\n\nStep 4 — Since both one-sided limits equal $6$, the two-sided limit exists:\n\n$$\\lim_{x\\to 3} f(x) = 6$$\n\n🗣 \"The limit of f of x as x approaches three equals six.\"\n\nNotice that this value, $6$, has nothing to do with the fact that the function was separately defined to equal $10$ at $x=3$ itself — the limit only ever looks at values of $x$ near $3$, never at $x=3$.\n\n❌ A common mistake is substituting $x=3$ directly into the original, unsimplified expression $\\frac{x^2-9}{x-3}$, getting $\\frac{0}{0}$, and either stopping there or declaring that the limit doesn't exist.\n\n✅ Always factor and cancel first (this cancellation is valid precisely because the limiting process only considers $x$ values near, but not equal to, $3$), and only then substitute the target value into the simplified expression.\n\n❌ Another common mistake is seeing that $f(3)=10$ is explicitly given and assuming the limit as $x\\to 3$ must also be $10$.\n\n✅ A one-sided or two-sided limit never depends on the value assigned at the point itself — only on the values $f(x)$ takes for $x$ arbitrarily close to, but different from, that point. Here the limit is $6$ no matter what number (if any) is assigned to $f(3)$.\n\n{{graph:goingdeeper-removable-point}}\n\nOne subtle edge case worth knowing: one-sided limits themselves can fail to exist for reasons that have nothing to do with disagreement between the two sides. Consider $g(x)=\\sqrt{x-4}$, whose domain (정의역, domain) is restricted to $x \\ge 4$. There are simply no domain values less than $4$ to approach along, so $\\lim_{x\\to 4^-} g(x)$ isn't just some disagreeing number — it's not defined at all, because the left-hand side of $x=4$ contains no points of the function's domain. Only $\\lim_{x\\to 4^+} g(x)$ is meaningful here, a reminder that the very statement \"the limit exists\" always implicitly assumes the function actually has points to approach from that direction.",
+  "advanced": {
+    "content": "On more difficult problems, the piecewise formula often contains one or more unknown constants (상수, constant), and the condition that a limit exists is used as an equation to solve for them — frequently combined with an ordinary function-value condition at a different point.\n\nLet\n\n$$f(x) = \\begin{cases} ax+b, & x<1 \\\\ x^2+3, & x\\ge 1 \\end{cases}$$\n\n🗣 \"f of x equals a x plus b when x is less than one, and x squared plus three when x is greater than or equal to one.\"\n\nSuppose $\\lim_{x\\to 1} f(x) = 4$ and $f(-1)=0$. Find $f(0)+f(2)$.\n\nStep 1 — Since $x\\ge 1$ uses the piece $x^2+3$, the right-hand limit is fixed regardless of $a,b$:\n\n$$\\lim_{x\\to 1^+} f(x) = 1^2+3 = 4$$\n\n🗣 \"The right-hand limit as x approaches one equals four.\"\n\nThis already matches the given value $4$, so the real content of the condition $\\lim_{x\\to1}f(x)=4$ is that the left-hand limit must also equal $4$.\n\nStep 2 — Set the left-hand limit equal to $4$:\n\n$$\\lim_{x\\to 1^-} f(x) = a(1)+b = a+b = 4$$\n\n🗣 \"a plus b equals four.\"\n\nStep 3 — Use the second condition. Since $-1<1$, the applicable piece is $ax+b$:\n\n$$f(-1) = -a+b = 0$$\n\n🗣 \"Negative a plus b equals zero.\"\n\nStep 4 — Solve the system $a+b=4$ and $-a+b=0$. Adding the two equations gives $2b=4$, so $b=2$, and then $a=2$ as well.\n\nStep 5 — Evaluate $f(0)$ and $f(2)$ using whichever piece applies at each point. Since $0<1$:\n\n$$f(0) = a(0)+b = b = 2$$\n\n🗣 \"f of zero equals two.\"\n\nSince $2\\ge 1$:\n\n$$f(2) = 2^2+3 = 7$$\n\n🗣 \"f of two equals seven.\"\n\nStep 6 — Add the results:\n\n$$f(0)+f(2) = 2+7 = 9$$\n\n🗣 \"f of zero plus f of two equals nine.\"\n\nA curious question this raises: why does the definition of a one-sided limit insist on the strict inequality $x<a$ or $x>a$, rather than $x\\le a$ or $x\\ge a$? The deeper reason is that a limit is meant to describe a trend as $x$ sweeps through a punctured neighborhood (구멍 뚫린 근방, punctured neighborhood) of $a$ — points arbitrarily close to $a$ but deliberately excluding $a$ itself — so that the question \"what does f(x) approach?\" stays meaningful even when $f(a)$ is undefined, or, as in the example above, disagrees with the trend entirely. This is exactly why neither one-sided limit ever \"sees\" the actual value $f(a)$, and it sets up the key extra ingredient — comparing the limit to $f(a)$ itself — that will later distinguish a merely well-behaved limit from actual continuity at a point.",
+    "practice": [
+      {
+        "id": "adv-practice-1",
+        "type": "numeric",
+        "prompt": "Let $$f(x) = \\begin{cases} x^2+k, & x<2 \\\\ 3x-1, & x\\ge 2 \\end{cases}$$ Find the value of the constant $k$ for which $\\lim_{x\\to 2} f(x)$ exists.",
+        "correctAnswer": "1",
+        "solution": "The right-hand limit is $\\lim_{x\\to2^+}f(x)=3(2)-1=5$. The left-hand limit is $\\lim_{x\\to2^-}f(x)=2^2+k=4+k$. For the two-sided limit to exist, the left-hand and right-hand limits must be equal: $4+k=5$, so $k=1$."
+      },
+      {
+        "id": "adv-practice-2",
+        "type": "multiple_choice",
+        "prompt": "Let $f(x)=\\dfrac{|x-3|}{x-3}$ for $x\\neq 3$ (f is undefined at $x=3$). Does $\\lim_{x\\to3} f(x)$ exist, and if so what is its value?",
+        "choices": [
+          "-1",
+          "0",
+          "1",
+          "DNE"
+        ],
+        "correctAnswer": "DNE",
+        "solution": "For $x<3$, $x-3<0$ so $|x-3|=3-x=-(x-3)$, giving $f(x)=\\frac{-(x-3)}{x-3}=-1$ for every such x, so $\\lim_{x\\to3^-}f(x)=-1$. For $x>3$, $x-3>0$ so $|x-3|=x-3$, giving $f(x)=1$ for every such x, so $\\lim_{x\\to3^+}f(x)=1$. Since $-1\\neq1$, the left-hand and right-hand limits disagree, so $\\lim_{x\\to3}f(x)$ does not exist (DNE)."
+      }
+    ]
+  },
   "lessonId": "one-sided-limits",
-  "generatedAt": "2026-07-12T09:53:36.157Z"
+  "generatedAt": "2026-07-17T04:01:49.348Z"
 }
