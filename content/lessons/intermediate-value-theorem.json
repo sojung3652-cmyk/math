@@ -74,6 +74,86 @@
       "solution": "Step 1 — Check $[0,1]$: $h(0)=-4$ and $h(1)=-1$ are both negative, so there is no sign change here.\n\nStep 2 — Check $[1,2]$: $h(1)=-1$ is negative and $h(2)=2$ is positive, so $0$ lies between them. Since $h$ is continuous, the IVT guarantees a root in $(1,2)$.\n\nStep 3 — Check $[2,3]$: $h(2)=2$ and $h(3)=6$ are both positive, so there is no sign change there. The guaranteed interval is $[1,2]$."
     }
   ],
+  "graphs": [
+    {
+      "id": "cubic-ivt-three-roots",
+      "captionEn": "f(x) = x^3 - 6x + 2 crosses the x-axis three times, once inside each interval located by the IVT.",
+      "captionKo": "f(x) = x^3 - 6x + 2 는 IVT로 찾아낸 세 구간에서 각각 한 번씩 x축과 만난다.",
+      "xDomain": [
+        -4,
+        4
+      ],
+      "yDomain": [
+        -15,
+        15
+      ],
+      "functions": [
+        {
+          "expression": "x^3 - 6*x + 2",
+          "color": "pen-blue"
+        }
+      ],
+      "points": [
+        {
+          "x": -3,
+          "y": -7,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": -1,
+          "y": 7,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 1,
+          "y": -3,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 3,
+          "y": 11,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "### A second worked example\n\n**Show that the equation $2^x + x = 3$ has a solution in the interval $[0, 2]$.**\n\nStep 1 — Rewrite the equation as a root-finding problem. Define $h(x) = 2^x + x - 3$; then a solution of $2^x + x = 3$ is exactly a value $c$ with $h(c) = 0$. Moving every term to one side of the equation is a standard trick (기법) that turns an equation you cannot solve algebraically into a root of a single function, which is exactly the setting the IVT needs.\n\nStep 2 — Confirm continuity. Since $2^x$ is continuous everywhere and $x-3$ is continuous everywhere, their sum $h(x) = 2^x + x - 3$ is continuous on all of ℝ, and in particular on $[0,2]$.\n\nStep 3 — Evaluate $h$ at the endpoints.\n\n$$h(0) = 2^0 + 0 - 3 = -2, \\qquad h(2) = 2^2 + 2 - 3 = 3$$\n\n🗣 \"h of zero equals negative two, and h of two equals three.\"\n\nStep 4 — Apply the IVT. Since $h(0) = -2 < 0 < 3 = h(2)$, the value $k=0$ lies between $h(0)$ and $h(2)$, and $h$ is continuous on $[0,2]$, so the IVT guarantees some $c \\in [0,2]$ with $h(c)=0$ — that is, $2^c + c = 3$.\n\nTherefore the equation $2^x + x = 3$ has at least one solution in $[0,2]$, even though it mixes an exponential (지수함수) term with a linear term and cannot be solved by ordinary algebra.\n\n### Common mistakes\n\n❌ A student sees that $f(a)$ and $f(b)$ have the *same* sign (say both positive) and concludes the IVT proves there is **no** root in $[a,b]$.\n\n✅ The IVT only makes a promise when $k$ lies strictly between $f(a)$ and $f(b)$; if $f(a)$ and $f(b)$ share a sign, the theorem simply says nothing at all — a root could still exist (the graph might dip down and come back up), it just isn't guaranteed by this particular tool.\n\n❌ Asked to guarantee a root of $f(x) = k$ for some $k \\neq 0$, a student checks whether $f(a)$ and $f(b)$ have opposite signs, as if solving $f(x)=0$, and forgets that the target value is $k$, not $0$.\n\n✅ For a general target $k$, check whether $k$ lies between $f(a)$ and $f(b)$ directly — equivalently, check whether $f(a)-k$ and $f(b)-k$ have a sign change (부호 변화); the signs of $f(a)$ and $f(b)$ themselves are irrelevant unless $k=0$.\n\n### Edge cases\n\nIf $k$ happens to equal $f(a)$ or $f(b)$ exactly, the IVT still holds, but trivially (자명하게): you may simply take $c=a$ or $c=b$, no searching required. If $f$ is continuous on the open interval $(a,b)$ but has even a single removable discontinuity (제거 가능한 불연속점) at $x=a$ or $x=b$, the closed-interval hypothesis fails and the IVT cannot be applied on $[a,b]$, no matter how 'close' to continuous the function looks there. Finally, if $f(a) = f(b)$, there is no value $k$ strictly between them, so the theorem yields no new information in that case — it neither confirms nor rules out other values the function might hit inside the interval.",
+  "advanced": {
+    "content": "**Exam-style problem: Using only the Intermediate Value Theorem and the fact that a cubic has at most three real roots, show that $f(x) = x^3 - 6x + 2$ has exactly three real roots, and locate each one inside an interval.**\n\nStep 1 — Since $f$ is a polynomial, it is continuous on all of ℝ, so the IVT may be applied on any closed interval we choose.\n\nStep 2 — Recall that a polynomial of degree (차수) 3 has at most three real roots; the plan is to find three disjoint intervals each guaranteed by the IVT to contain a root, which will force there to be exactly one root in each.\n\nStep 3 — Evaluate $f$ at several sample points.\n\n| $x$ | -3 | -1 | 0 | 1 | 3 |\n|---|---|---|---|---|---|\n| $f(x)$ | -7 | 7 | 2 | -3 | 11 |\n\nStep 4 — Scan consecutive pairs for a sign change (부호 변화): $f(-3)=-7$ to $f(-1)=7$ changes sign, so the IVT guarantees a root in $(-3,-1)$; $f(-1)=7$ to $f(0)=2$ does **not** change sign, so this pair gives no guarantee; $f(0)=2$ to $f(1)=-3$ changes sign, guaranteeing a root in $(0,1)$; $f(1)=-3$ to $f(3)=11$ changes sign, guaranteeing a root in $(1,3)$.\n\nStep 5 — Combine with the degree bound. We now have three disjoint intervals — $(-3,-1)$, $(0,1)$, $(1,3)$ — each proven by the IVT to contain at least one root, giving at least three roots total. Since a cubic can have at most three real roots, each interval must contain exactly one, and $f$ has exactly three real roots.\n\n{{graph:cubic-ivt-three-roots}}\n\nA deeper question this raises: why does *every* odd-degree polynomial with real coefficients have at least one real root, even before a single value is computed? The reason is that the leading term (최고차항) dominates the polynomial's behavior for very large $|x|$: for an odd-degree polynomial, as $x \\to +\\infty$ the leading term forces $f(x) \\to +\\infty$ (or $-\\infty$), while as $x \\to -\\infty$ it forces the opposite sign. So for some sufficiently large $M$, $f(-M)$ and $f(M)$ always have opposite signs — and since every polynomial is continuous on ℝ, the IVT applied to $[-M, M]$ guarantees a root, purely from the shape of the leading term, with no computation of intermediate values needed at all.",
+    "practice": [
+      {
+        "id": "adv-1",
+        "type": "numeric",
+        "prompt": "Let $f(x) = x^3 - 4x + 1$, continuous on ℝ. Evaluate $f(-3), f(-2), f(0), f(1), f(2)$, then count how many of the four intervals $[-3,-2], [-2,0], [0,1], [1,2]$ are guaranteed by the Intermediate Value Theorem to contain a root of $f(x)=0$.",
+        "correctAnswer": "3",
+        "solution": "Compute the values: $f(-3) = -27+12+1 = -14$, $f(-2) = -8+8+1 = 1$, $f(0) = 1$, $f(1) = 1-4+1 = -2$, $f(2) = 8-8+1 = 1$. Checking consecutive pairs for a sign change: $f(-3)=-14$ to $f(-2)=1$ changes sign, so $[-3,-2]$ is guaranteed; $f(-2)=1$ to $f(0)=1$ has no sign change (both positive), so $[-2,0]$ is not guaranteed; $f(0)=1$ to $f(1)=-2$ changes sign, so $[0,1]$ is guaranteed; $f(1)=-2$ to $f(2)=1$ changes sign, so $[1,2]$ is guaranteed. That gives 3 guaranteed intervals."
+      },
+      {
+        "id": "adv-2",
+        "type": "multiple_choice",
+        "prompt": "For $f(x) = x^3 - 3x + k$, which value of $k$ guarantees, by the Intermediate Value Theorem applied to $[-2, 0]$, that $f$ has a root in that interval?",
+        "choices": [
+          "k = -1",
+          "k = 0",
+          "k = 1",
+          "k = 3"
+        ],
+        "correctAnswer": "k = 1",
+        "solution": "Compute the endpoint values in terms of $k$: $f(-2) = (-2)^3 - 3(-2) + k = -8+6+k = k-2$, and $f(0) = 0 - 0 + k = k$. The IVT guarantees a root in $[-2,0]$ exactly when $0$ lies strictly between $f(-2)=k-2$ and $f(0)=k$, i.e. when $k-2$ and $k$ have opposite signs. Since $k-2 < k$ always, this requires $k - 2 < 0 < k$, i.e. $0 < k < 2$. Among the given choices, only $k=1$ satisfies $0 < k < 2$, so $k=1$ is the value that guarantees a root by the IVT."
+      }
+    ]
+  },
   "lessonId": "intermediate-value-theorem",
-  "generatedAt": "2026-07-12T05:50:12.027Z"
+  "generatedAt": "2026-07-17T05:49:18.673Z"
 }

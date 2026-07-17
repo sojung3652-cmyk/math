@@ -74,6 +74,107 @@
       "solution": "Step 1 — Remember that the limit describes only the trend of $h(x)$ for $x$ near $2$, not the actual value $h(2)$.\n\nStep 2 — Since the values of $h(x)$ converge (수렴하다) to $3$ from both the left and right of $x=2$, the limit is $3$.\n\nStep 3 — The fact that $h(2)=100$ has no effect on this conclusion, because a limit never requires the function to actually reach or match that value at $a$. So $\\lim_{x \\to 2} h(x) = 3$."
     }
   ],
+  "graphs": [
+    {
+      "id": "sqrt-limit-hole",
+      "captionEn": "f(x) = (√(x+4)-2)/x has a hole at x=0, but both sides converge to y=1/4.",
+      "captionKo": "f(x) = (√(x+4)-2)/x 는 x=0에서 구멍이 있지만 양쪽에서 y=1/4로 수렴합니다.",
+      "xDomain": [
+        -3,
+        3
+      ],
+      "yDomain": [
+        0,
+        1
+      ],
+      "functions": [
+        {
+          "expression": "(sqrt(x+4)-2)/x",
+          "color": "pen-blue",
+          "domain": [
+            -3,
+            -0.02
+          ]
+        },
+        {
+          "expression": "(sqrt(x+4)-2)/x",
+          "color": "pen-blue",
+          "domain": [
+            0.02,
+            3
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 0,
+          "y": 0.25,
+          "style": "open",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    },
+    {
+      "id": "removable-discontinuity-cubic",
+      "captionEn": "After canceling the shared factor, f(x) simplifies to (x+2)(x+3) everywhere except the hole at x=2.",
+      "captionKo": "공통 인수를 약분하면 f(x)는 x=2의 구멍을 제외하고 (x+2)(x+3)로 단순화됩니다.",
+      "xDomain": [
+        -4,
+        6
+      ],
+      "yDomain": [
+        -2,
+        40
+      ],
+      "functions": [
+        {
+          "expression": "(x+2)*(x+3)",
+          "color": "pen-blue",
+          "domain": [
+            -4,
+            6
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 2,
+          "y": 20,
+          "style": "open",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "A limit obstruction doesn't only come from polynomial factors — sometimes it comes from a square root, and the fix is a different algebraic trick: rationalizing (유리화하다) instead of factoring.\n\nFind $\\lim_{x \\to 0} \\dfrac{\\sqrt{x+4}-2}{x}$.\n\nStep 1 — Try direct substitution at $x=0$: the numerator becomes $\\sqrt{4}-2=0$ and the denominator becomes $0$, giving the indeterminate form $\\frac{0}{0}$. Just like before, this only means direct substitution fails here — it says nothing about whether the limit itself exists.\n\nStep 2 — Since there's no polynomial factor to cancel, multiply the numerator and denominator by the conjugate (켤레), $\\sqrt{x+4}+2$.\n\n$$\\frac{\\sqrt{x+4}-2}{x}\\cdot\\frac{\\sqrt{x+4}+2}{\\sqrt{x+4}+2} = \\frac{(x+4)-4}{x(\\sqrt{x+4}+2)} = \\frac{x}{x(\\sqrt{x+4}+2)}$$\n\n🗣 \"Multiplying top and bottom by the conjugate turns the numerator into just x, which cancels with the x already in the denominator.\"\n\nStep 3 — For $x \\neq 0$, cancel the shared factor of $x$.\n\n$$\\frac{x}{x(\\sqrt{x+4}+2)} = \\frac{1}{\\sqrt{x+4}+2}$$\n\nStep 4 — Now direct substitution is safe, since the troublesome shared factor is gone. Let $x \\to 0$.\n\n$$\\lim_{x \\to 0} \\frac{1}{\\sqrt{x+4}+2} = \\frac{1}{\\sqrt{4}+2} = \\frac{1}{4}$$\n\n🗣 \"The limit of one over the square root of x plus four, plus two, as x approaches zero, equals one fourth.\"\n\nSo $\\lim_{x\\to0}\\dfrac{\\sqrt{x+4}-2}{x} = \\dfrac14$, even though the original fraction is completely undefined at $x=0$ itself — dividing by zero there is never allowed.\n\n{{graph:sqrt-limit-hole}}\n\n❌ A student sees the $\\frac{0}{0}$ form appear after substituting and immediately writes \"the limit does not exist,\" stopping without trying a table or an algebraic rewrite.\n\n✅ Treat $\\frac{0}{0}$ only as a signal that direct substitution failed — it's your cue to factor, rationalize, or build a table of values before concluding anything about whether the limit exists.\n\n❌ A student only checks values approaching from one side — say $x=0.1,\\ 0.01,\\ 0.001$ from the right — sees them settling near a number, and declares that number the limit without ever checking $x=-0.1,\\ -0.01,\\ -0.001$ from the left.\n\n✅ A limit is confirmed only once the left-side approach and the right-side approach settle on the *same* value; the two sides don't always agree, so checking a single side can be misleading.\n\nNot every function settles down as $x \\to a$. For example, $f(x) = \\sin\\left(\\frac{1}{x}\\right)$ oscillates faster and faster between $-1$ and $1$ as $x \\to 0$ from either side, never approaching a single number — so $\\lim_{x\\to0} f(x)$ simply does not exist (극한이 존재하지 않다), no matter how tiny a neighborhood of $0$ you examine. This is a different kind of edge case than a removable hole: instead of one missing point on an otherwise well-behaved graph, the entire graph near $a$ refuses to settle anywhere. Learning to tell these two situations apart — a single gap vs. a function that never converges — will matter as you study more complicated limits.",
+  "advanced": {
+    "content": "Exam-style problem: Suppose $a$ is a real constant for which $\\lim_{x \\to 2} \\dfrac{x^3+ax^2-4x-12}{x-2}$ exists and is finite. Find the value of $a$, and then find the value of the limit.\n\nStep 1 — Since the denominator $x-2$ approaches $0$ as $x \\to 2$, the only way the whole fraction can approach a *finite* value is if the numerator also approaches $0$ at $x=2$ — otherwise the fraction would grow without bound rather than settle on a number. So we require the numerator to vanish when $x=2$.\n\nStep 2 — Substitute $x=2$ into the numerator and set it equal to $0$ to solve for $a$.\n\n$$2^3 + a(2)^2 - 4(2) - 12 = 8 + 4a - 8 - 12 = 4a - 12 = 0 \\ \\Rightarrow\\ a = 3$$\n\n🗣 \"Plugging x equals two into the numerator and setting it equal to zero gives a equals three.\"\n\nStep 3 — With $a=3$, the numerator is $x^3+3x^2-4x-12$, which must now have $(x-2)$ as a factor. Divide it out (by synthetic division or long division) to find the other factor.\n\n$$x^3+3x^2-4x-12 = (x-2)(x^2+5x+6) = (x-2)(x+2)(x+3)$$\n\nStep 4 — Cancel the shared factor of $(x-2)$, valid for all $x \\neq 2$, then substitute $x=2$ into what remains.\n\n$$\\lim_{x\\to2}\\frac{(x-2)(x+2)(x+3)}{x-2} = \\lim_{x\\to2}(x+2)(x+3) = (2+2)(2+3) = 20$$\n\n🗣 \"After canceling x minus two, the limit becomes x plus two times x plus three, which equals twenty at x equals two.\"\n\nSo $a=3$ and $\\lim_{x\\to2}\\dfrac{x^3+ax^2-4x-12}{x-2} = 20$.\n\n{{graph:removable-discontinuity-cubic}}\n\nWhy does the numerator have to vanish at $a$ whenever the denominator does, for a limit to come out finite? Think of it as a kind of algebraic balancing act: near $x=a$, a fraction whose denominator shrinks toward $0$ while its numerator shrinks toward some nonzero number is forced to blow up in size, so no finite limit can exist in that situation. Only when the numerator shrinks toward $0$ at exactly the same point does the fraction have a chance to settle on a finite value — and even then, only after you've canceled the shared factor causing both to vanish. This is precisely why the factor theorem (인수 정리) — the fact that a polynomial $p(x)$ has $(x-a)$ as a factor exactly when $p(a)=0$ — turns out to be the algebraic engine behind almost every 'removable hole' limit problem you'll meet: finding the limit is really a search for, and cancellation of, that shared vanishing factor.",
+    "practice": [
+      {
+        "id": "adv-1",
+        "type": "numeric",
+        "prompt": "Find $\\lim_{x \\to -1} \\dfrac{x^3+2x^2-x-2}{x+1}$.",
+        "correctAnswer": "-2",
+        "solution": "Direct substitution gives $\\frac{-1+2+1-2}{0}=\\frac{0}{0}$, so factor the numerator. Since $x=-1$ is a root, divide by $(x+1)$: $x^3+2x^2-x-2=(x+1)(x^2+x-2)=(x+1)(x+2)(x-1)$. Cancel $(x+1)$ for $x\\neq-1$ to get $(x+2)(x-1)$, then substitute $x=-1$: $(1)(-2)=-2$. So the limit is $-2$."
+      },
+      {
+        "id": "adv-2",
+        "type": "multiple_choice",
+        "prompt": "Find $\\lim_{x\\to0}\\dfrac{1}{x}\\left(\\dfrac{1}{\\sqrt{x+1}}-1\\right)$.",
+        "choices": [
+          "-1/2",
+          "1/2",
+          "-1",
+          "1",
+          "0"
+        ],
+        "correctAnswer": "-1/2",
+        "solution": "Combine into one fraction: $\\frac{1}{x}\\left(\\frac{1-\\sqrt{x+1}}{\\sqrt{x+1}}\\right)=\\frac{1-\\sqrt{x+1}}{x\\sqrt{x+1}}$. Direct substitution gives $\\frac00$, so rationalize by multiplying by the conjugate $1+\\sqrt{x+1}$: the numerator becomes $1-(x+1)=-x$, so the expression simplifies to $\\frac{-x}{x\\sqrt{x+1}(1+\\sqrt{x+1})}=\\frac{-1}{\\sqrt{x+1}(1+\\sqrt{x+1})}$ for $x\\neq0$. Substituting $x=0$ gives $\\frac{-1}{1\\cdot2}=-\\frac12$."
+      }
+    ]
+  },
   "lessonId": "what-is-a-limit",
-  "generatedAt": "2026-07-12T05:42:16.011Z"
+  "generatedAt": "2026-07-17T04:50:08.760Z"
 }

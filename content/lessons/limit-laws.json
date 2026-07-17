@@ -56,6 +56,68 @@
       "solution": "Step 1 — Direct substitution gives $\\dfrac{0}{0}$, an indeterminate form (부정형), so factor (인수분해) the numerator first.\n\nStep 2 — Factor: $x^2-25=(x-5)(x+5)$, so for $x\\neq 5$,\n\n$$\\frac{x^2-25}{x-5} = x+5$$\n\n🗣 \"x squared minus twenty-five, over x minus five, simplifies to x plus five.\"\n\nStep 3 — Apply direct substitution to the simplified form.\n\n$$\\lim_{x\\to 5}\\frac{x^2-25}{x-5} = 5+5 = 10$$\n\n🗣 \"The limit equals ten.\""
     }
   ],
+  "graphs": [
+    {
+      "id": "limit-laws-radical-removable",
+      "captionEn": "The function y=(√(x+4)-2)/x is undefined at x=0, but its limit there is 1/4.",
+      "captionKo": "함수 y=(√(x+4)-2)/x는 x=0에서 정의되지 않지만, 그 점에서의 극한값은 1/4입니다.",
+      "xDomain": [
+        -3,
+        4
+      ],
+      "yDomain": [
+        -0.2,
+        1
+      ],
+      "functions": [
+        {
+          "expression": "(sqrt(x+4)-2)/x",
+          "color": "pen-blue",
+          "domain": [
+            -3,
+            -0.05
+          ]
+        },
+        {
+          "expression": "(sqrt(x+4)-2)/x",
+          "color": "pen-blue",
+          "domain": [
+            0.05,
+            4
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 0,
+          "y": 0.25,
+          "style": "open",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "Here is a second worked example that uses a different technique: rationalizing (유리화) a radical expression by multiplying by its conjugate (켤레식), instead of factoring a polynomial.\n\nEvaluate $\\lim_{x\\to 0}\\dfrac{\\sqrt{x+4}-2}{x}$.\n\nStep 1 — Try direct substitution first: at $x=0$ the numerator becomes $\\sqrt{4}-2=0$ and the denominator is $0$, giving the indeterminate form $0/0$ again — a signal to transform the expression before the quotient rule can apply.\n\nStep 2 — Multiply the numerator and denominator by the conjugate $\\sqrt{x+4}+2$ to eliminate the square root:\n\n$$\\frac{\\sqrt{x+4}-2}{x}\\cdot\\frac{\\sqrt{x+4}+2}{\\sqrt{x+4}+2}=\\frac{(x+4)-4}{x(\\sqrt{x+4}+2)}=\\frac{x}{x(\\sqrt{x+4}+2)}$$\n\n🗣 \"The square root of x plus four, minus two, over x, times its conjugate over itself, simplifies to x over x times the square root of x plus four plus two.\"\n\nStep 3 — Cancel the common factor $x$, which is valid since the limit only cares about values near $x=0$, not at $x=0$ itself:\n\n$$\\frac{x}{x(\\sqrt{x+4}+2)}=\\frac{1}{\\sqrt{x+4}+2}$$\n\n🗣 \"This simplifies to one over the square root of x plus four, plus two.\"\n\nStep 4 — Now direct substitution works, because the denominator's limit is no longer zero:\n\n$$\\lim_{x\\to0}\\frac{\\sqrt{x+4}-2}{x}=\\lim_{x\\to0}\\frac{1}{\\sqrt{x+4}+2}=\\frac{1}{\\sqrt{4}+2}=\\frac14$$\n\n🗣 \"The limit of the square root of x plus four minus two, over x, as x approaches zero, equals one fourth.\"\n\n{{graph:limit-laws-radical-removable}}\n\n❌ A common mistake is forcing the quotient rule even when the denominator's limit is $0$ but the numerator's limit is not — for example, seeing $\\lim_{x\\to a}f(x)=5$ and $\\lim_{x\\to a}g(x)=0$, then writing $\\lim_{x\\to a}\\dfrac{f(x)}{g(x)}=\\dfrac{5}{0}=0$.\n\n✅ The quotient rule requires $M\\neq0$; when $M=0$ but $L\\neq0$, the rule simply does not apply, and the limit does not exist because the expression grows without bound near $a$ — never invent a finite value by treating $\\dfrac{5}{0}$ as $0$.\n\n❌ Another mistake is trying to split a limit like $\\lim_{x\\to0}\\left[\\dfrac1x+\\left(3-\\dfrac1x\\right)\\right]$ into $\\lim_{x\\to0}\\dfrac1x+\\lim_{x\\to0}\\left(3-\\dfrac1x\\right)$ and concluding the whole limit fails to exist because neither piece converges.\n\n✅ The sum rule only guarantees a valid split when both individual limits exist; here the two unbounded pieces actually cancel algebraically before you ever take a limit, since $\\dfrac1x+3-\\dfrac1x=3$ for every $x\\neq0$, so $\\lim_{x\\to0}\\left[\\dfrac1x+3-\\dfrac1x\\right]=\\lim_{x\\to0}3=3$. Always simplify first when a piece of the expression looks like it might diverge.\n\nEdge cases worth noticing: the quotient rule's condition $M\\neq0$ splits into two very different situations. If $M=0$ while $L\\neq0$, the limit of the quotient genuinely does not exist — the graph shoots off toward $+\\infty$ or $-\\infty$ near $a$. If both $L=0$ and $M=0$, you get an indeterminate form, which is not a verdict of \"no limit\" but an instruction to dig deeper — factor, rationalize, or otherwise simplify, as in both worked examples above. And even when the limit exists and is finite, the original function may still be undefined exactly at $x=a$, as with the removable hole at $x=0$ in the example above — the limit describes the trend approaching that point, not the value (or non-value) sitting there.",
+  "advanced": {
+    "content": "Suppose a function $f$ satisfies $\\lim_{x\\to1}\\dfrac{f(x)-2}{x-1}=4$. Evaluate $\\lim_{x\\to1}\\dfrac{f(x)^2-4}{x-1}$.\n\nStep 1 — Since $x-1\\to0$ as $x\\to1$ and the given quotient converges to the finite value $4$, the numerator $f(x)-2$ must also approach $0$ — otherwise the quotient would grow without bound rather than settle at $4$. This forces $\\lim_{x\\to1}f(x)=2$.\n\nStep 2 — Rewrite the target expression's numerator as a difference of squares, $f(x)^2-4=\\big(f(x)-2\\big)\\big(f(x)+2\\big)$, and split the quotient into a product of two pieces:\n\n$$\\frac{f(x)^2-4}{x-1}=\\frac{f(x)-2}{x-1}\\cdot\\big(f(x)+2\\big)$$\n\n🗣 \"f of x squared minus four, over x minus one, equals f of x minus two, over x minus one, times f of x plus two.\"\n\nStep 3 — Apply the product rule, using the given limit for the first factor and the result from Step 1 for the second factor:\n\n$$\\lim_{x\\to1}\\frac{f(x)^2-4}{x-1}=\\left(\\lim_{x\\to1}\\frac{f(x)-2}{x-1}\\right)\\cdot\\left(\\lim_{x\\to1}\\big(f(x)+2\\big)\\right)=4\\cdot(2+2)=16$$\n\n🗣 \"The limit equals four times two plus two, which is sixteen.\"\n\nA curious student might ask why it's legitimate to conclude $\\lim_{x\\to1}f(x)=2$ from a statement about a quotient, rather than being given it directly. The answer is really the quotient rule in reverse: the quotient rule tells you that if both $\\lim f(x)$ and $\\lim g(x)$ exist with the latter nonzero, the limit of the quotient exists and equals their ratio — but the converse-style reasoning used here says that if $g(x)\\to0$ and the quotient still converges to some finite number, the numerator is forced to shrink toward $0$ at exactly the same rate, since dividing something that doesn't vanish by something that does would make the quotient blow up. Korean exam problems exploit this hidden information constantly: a limit statement involving an unknown function's behavior near a point is often the only way to pin down that function's value (or its rate of change) at that point, long before you ever get an explicit formula for $f$.",
+    "practice": [
+      {
+        "id": "limit-laws-adv-1",
+        "type": "numeric",
+        "prompt": "Given $\\lim_{x\\to3}\\dfrac{f(x)-6}{x-3}=5$, evaluate $\\lim_{x\\to3}\\dfrac{xf(x)-18}{x-3}$.",
+        "correctAnswer": "21",
+        "solution": "Since $x-3\\to0$ and the given quotient converges to $5$, the numerator $f(x)-6$ must also approach $0$, so $\\lim_{x\\to3}f(x)=6$. Rewrite $xf(x)-18=x\\big(f(x)-6\\big)+6(x-3)$, so $$\\frac{xf(x)-18}{x-3}=x\\cdot\\frac{f(x)-6}{x-3}+6.$$ Taking the limit as $x\\to3$ using the product and sum rules gives $3\\cdot5+6=21$."
+      },
+      {
+        "id": "limit-laws-adv-2",
+        "type": "numeric",
+        "prompt": "If $\\lim_{x\\to2}\\dfrac{x^2+ax-6}{x-2}$ exists and equals $L$, find the value of $a+L$.",
+        "correctAnswer": "6",
+        "solution": "Because the denominator's limit is $0$, the numerator must also approach $0$ at $x=2$ for the limit to exist, so $2^2+2a-6=0$, giving $a=1$. Substituting $a=1$, the numerator factors as $x^2+x-6=(x-2)(x+3)$, so $$\\frac{x^2+ax-6}{x-2}=\\frac{(x-2)(x+3)}{x-2}=x+3$$ for $x\\neq2$. Then $L=\\lim_{x\\to2}(x+3)=5$, so $a+L=1+5=6$."
+      }
+    ]
+  },
   "lessonId": "limit-laws",
-  "generatedAt": "2026-07-12T05:43:30.850Z"
+  "generatedAt": "2026-07-17T04:52:03.351Z"
 }
