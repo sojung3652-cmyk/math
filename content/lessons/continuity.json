@@ -232,8 +232,114 @@
         }
       ],
       "asymptotes": []
+    },
+    {
+      "id": "sqrt-interval-continuity",
+      "captionEn": "h(x) = √(x−1) is continuous on the closed interval [1,5], matched at both endpoints by one-sided limits.",
+      "captionKo": "h(x) = √(x−1)는 닫힌구간 [1,5]에서 양 끝점의 편측 극한과 일치하며 연속이다.",
+      "xDomain": [
+        0,
+        6
+      ],
+      "yDomain": [
+        -1,
+        3
+      ],
+      "functions": [
+        {
+          "expression": "sqrt(x-1)",
+          "color": "pen-blue",
+          "domain": [
+            1,
+            5
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 1,
+          "y": 0,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 5,
+          "y": 2,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    },
+    {
+      "id": "reciprocal-infinite-discontinuity",
+      "captionEn": "f(x) = 1/x has an infinite discontinuity at x = 0 — neither removable nor a jump.",
+      "captionKo": "f(x) = 1/x는 x=0에서 제거 가능하지도, 도약하지도 않는 무한 불연속을 갖는다.",
+      "xDomain": [
+        -4,
+        4
+      ],
+      "yDomain": [
+        -4,
+        4
+      ],
+      "functions": [
+        {
+          "expression": "1/x",
+          "color": "pen-blue",
+          "domain": [
+            -4,
+            -0.1
+          ]
+        },
+        {
+          "expression": "1/x",
+          "color": "pen-blue",
+          "domain": [
+            0.1,
+            4
+          ]
+        }
+      ],
+      "points": [],
+      "asymptotes": [
+        {
+          "axis": "x",
+          "value": 0
+        },
+        {
+          "axis": "y",
+          "value": 0
+        }
+      ]
     }
   ],
+  "goingDeeper": "Continuity on a closed interval (닫힌구간) demands extra care exactly at the two endpoints, because the function's domain stops there and only one side of the limit is even meaningful — this worked example fills that gap using a square-root function (제곱근 함수), a setup the earlier worked example never tested.\n\nDetermine whether $h(x) = \\sqrt{x-1}$ is continuous on the closed interval $[1,5]$.\n\n🗣 \"H of x equals the square root of x minus one, on the closed interval from one to five.\"\n\nStep 1 — Confirm the domain lines up with the interval. Since $\\sqrt{x-1}$ requires $x-1 \\ge 0$, the domain of $h$ is $[1,\\infty)$, which fully contains $[1,5]$, so $h(x)$ is defined at every point we need to check.\n\nStep 2 — Check every interior point $x \\in (1,5)$. For any such $a$, both the left-hand and right-hand limits exist and equal $\\sqrt{a-1}$, and $h(a) = \\sqrt{a-1}$ as well, so all three conditions line up — $h$ is continuous at every interior point.\n\nStep 3 — Check the left endpoint $x=1$. Because $h$ isn't defined for $x<1$, only the right-hand limit (우극한) is relevant here.\n\n$$\\lim_{x\\to 1^+} h(x) = \\sqrt{1-1} = 0 = h(1)$$\n\n🗣 \"The right-hand limit as x approaches one equals zero, which matches h of one.\"\n\nStep 4 — Check the right endpoint $x=5$. Only the left-hand limit matters here, since $5$ is the interval's upper edge.\n\n$$\\lim_{x\\to 5^-} h(x) = \\sqrt{5-1} = 2 = h(5)$$\n\n🗣 \"The left-hand limit as x approaches five equals two, which matches h of five.\"\n\nSince every interior point and both endpoints satisfy the definition using whichever limit is actually available there, $h$ is continuous on all of $[1,5]$.\n\n{{graph:sqrt-interval-continuity}}\n\n❌ A common error is trying to force a two-sided limit at $x=1$ and panicking when the left-hand piece 'doesn't exist' because $\\sqrt{x-1}$ isn't even defined for $x<1$, then concluding $h$ must be discontinuous there.\n\n✅ At an endpoint of the interval you only ever need the one-sided limit that stays inside the domain — the missing side isn't a broken limit, it's simply outside the question being asked.\n\n❌ Another frequent mix-up: seeing that a break can be 'patched' by cancelling a common factor, like $(x-3)$ in $\\dfrac{x^2-9}{x-3}$, and assuming every discontinuity must therefore be removable.\n\n✅ Removability depends entirely on whether the two-sided limit exists in the first place; if the left-hand and right-hand limits disagree — a genuine jump — no amount of algebraic cancelling will patch it, because there's no single limiting height to fill in.\n\nEdge cases are worth collecting separately from the two named types you've already met. A function like $f(x) = \\dfrac{1}{x}$ at $x=0$ is undefined, and its two-sided limit doesn't exist either — yet it's neither removable nor a jump discontinuity, because the two sides don't approach two different finite heights, they shoot off toward $\\pm\\infty$. This is sometimes called an infinite discontinuity (무한 불연속), and no single patched value could ever fix it.\n\n{{graph:reciprocal-infinite-discontinuity}}",
+  "advanced": {
+    "content": "Suppose $f(x) = \\begin{cases} x^2+ax+3 & x<2 \\\\ 2bx-1 & x\\ge 2 \\end{cases}$, and it's also known that $f(4)=15$. If $f$ is continuous on all of $\\mathbb{R}$, find the value of $a+b$.\n\n🗣 \"F of x equals x squared plus a x plus three for x less than two, and two b x minus one for x greater than or equal to two, with f of four equal to fifteen.\"\n\nStep 1 — Use the given value $f(4)=15$ to pin down $b$ first, since $x=4$ only touches the second piece.\n\n$$2b(4)-1=15 \\;\\Rightarrow\\; 8b=16 \\;\\Rightarrow\\; b=2$$\n\n🗣 \"Eight b equals sixteen, so b equals two.\"\n\nStep 2 — With $b$ known, impose continuity at the junction $x=2$, where the two pieces meet. Compute the limit from the left using the first piece and the value from the right using the second piece.\n\n$$\\lim_{x\\to 2^-}f(x) = 2^2+2a+3 = 7+2a, \\qquad f(2) = 2(2)(2)-1 = 7$$\n\n🗣 \"The left-hand limit at two is seven plus two a, and f of two equals seven.\"\n\nStep 3 — Set these equal, since continuity at $x=2$ requires condition (3): the limit must equal the function value there.\n\n$$7+2a = 7 \\;\\Rightarrow\\; a=0$$\n\n🗣 \"Seven plus two a equals seven, so a equals zero.\"\n\nStep 4 — Combine both results: since $a=0$ and $b=2$, the requested sum is $a+b = 0+2 = 2$.\n\nA curious student should next ask why we never had to individually re-check continuity at every other real number besides $x=2$ — the answer is that polynomials are continuous at every real number by construction, being built from sums and products of continuous power functions and constants. So the only place a piecewise combination of polynomials can possibly break is exactly at a seam where the definition switches. This is the algebra of continuous functions at work: sums, products, and quotients (away from zero denominators) of continuous functions stay continuous, and compositions of continuous functions stay continuous too — which is precisely why checking only the junction points is always enough for piecewise polynomial functions, instead of checking every real number one at a time.",
+    "practice": [
+      {
+        "id": "adv-1",
+        "type": "multiple_choice",
+        "prompt": "Let $g(x) = \\dfrac{x^2-5x+6}{x-3}$ for $x\\neq 3$, and define $g(3)=-2$. What type of discontinuity, if any, does $g$ have at $x=3$?",
+        "choices": [
+          "Removable discontinuity",
+          "Jump discontinuity",
+          "Infinite discontinuity",
+          "$g$ is continuous at $x=3$"
+        ],
+        "correctAnswer": "Removable discontinuity",
+        "solution": "Step 1 — Factor the numerator: $x^2-5x+6=(x-3)(x-2)$, so for $x\\neq3$, $g(x)=\\dfrac{(x-3)(x-2)}{x-3}=x-2$.\n\nStep 2 — The two-sided limit exists: $\\lim_{x\\to3}g(x) = 3-2=1$.\n\nStep 3 — Compare to the defined value: $g(3)=-2\\neq1$, so condition (3) fails even though the limit exists — this is a removable discontinuity, fixable by redefining $g(3)=1$."
+      },
+      {
+        "id": "adv-2",
+        "type": "numeric",
+        "prompt": "Let $f(x) = \\begin{cases} x^2+ax+1 & x<1 \\\\ bx-2 & 1\\le x<4 \\\\ x^2-5 & x\\ge 4 \\end{cases}$. If $f$ is continuous on all of $\\mathbb{R}$, find the value of $a+b$.",
+        "correctAnswer": "5/2",
+        "solution": "Step 1 — Impose continuity at $x=1$: the left limit using the first piece is $1+a+1=2+a$, and the value from the middle piece is $f(1)=b-2$. Setting them equal gives $2+a=b-2$, i.e. $b-a=4$.\n\nStep 2 — Impose continuity at $x=4$: the limit from the middle piece as $x\\to4^-$ is $4b-2$, and the value from the third piece is $f(4)=16-5=11$. Setting them equal gives $4b-2=11$, so $b=\\dfrac{13}{4}$.\n\nStep 3 — Substitute back into $b-a=4$ to get $a=b-4=\\dfrac{13}{4}-4=-\\dfrac{3}{4}$.\n\nStep 4 — Add the results: $a+b=-\\dfrac{3}{4}+\\dfrac{13}{4}=\\dfrac{10}{4}=\\dfrac{5}{2}$."
+      }
+    ]
+  },
   "lessonId": "continuity",
-  "generatedAt": "2026-07-12T09:54:06.734Z"
+  "generatedAt": "2026-07-17T05:58:09.859Z"
 }

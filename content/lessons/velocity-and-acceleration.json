@@ -74,6 +74,92 @@
       "solution": "Step 1 — Differentiate $s(t) = t^3 - 12t$ to get $v(t) = 3t^2 - 12$, then differentiate again to get $a(t) = 6t$.\n\nStep 2 — Evaluate at $t = 1$: $v(1) = 3(1) - 12 = -9$, and $a(1) = 6(1) = 6$.\n\nStep 3 — Since $v(1) = -9 < 0$, the particle moves in the negative direction. Since $a(1) = 6 > 0$ has the opposite sign from $v(1)$, the particle is slowing down. So the answer is 'Slowing down, moving in negative direction.'"
     }
   ],
+  "graphs": [
+    {
+      "id": "quartic-velocity-accel",
+      "captionEn": "Velocity v(t) and acceleration a(t) for s(t) = t^4 - 4t^3, showing where each function crosses zero.",
+      "captionKo": "s(t) = t^4 - 4t^3의 속도 v(t)와 가속도 a(t) 그래프로, 각 함수가 0이 되는 지점을 보여준다.",
+      "xDomain": [
+        0,
+        4
+      ],
+      "yDomain": [
+        -20,
+        100
+      ],
+      "functions": [
+        {
+          "expression": "4*t^3 - 12*t^2",
+          "color": "pen-blue",
+          "domain": [
+            0,
+            4
+          ]
+        },
+        {
+          "expression": "12*t^2 - 24*t",
+          "color": "red-pen",
+          "domain": [
+            0,
+            4
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 0,
+          "y": 0,
+          "style": "closed",
+          "color": "ink"
+        },
+        {
+          "x": 2,
+          "y": -16,
+          "style": "closed",
+          "color": "ink"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "style": "closed",
+          "color": "ink"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "Let's look at a second scenario: a particle whose position follows a quartic (사차함수) function, where instead of checking a single instant we analyze speeding-up and slowing-down behavior across a whole interval of time using a sign chart (부호표).\n\nA particle moves along a line so that its position in meters at time $t$ seconds ($t \\ge 0$) is given by\n\n$$s(t) = t^4 - 4t^3$$\n\n🗣 \"s of t equals t to the fourth minus four t cubed.\"\n\nFind the velocity and acceleration functions, then determine on which time intervals the particle is speeding up and on which it is slowing down.\n\nStep 1 — Differentiate $s(t)$ to get the velocity function and factor it:\n\n$$v(t) = s'(t) = 4t^3 - 12t^2 = 4t^2(t-3)$$\n\n🗣 \"v of t equals four t cubed minus twelve t squared, which factors as four t squared times the quantity t minus three.\"\n\nStep 2 — Differentiate $v(t)$ to get the acceleration function and factor it:\n\n$$a(t) = v'(t) = 12t^2 - 24t = 12t(t-2)$$\n\n🗣 \"a of t equals twelve t squared minus twenty-four t, which factors as twelve t times the quantity t minus two.\"\n\nStep 3 — List every time where $v(t)=0$ or $a(t)=0$: these are $t=0$, $t=2$, and $t=3$. These three values split $[0,\\infty)$ into the intervals $(0,2)$, $(2,3)$, and $(3,\\infty)$, and only inside each interval are the signs of $v(t)$ and $a(t)$ guaranteed to stay fixed.\n\nStep 4 — Test one sample point in each interval. On $(0,2)$, try $t=1$: $v(1)=4(1)(1-3)=-8<0$ and $a(1)=12(1)(1-2)=-12<0$ — same sign, so the particle speeds up while moving in the negative direction. On $(2,3)$, try $t=2.5$: $v(2.5)=4(6.25)(-0.5)=-12.5<0$ and $a(2.5)=12(2.5)(0.5)=15>0$ — opposite signs, so the particle slows down, still moving in the negative direction. On $(3,\\infty)$, try $t=4$: $v(4)=4(16)(1)=64>0$ and $a(4)=12(16)(2)=384>0$ — same sign, so the particle speeds up while moving in the positive direction.\n\nStep 5 — Handle $t=0$ separately: $v(0)=0$ and $a(0)=0$ at the same instant, so the particle is instantaneously at rest (순간적으로 정지) with zero acceleration too — the labels 'speeding up' and 'slowing down' simply don't apply at that exact instant, since both quantities that define them vanish.\n\n{{graph:quartic-velocity-accel}}\n\n❌ A common error is to test only the isolated times where $v(t)=0$ or $a(t)=0$ — here $t=0,2,3$ — and try to decide 'speeding up' or 'slowing down' *at* those exact instants.\n\n✅ Speeding up and slowing down describe behavior over an interval, not an isolated instant where velocity or acceleration momentarily vanishes; combine every root of $v(t)$ and every root of $a(t)$ into one list, then test a sample point inside each resulting sub-interval.\n\n❌ Another frequent mistake is concluding that once $v(t)=0$ at $t=3$, the particle has stopped moving for good, treating it like a permanent stop.\n\n✅ A zero of $v(t)$ only means the particle is momentarily at rest; check the sign of $v(t)$ just before and just after that instant to see whether it reverses direction or simply pauses and continues the same way.\n\nAn important edge case occurs whenever $v(t)$ and $a(t)$ equal zero at the same instant, as happened at $t=0$ above: the comparison of their signs is undefined right at that point, so the classification only makes sense on open intervals where neither function is zero. Another edge case is a particle with constant velocity, where $a(t)\\equiv 0$ everywhere; with no acceleration at all, the object never speeds up and never slows down — it simply holds a constant speed forever, and asking whether it is speeding up or slowing down has no interval where either answer applies.",
+  "advanced": {
+    "content": "Consider a particle moving along a number line with velocity given by\n\n$$v(t) = t^2 - 4t + 3 \\quad (t \\ge 0)$$\n\n🗣 \"v of t equals t squared minus four t plus three.\"\n\nGiven that the particle starts at position $s(0)=0$, find the total distance (전체 이동 거리) it travels during the first $4$ seconds — note this is different from its displacement (변위), $s(4)-s(0)$.\n\nStep 1 — Factor $v(t)$ to find when the particle changes direction: $v(t) = (t-1)(t-3)$, so $v(t)=0$ at $t=1$ and $t=3$, splitting $[0,4]$ into $[0,1]$, $[1,3]$, and $[3,4]$.\n\nStep 2 — Determine the sign of $v(t)$ on each piece: $v(t)>0$ on $[0,1)$, $v(t)<0$ on $(1,3)$, and $v(t)>0$ on $(3,4]$, so the particle reverses direction exactly twice.\n\nStep 3 — Antidifferentiate $v(t)$ to recover the position function, using $s(0)=0$ to fix the constant of integration:\n\n$$s(t) = \\int v(t)\\,dt = \\frac{t^3}{3} - 2t^2 + 3t$$\n\n🗣 \"s of t equals t cubed over three minus two t squared plus three t.\"\n\nStep 4 — Evaluate $s(t)$ at each breakpoint: $s(0)=0$, $s(1)=\\frac{1}{3}-2+3=\\frac{4}{3}$, $s(3)=9-18+9=0$, and $s(4)=\\frac{64}{3}-32+12=\\frac{4}{3}$.\n\nStep 5 — Sum the absolute displacement on each sub-interval, since the particle moves in one consistent direction within each piece:\n\n$$\\text{distance} = |s(1)-s(0)| + |s(3)-s(1)| + |s(4)-s(3)| = \\frac{4}{3}+\\frac{4}{3}+\\frac{4}{3} = 4$$\n\n🗣 \"the total distance equals four meters.\"\n\nSo although the net displacement over the first four seconds is only $s(4)-s(0)=\\frac{4}{3}$ meters, the particle actually travels a total of $4$ meters back and forth.\n\nThe deeper reason displacement and total distance disagree is that displacement is the signed net change $\\int_a^b v(t)\\,dt$, where motion in the negative direction literally cancels motion in the positive direction inside the integral, while total distance is $\\int_a^b |v(t)|\\,dt$, the integral of speed (속력) rather than velocity — speed is never negative, so no cancellation ever happens. This is exactly why, whenever a particle changes direction inside an interval, you cannot just plug the endpoints into $s(t)$ and subtract to get distance traveled; you must first locate every zero of $v(t)$ inside the interval, split the interval there, and add the absolute displacement on each piece separately.",
+    "practice": [
+      {
+        "id": "adv-1",
+        "type": "numeric",
+        "prompt": "A particle's position is $s(t) = t^4 - 8t^2$ (meters, $t$ in seconds, $t \\ge 0$). Find the total distance the particle travels during the first $3$ seconds.",
+        "correctAnswer": "41",
+        "solution": "Differentiate to get $v(t)=4t^3-16t=4t(t-2)(t+2)$. For $t\\ge 0$ the relevant zero besides $t=0$ is $t=2$, splitting $[0,3]$ into $[0,2]$ and $[2,3]$. Testing $t=1$ gives $v(1)=-12<0$, so the particle moves negative on $(0,2)$; testing $t=2.5$ gives $v(2.5)>0$, so it moves positive on $(2,3)$. Since $s(t)=t^4-8t^2$, compute $s(0)=0$, $s(2)=16-32=-16$, $s(3)=81-72=9$. Total distance $=|s(2)-s(0)|+|s(3)-s(2)|=|-16|+|25|=16+25=41$ meters."
+      },
+      {
+        "id": "adv-2",
+        "type": "multiple_choice",
+        "prompt": "A particle's velocity is $v(t) = t^3 - 5t^2 + 6t$ for $0 \\le t \\le 4$ (t in seconds). How many times does the particle change direction during this interval?",
+        "choices": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "correctAnswer": "2",
+        "solution": "Factor $v(t)=t(t-2)(t-3)$, giving zeros at $t=0,2,3$, all inside $[0,4]$. Testing sample points: on $(0,2)$ with $t=1$, $v(1)=1(-1)(-2)=2>0$; on $(2,3)$ with $t=2.5$, $v(2.5)=2.5(0.5)(-0.5)<0$; on $(3,4)$ with $t=3.5$, $v(3.5)=3.5(1.5)(0.5)>0$. The sign goes $+,-,+$ across the interior zeros $t=2$ and $t=3$ — that's two sign changes, so the particle changes direction exactly twice (the zero at $t=0$ is the starting instant, not a reversal since there's no motion beforehand to compare)."
+      }
+    ]
+  },
   "lessonId": "velocity-and-acceleration",
-  "generatedAt": "2026-07-12T06:13:13.472Z"
+  "generatedAt": "2026-07-17T06:05:21.254Z"
 }

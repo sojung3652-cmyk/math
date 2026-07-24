@@ -74,6 +74,69 @@
       "solution": "Step 1 — Reverse the power rule term by term: an antiderivative of $6x^2$ is $2x^3$, and an antiderivative of $-4$ is $-4x$.\n\nStep 2 — Check by differentiating: $(2x^3-4x)' = 6x^2-4 = f(x)$ ✓.\n\nStep 3 — Because every constant works, the complete answer needs the constant of integration attached, giving $2x^3-4x+C$ as the family of all antiderivatives."
     }
   ],
+  "graphs": [
+    {
+      "id": "neg-power-antideriv",
+      "captionEn": "F(x) = -1/x, one antiderivative of f(x) = x^{-2}, shown for x > 0",
+      "captionKo": "F(x) = -1/x는 x>0에서 f(x)=x^{-2}의 원시함수 중 하나입니다",
+      "xDomain": [
+        0,
+        5
+      ],
+      "yDomain": [
+        -5,
+        5
+      ],
+      "functions": [
+        {
+          "expression": "-1/x",
+          "color": "pen-blue",
+          "domain": [
+            0.2,
+            5
+          ]
+        }
+      ],
+      "points": [],
+      "asymptotes": [
+        {
+          "axis": "x",
+          "value": 0
+        },
+        {
+          "axis": "y",
+          "value": 0
+        }
+      ]
+    }
+  ],
+  "goingDeeper": "Consider a case where the exponent is negative, which tests whether the reverse power rule (거듭제곱 법칙) still works outside of positive integers.\n\nFind the general antiderivative of $f(x) = x^{-2}$ for $x > 0$.\n\nStep 1 — Identify $n$ in $f(x)=x^n$. Here $n=-2$, so $n+1=-1$, which is not zero, so the reverse power rule still applies.\n\nStep 2 — Apply $F(x) = \\dfrac{x^{n+1}}{n+1} + C$ with $n=-2$.\n\n$$F(x) = \\frac{x^{-1}}{-1} + C = -\\frac{1}{x} + C$$\n\n🗣 \"F of x equals negative one over x, plus C.\"\n\nStep 3 — Verify by differentiating. Using the power rule on $-x^{-1}$ gives $-(-1)x^{-2}=x^{-2}$, and the constant term vanishes.\n\n$$F'(x) = -(-1)x^{-1-1} + 0 = x^{-2} = f(x)$$\n\n🗣 \"F prime of x equals negative negative one, x to the negative two, plus zero, equals x to the negative two, which equals f of x.\"\n\nStep 4 — Note the domain restriction: since $x^{-2}$ and $-1/x$ are both undefined at $x=0$, this antiderivative is only valid on an interval that avoids $0$, such as $x>0$ or $x<0$ separately.\n\n{{graph:neg-power-antideriv}}\n\nA frequent error appears once functions have more than one term.\n\n❌ Some students write a separate constant for every term, such as $F(x) = \\dfrac{x^3}{3} + C_1 - x^2 + C_2$, treating each piece as if it needed its own leftover constant.\n\n✅ Since the sum of several constants is still just some constant, always collect every leftover piece into a single $+C$ at the very end: $F(x) = \\dfrac{x^3}{3} - x^2 + C$.\n\nAnother slip happens when the exponent itself is negative or fractional.\n\n❌ Writing $F(x) = x^{n+1} + C$ and forgetting to divide by $n+1$, for example claiming an antiderivative of $x^{-2}$ is simply $-x^{-1}$'s numerator without the division step.\n\n✅ Always divide by the new exponent $n+1$ no matter its sign: $F(x) = \\dfrac{x^{n+1}}{n+1}+C$, so for $n=-2$ the correct antiderivative is $-\\dfrac{1}{x}+C$, which should always be checked by differentiating back to $f(x)$.\n\nThe formula $F(x)=\\dfrac{x^{n+1}}{n+1}+C$ has one genuine edge case: it completely breaks down at $n=-1$, since $n+1=0$ would force division by zero. Reversing the power rule for $f(x)=x^{-1}$ therefore needs an entirely different kind of function, which is why that case is deliberately postponed to a later lesson. A subtler edge case involves domains with a break in them, like $x\\neq 0$: on each side of the break, the constant $C$ is only guaranteed to match within one connected piece, so a valid antiderivative on all of $x\\neq 0$ could in principle use a different constant for $x>0$ than for $x<0$, even though both pieces come from the same formula $-1/x$.",
+  "advanced": {
+    "content": "Let $F(x)$ be an antiderivative of $f(x) = 4x^3 - 6x^2 + 2ax$, where $a$ is a constant. Suppose the graph of $y=F(x)$ has a horizontal tangent line at $x=1$, and $F(0)=3$. Find $F(2)$.\n\nStep 1 — Translate the tangent condition. A horizontal tangent at $x=1$ means the slope of $F$ there is zero, so $F'(1)=0$. Since $F'(x)=f(x)$, this is the same as $f(1)=0$.\n\nStep 2 — Substitute $x=1$ into $f(x)$ and solve for $a$.\n\n$$4(1)^3 - 6(1)^2 + 2a(1) = 0 \\implies 4 - 6 + 2a = 0 \\implies a = 1$$\n\n🗣 \"Four minus six plus two a equals zero, so a equals one.\"\n\nStep 3 — With $a=1$ fixed, $f(x) = 4x^3-6x^2+2x$. Apply the reverse power rule term by term to build the general antiderivative.\n\n$$F(x) = x^4 - 2x^3 + x^2 + C$$\n\n🗣 \"F of x equals x to the fourth, minus two x cubed, plus x squared, plus C.\"\n\nStep 4 — Use $F(0)=3$ to pin down $C$.\n\n$$F(0) = 0-0+0+C = 3 \\implies C = 3$$\n\nStep 5 — Now evaluate the fully determined $F(x)=x^4-2x^3+x^2+3$ at $x=2$.\n\n$$F(2) = 16 - 16 + 4 + 3 = 7$$\n\n🗣 \"F of two equals sixteen minus sixteen plus four plus three, equals seven.\"\n\nA curious question this raises: why is it legitimate to find the antiderivative of a sum of terms just by antidifferentiating each term separately and adding the results, exactly as in Step 3? The underlying reason is that the derivative operator is linear (선형성) — the derivative of a sum equals the sum of the derivatives, and the derivative of a constant multiple pulls the constant outside. Because antidifferentiation is defined purely by asking 'what function, when differentiated, gives this back,' that same linearity transfers backward: if $F'=f$ and $G'=g$, then $(F+G)'=f+g$, so $F+G$ is automatically an antiderivative of $f+g$. This is precisely why the reverse power rule can be applied one power of $x$ at a time inside a complicated polynomial, without ever treating the whole expression as one indivisible block.",
+    "practice": [
+      {
+        "id": "adv-1",
+        "type": "numeric",
+        "prompt": "Let $F(x)$ be an antiderivative of $f(x) = 6x^2 + 2ax + b$ (with $a,b$ constants), satisfying $F(0)=5$, $F'(0)=-3$, and $F(1)=6$. Find the value of $a+b$.",
+        "correctAnswer": "-1",
+        "solution": "Since $F'(x)=f(x)$, we have $F'(0)=f(0)=b$, and this is given as $-3$, so $b=-3$. Applying the reverse power rule term by term gives $F(x) = 2x^3 + ax^2 + bx + C$. Using $F(0)=C=5$ fixes $C=5$. Then $F(1) = 2 + a + b + C = 2 + a - 3 + 5 = a+4$, and setting this equal to $6$ gives $a=2$. Therefore $a+b = 2 + (-3) = -1$."
+      },
+      {
+        "id": "adv-2",
+        "type": "multiple_choice",
+        "prompt": "Suppose $F(x)$ and $G(x)$ are both antiderivatives of the same function $f(x)$ on the entire real line. Which statement must be true for every $x$?",
+        "choices": [
+          "$F(x) = G(x)$ for every $x$",
+          "$F(x) - G(x)$ is a nonzero constant",
+          "$F(x) - G(x)$ is a constant, possibly $0$",
+          "$F(x)/G(x)$ is constant for every $x$",
+          "$F(x) + G(x) = 0$ for every $x$"
+        ],
+        "correctAnswer": "$F(x) - G(x)$ is a constant, possibly $0$",
+        "solution": "Since $F'(x)=f(x)$ and $G'(x)=f(x)$ for every $x$, the difference satisfies $(F-G)'(x) = f(x)-f(x)=0$ for every $x$ on the whole real line, which is a single connected interval. A function whose derivative is $0$ everywhere on a connected interval must itself be constant there, so $F(x)-G(x)=k$ for some constant $k$. This constant is allowed to be $0$ (if $F$ and $G$ happen to be identical), so the only statement guaranteed to be true is that the difference is some constant, possibly zero — not necessarily nonzero, and not necessarily forcing $F=G$."
+      }
+    ]
+  },
   "lessonId": "antiderivatives",
-  "generatedAt": "2026-07-12T06:18:13.755Z"
+  "generatedAt": "2026-07-17T06:05:03.808Z"
 }

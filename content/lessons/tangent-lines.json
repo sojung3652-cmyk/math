@@ -175,8 +175,124 @@
         }
       ],
       "asymptotes": []
+    },
+    {
+      "id": "tangent-slope-multiple",
+      "captionEn": "Two tangent lines with slope 9 touching y = x^3 - 3x^2 + 2 at (-1,-2) and (3,2).",
+      "captionKo": "기울기가 9인 두 접선이 y = x^3 - 3x^2 + 2 위의 점 (-1,-2)와 (3,2)에서 곡선에 접합니다.",
+      "xDomain": [
+        -3,
+        5
+      ],
+      "yDomain": [
+        -30,
+        20
+      ],
+      "functions": [
+        {
+          "expression": "x^3 - 3*x^2 + 2",
+          "color": "ink"
+        },
+        {
+          "expression": "9*x - 25",
+          "color": "pen-blue"
+        },
+        {
+          "expression": "9*x + 7",
+          "color": "red-pen"
+        }
+      ],
+      "points": [
+        {
+          "x": 3,
+          "y": 2,
+          "style": "closed",
+          "color": "pen-blue"
+        },
+        {
+          "x": -1,
+          "y": -2,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    },
+    {
+      "id": "tangent-external-point",
+      "captionEn": "Two tangent lines from the external point (1,-3) touching y = x^3 - 3x at (0,0) and (1.5, -1.125).",
+      "captionKo": "외부점 (1,-3)에서 그은 두 접선이 y = x^3 - 3x 위의 점 (0,0)과 (1.5, -1.125)에서 곡선에 접합니다.",
+      "xDomain": [
+        -2.5,
+        3
+      ],
+      "yDomain": [
+        -6,
+        4
+      ],
+      "functions": [
+        {
+          "expression": "x^3-3*x",
+          "color": "ink"
+        },
+        {
+          "expression": "-3*x",
+          "color": "pen-blue"
+        },
+        {
+          "expression": "(15/4)*x - 27/4",
+          "color": "red-pen"
+        }
+      ],
+      "points": [
+        {
+          "x": 0,
+          "y": 0,
+          "style": "closed",
+          "color": "pen-blue"
+        },
+        {
+          "x": 1.5,
+          "y": -1.125,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 1,
+          "y": -3,
+          "style": "open",
+          "color": "ink"
+        }
+      ],
+      "asymptotes": []
     }
   ],
+  "goingDeeper": "### Going deeper\n\nLet's flip the usual question around: instead of being handed the point of tangency, suppose we're only given the slope (기울기) and asked to find where on the curve that slope actually occurs — sometimes at more than one point at once.\n\n**Worked example:** Find all tangent lines to $f(x) = x^3 - 3x^2 + 2$ that have slope $9$.\n\nStep 1 — Differentiate $f(x)$ to get a formula for the slope at any point, then set that formula equal to the target slope $9$.\n\n$$f'(x) = 3x^2 - 6x \\quad\\Rightarrow\\quad 3x^2 - 6x = 9$$\n\n🗣 \"three x squared minus six x equals nine.\"\n\nStep 2 — Solve this equation for $x$; since it's quadratic, there may be two valid points of tangency, not just one.\n\n$$3x^2 - 6x - 9 = 0 \\ \\Rightarrow\\ x^2 - 2x - 3 = 0 \\ \\Rightarrow\\ (x-3)(x+1) = 0$$\n\n🗣 \"x minus three, times x plus one, equals zero.\"\n\nSo $x_0 = 3$ or $x_0 = -1$ — two separate points of tangency (접점) share the exact same slope.\n\nStep 3 — Find the $y$-coordinate at each $x_0$ by evaluating $f$.\n\n$$f(3) = 27 - 27 + 2 = 2, \\qquad f(-1) = -1 - 3 + 2 = -2$$\n\n🗣 \"f of three equals two, and f of negative one equals negative two.\"\n\nStep 4 — Write each tangent line using point-slope form with $m = 9$.\n\n$$y - 2 = 9(x - 3)\\ \\Rightarrow\\ y = 9x - 25, \\qquad y + 2 = 9(x + 1)\\ \\Rightarrow\\ y = 9x + 7$$\n\n🗣 \"y equals nine x minus twenty-five, and y equals nine x plus seven.\"\n\n{{graph:tangent-slope-multiple}}\n\n❌ A student solves $f'(x_0) = 9$, finds one root, writes down one tangent line, and stops — assuming a given slope can only occur at a single spot on the curve.\n\n✅ Always check whether the equation $f'(x_0) = m$ is linear or higher-degree; a quadratic (or cubic) can have multiple real roots, and each one produces its own valid tangent line.\n\n❌ Another frequent slip: when $f'(x_0) = 0$, a student tries to compute the normal slope as $-\\dfrac{1}{0}$ and concludes \"undefined, so no normal line exists.\"\n\n✅ When the tangent line is horizontal ($f'(x_0) = 0$), the normal line is simply vertical — it still exists, just written as $x = x_0$ instead of in slope-intercept form.\n\nEdge cases (경계 사례) worth remembering: if $f$ has a sharp corner or a vertical tangent at $x_0$ (like $f(x) = x^{1/3}$ at $x = 0$), the derivative fails to exist there, so no tangent line in the usual point-slope sense can be written at all — the curve simply has no single well-defined direction at that instant. Conversely, whenever $f'(x_0) = 0$, the normal-slope formula breaks down algebraically (division by zero) even though geometrically the vertical normal line $x = x_0$ is perfectly well-defined.",
+  "advanced": {
+    "content": "### Advanced example (수능 스타일)\n\nFrom the external point $(1, -3)$ — which does **not** lie on the curve — two tangent lines can be drawn to $y = x^3 - 3x$. Find the sum of the slopes of these two tangent lines.\n\nStep 1 — Since the tangency point isn't given, call it $(a,\\, a^3 - 3a)$ and write its tangent line using $f'(a) = 3a^2 - 3$ as the slope.\n\n$$y - (a^3 - 3a) = (3a^2 - 3)(x - a)$$\n\n🗣 \"y minus a cubed minus three a equals three a squared minus three, times x minus a.\"\n\nStep 2 — Force this line to pass through $(1, -3)$ by substituting $x = 1,\\ y = -3$.\n\n$$-3 - a^3 + 3a = (3a^2 - 3)(1 - a)$$\n\n🗣 \"negative three minus a cubed plus three a equals three a squared minus three, times one minus a.\"\n\nStep 3 — Expand the right-hand side and collect all terms onto one side.\n\n$$-3 - a^3 + 3a = 3a^2 - 3a^3 - 3 + 3a \\ \\Rightarrow\\ 2a^3 - 3a^2 = 0 \\ \\Rightarrow\\ a^2(2a - 3) = 0$$\n\n🗣 \"a squared, times two a minus three, equals zero.\"\n\nStep 4 — Solve for $a$: two valid tangency points emerge, $a = 0$ and $a = \\dfrac{3}{2}$.\n\nStep 5 — Compute the slope at each tangency point with $f'(a) = 3a^2 - 3$, then add the two slopes.\n\n$$f'(0) = -3, \\qquad f'\\!\\left(\\tfrac{3}{2}\\right) = 3\\!\\left(\\tfrac{9}{4}\\right) - 3 = \\tfrac{15}{4}$$\n\n🗣 \"f-prime of zero is negative three, and f-prime of three-halves is fifteen fourths.\"\n\n$$-3 + \\frac{15}{4} = \\frac{3}{4}$$\n\n🗣 \"negative three plus fifteen fourths equals three fourths.\"\n\nThe two tangent lines turn out to be $y = -3x$ and $y = \\dfrac{15}{4}x - \\dfrac{27}{4}$, and the sum of their slopes is $\\dfrac{3}{4}$.\n\n{{graph:tangent-external-point}}\n\nWhy does an external point sometimes admit one tangent line to a cubic, sometimes two, sometimes three? The condition \"the line through $(x_0, y_0)$ touches $y = f(x)$ at $x = a$\" always collapses, after algebra, into a single polynomial equation in $a$ whose degree matches $f$'s own degree — a cubic $f$ produces a cubic in $a$. The number of real tangent lines you can draw from a point equals the number of real roots of that polynomial, so \"how many tangents fit through here\" is secretly a question about how many times a polynomial crosses zero — which depends on where the point sits relative to the curve's inflection point (변곡점) and local turning points.",
+    "practice": [
+      {
+        "id": "adv1",
+        "type": "numeric",
+        "prompt": "Three tangent lines to the curve $y = x^3 - 3x$ can be drawn from the external point $(2, -2)$. Find the sum of the slopes of all three tangent lines.",
+        "correctAnswer": "18",
+        "solution": "Let the tangency point be $(a, a^3-3a)$ with slope $f'(a)=3a^2-3$. The tangent line is $y-(a^3-3a)=(3a^2-3)(x-a)$. Forcing it through $(2,-2)$ gives $-2-a^3+3a=(3a^2-3)(2-a)=6a^2-3a^3-6+3a$. Simplifying: $2a^3-6a^2+4=0 \\Rightarrow a^3-3a^2+2=0$. Testing $a=1$ gives $0$, so $(a-1)$ is a factor: $a^3-3a^2+2=(a-1)(a^2-2a-2)$. The quadratic factor gives $a=1\\pm\\sqrt3$. So $a=1,\\ 1+\\sqrt3,\\ 1-\\sqrt3$. Slopes: $f'(1)=3-3=0$; $f'(1+\\sqrt3)=3(4+2\\sqrt3)-3=9+6\\sqrt3$; $f'(1-\\sqrt3)=3(4-2\\sqrt3)-3=9-6\\sqrt3$. Summing all three: $0+(9+6\\sqrt3)+(9-6\\sqrt3)=18$."
+      },
+      {
+        "id": "adv2",
+        "type": "multiple_choice",
+        "prompt": "Find the equation of the common tangent line to the curves $y = x^2$ and $y = -x^2 + 4x - 2$.",
+        "choices": [
+          "y = 2x - 1",
+          "y = x - 1",
+          "y = 2x + 1",
+          "y = -2x + 1"
+        ],
+        "correctAnswer": "y = 2x - 1",
+        "solution": "Let the tangent to $y=x^2$ touch at $(a,a^2)$: slope $2a$, line $y=2ax-a^2$. Let the tangent to $y=-x^2+4x-2$ touch at $(b,-b^2+4b-2)$: slope $-2b+4$, line $y=(4-2b)x+(b^2-2)$. For a common tangent, both slopes and intercepts must match: $2a=4-2b \\Rightarrow a=2-b$, and $-a^2=b^2-2 \\Rightarrow a^2+b^2=2$. Substituting $a=2-b$: $(2-b)^2+b^2=2 \\Rightarrow 2b^2-4b+2=0 \\Rightarrow (b-1)^2=0 \\Rightarrow b=1$, so $a=1$. The slope is $2a=2$ and the line is $y=2x-a^2=2x-1$. Checking both tangency points confirms $y=2x-1$ touches each parabola exactly once."
+      }
+    ]
+  },
   "lessonId": "tangent-lines",
-  "generatedAt": "2026-07-12T09:54:23.595Z"
+  "generatedAt": "2026-07-17T05:57:00.009Z"
 }

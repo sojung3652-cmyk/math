@@ -62,6 +62,133 @@
       "solution": "Step 1 — Find where $f(x)=0$ inside the interval: $x^2-9=0 \\Rightarrow x=\\pm3$. Only $x=3$ lies in $[-2,4]$, so $f(x)\\le0$ on $[-2,3]$ and $f(x)\\ge0$ on $[3,4]$.\n\n🗣 \"f of x equals zero at x equals negative three or three, and only three is inside negative two to four.\"\n\nStep 2 — On $[-2,3]$, integrate $-f(x)$:\n\n$$\\int_{-2}^{3}(9-x^2)\\,dx=\\Big[9x-\\tfrac{x^3}{3}\\Big]_{-2}^{3}=18-\\left(-\\frac{46}{3}\\right)=\\frac{100}{3}.$$\n\n🗣 \"The integral of nine minus x squared from negative two to three equals one hundred thirds.\"\n\nStep 3 — On $[3,4]$, integrate $f(x)$ directly:\n\n$$\\int_{3}^{4}(x^2-9)\\,dx=\\Big[\\tfrac{x^3}{3}-9x\\Big]_{3}^{4}=-\\frac{44}{3}-\\left(-\\frac{54}{3}\\right)=\\frac{10}{3}.$$\n\n🗣 \"The integral of x squared minus nine from three to four equals ten thirds.\"\n\nStep 4 — Add the two pieces:\n\n$$A=\\frac{100}{3}+\\frac{10}{3}=\\frac{110}{3}.$$\n\n🗣 \"A equals one hundred thirds plus ten thirds, which is one hundred ten thirds.\""
     }
   ],
+  "graphs": [
+    {
+      "id": "cubic-line-crossing",
+      "captionEn": "f(x)=x^3-3x crosses the line g(x)=x three times, swapping which curve is on top at x=0.",
+      "captionKo": "f(x)=x^3-3x와 직선 g(x)=x는 세 지점에서 교차하며 x=0에서 위아래가 바뀝니다.",
+      "xDomain": [
+        -2.5,
+        2.5
+      ],
+      "yDomain": [
+        -3,
+        3
+      ],
+      "functions": [
+        {
+          "expression": "x^3-3x",
+          "color": "ink",
+          "domain": [
+            -2.5,
+            2.5
+          ]
+        },
+        {
+          "expression": "x",
+          "color": "pen-blue",
+          "domain": [
+            -2.5,
+            2.5
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": -2,
+          "y": -2,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    },
+    {
+      "id": "abs-parabola-line",
+      "captionEn": "The curve f(x)=|x^2-4| stays below the line g(x)=5 on [-3,3], touching it only at the endpoints.",
+      "captionKo": "곡선 f(x)=|x^2-4|는 [-3,3]에서 직선 g(x)=5 아래에 있으며 양 끝점에서만 만납니다.",
+      "xDomain": [
+        -4,
+        4
+      ],
+      "yDomain": [
+        -1,
+        6
+      ],
+      "functions": [
+        {
+          "expression": "abs(x^2-4)",
+          "color": "ink",
+          "domain": [
+            -4,
+            4
+          ]
+        },
+        {
+          "expression": "5",
+          "color": "red-pen",
+          "domain": [
+            -3,
+            3
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": -3,
+          "y": 5,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 3,
+          "y": 5,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "A trickier situation arises when the two curves cross each other more than twice on the interval, so the difference $f(x)-g(x)$ changes sign (부호가 바뀜) more than once — you then need more than one split point.\n\nStep 1 — Let $f(x)=x^3-3x$ and $g(x)=x$, and find every intersection point (교점) by solving $f(x)=g(x)$.\n\n$$x^3-3x=x \\;\\Longrightarrow\\; x^3-4x=0 \\;\\Longrightarrow\\; x(x-2)(x+2)=0 \\;\\Longrightarrow\\; x=-2,\\,0,\\,2.$$\n\n🗣 \"x cubed minus three x equals x gives x times x minus two times x plus two equals zero, so x equals negative two, zero, or two.\"\n\nStep 2 — Because there are three intersection points, check the sign of $h(x)=f(x)-g(x)=x^3-4x$ separately on $(-2,0)$ and $(0,2)$ by testing one value in each.\n\nAt $x=-1$: $h(-1)=(-1)^3-4(-1)=3>0$, so $f$ is on top on $(-2,0)$. At $x=1$: $h(1)=1-4=-3<0$, so $g$ is on top on $(0,2)$ — the curves swap places at $x=0$.\n\nStep 3 — Set up two separate integrals, always subtracting the lower curve from the upper curve on each piece.\n\n$$A=\\int_{-2}^{0}\\big[(x^3-3x)-x\\big]\\,dx+\\int_{0}^{2}\\big[x-(x^3-3x)\\big]\\,dx=\\int_{-2}^{0}(x^3-4x)\\,dx+\\int_{0}^{2}(4x-x^3)\\,dx.$$\n\n🗣 \"A equals the integral from negative two to zero of x cubed minus four x, d x, plus the integral from zero to two of four x minus x cubed, d x.\"\n\nStep 4 — Find the antiderivative $\\frac{x^4}{4}-2x^2$ for the first piece and evaluate.\n\n$$\\Big[\\frac{x^4}{4}-2x^2\\Big]_{-2}^{0}=0-(4-8)=4.$$\n\nStep 5 — Find the antiderivative $2x^2-\\frac{x^4}{4}$ for the second piece and evaluate.\n\n$$\\Big[2x^2-\\frac{x^4}{4}\\Big]_{0}^{2}=(8-4)-0=4.$$\n\nAdding the two pieces gives $A=4+4=8$ square units — notice that even though the two curves bound a 'crossing' shape rather than a single simple lens, the same split-and-absolute-value logic from the single-curve case still applies, just to $f(x)-g(x)$ instead of to $f(x)$ alone.\n\n{{graph:cubic-line-crossing}}\n\n❌ A common shortcut is to integrate $f(x)-g(x)$ across the whole interval in one go, i.e. computing $\\int_{-2}^{2}(x^3-4x)\\,dx$ without splitting at $x=0$.\n\n✅ Because $h(x)=x^3-4x$ is an odd function (홀함수), that single integral evaluates to exactly $0$ — the positive region above and the negative region below cancel perfectly, even though the actual enclosed area is $8$, not $0$. Always split at every interior zero of $f(x)-g(x)$ before adding.\n\n❌ Another frequent error is finding the intersection points correctly but then testing the sign of $f(x)-g(x)$ only once for the whole interval, assuming that because the curves crossed at one point they can't cross again elsewhere.\n\n✅ Every root of $f(x)=g(x)$ is a candidate split point; test a sample value inside each subinterval formed by consecutive roots, since a cubic (or higher-degree) difference can flip sign multiple times.\n\nEdge cases are worth flagging too. If $f(x)$ and $g(x)$ merely touch at a point without crossing — for instance when $f(x)-g(x)$ has a double root (중근), like $h(x)=x^2(x-1)$ — the sign of $h$ does not actually flip there, since $x^2\\ge 0$ regardless of sign; in that case you do NOT need to split the integral at that touching point, only at points where the sign genuinely changes. And if $a=b$ (a degenerate interval of zero width), the area is trivially $0$, since a definite integral over a single point contributes nothing.",
+  "advanced": {
+    "content": "Consider the curve $f(x)=|x^2-4|$ and the horizontal line $g(x)=5$. Find the area of the region enclosed between the curve and the line.\n\nStep 1 — Express $f$ piecewise, since the absolute value (절댓값) splits its formula depending on the sign of $x^2-4$: for $|x|\\ge 2$, $f(x)=x^2-4$; for $|x|<2$, $f(x)=4-x^2$.\n\nStep 2 — Find where $f(x)=g(x)=5$. On $|x|<2$, solving $4-x^2=5$ gives $x^2=-1$, which has no real solution, so the curve never reaches height $5$ on that middle piece. On $|x|\\ge 2$, solving $x^2-4=5$ gives $x^2=9$, so $x=\\pm 3$.\n\n$$x=-3,\\ 3.$$\n\n🗣 \"x squared minus four equals five gives x equals negative three or three.\"\n\nStep 3 — Confirm the line stays above the curve for the entire interval $[-3,3]$: on $[-2,2]$, $f(x)=4-x^2\\le 4<5$; on $[2,3]$ and $[-3,-2]$, $f(x)=x^2-4$ rises from $0$ up to exactly $5$ at $x=\\pm3$. So $g(x)\\ge f(x)$ throughout, with equality only at the two endpoints — no sign change to worry about.\n\nStep 4 — Use the even symmetry (대칭) of $f$ to halve the work: compute the area on $[0,3]$ and double it.\n\n$$A=2\\int_{0}^{3}\\big(5-f(x)\\big)\\,dx=2\\left[\\int_{0}^{2}\\big(1+x^2\\big)\\,dx+\\int_{2}^{3}\\big(9-x^2\\big)\\,dx\\right].$$\n\n🗣 \"A equals two times the integral from zero to two of one plus x squared, d x, plus the integral from two to three of nine minus x squared, d x.\"\n\nStep 5 — Evaluate each antiderivative.\n\n$$\\int_{0}^{2}(1+x^2)\\,dx=\\Big[x+\\frac{x^3}{3}\\Big]_{0}^{2}=2+\\frac{8}{3}=\\frac{14}{3}.$$\n\n$$\\int_{2}^{3}(9-x^2)\\,dx=\\Big[9x-\\frac{x^3}{3}\\Big]_{2}^{3}=18-\\frac{46}{3}=\\frac{8}{3}.$$\n\nStep 6 — Add the two pieces and double the total.\n\n$$A=2\\left(\\frac{14}{3}+\\frac{8}{3}\\right)=2\\cdot\\frac{22}{3}=\\frac{44}{3}.$$\n\n🗣 \"A equals two times twenty-two thirds, which is forty-four thirds.\"\n\nSo the enclosed area is $\\dfrac{44}{3}$ square units.\n\n{{graph:abs-parabola-line}}\n\nA curious student might ask why splitting at the zeros of $f(x)-g(x)$ is always mathematically safe — why can't the sign flip again between two consecutive zeros without another root appearing? The reason traces back to continuity (연속성) and the Intermediate Value Theorem (사잇값 정리): if $h(x)=f(x)-g(x)$ is continuous and $h(x)\\ne 0$ anywhere strictly between two consecutive roots, then $h$ cannot cross zero there, so by the Intermediate Value Theorem it must keep the same sign on that whole open subinterval — a single test point is therefore enough to characterize the entire piece. This is also why the 'area vs. signed integral' distinction mirrors the classic physics contrast between distance (거리) traveled and displacement (변위): integrating $f(x)-g(x)$ directly gives the net signed quantity (like displacement, where opposite directions cancel), while summing $|f(x)-g(x)|$ piece by piece over each constant-sign interval gives the true total area (like total distance, where every bit of motion counts positively).",
+    "practice": [
+      {
+        "id": "area-adv-1",
+        "type": "numeric",
+        "prompt": "Find the area enclosed between the curve $f(x)=x^3-9x$ and the x-axis on the interval $[-3,3]$. (The curve crosses the x-axis twice inside the interval, so split the integral into three pieces.)",
+        "correctAnswer": "81/2",
+        "solution": "Step 1 — Solve $x^3-9x=0 \\Rightarrow x(x-3)(x+3)=0$, giving zeros at $x=-3,0,3$, which splits $[-3,3]$ into two pieces.\n\nStep 2 — Test signs: at $x=-1$, $f(-1)=-1+9=8>0$; at $x=1$, $f(1)=1-9=-8<0$. So $f\\ge0$ on $[-3,0]$ and $f\\le0$ on $[0,3]$.\n\nStep 3 — Use the antiderivative $F(x)=\\frac{x^4}{4}-\\frac{9x^2}{2}$.\n\n$$\\int_{-3}^{0}(x^3-9x)\\,dx=F(0)-F(-3)=0-\\left(\\frac{81}{4}-\\frac{81}{2}\\right)=\\frac{81}{4}.$$\n\n$$\\int_{0}^{3}(x^3-9x)\\,dx=F(3)-F(0)=\\left(\\frac{81}{4}-\\frac{81}{2}\\right)-0=-\\frac{81}{4}.$$\n\nStep 4 — Take the absolute value of the negative piece and add both pieces: $A=\\frac{81}{4}+\\frac{81}{4}=\\frac{81}{2}$."
+      },
+      {
+        "id": "area-adv-2",
+        "type": "multiple_choice",
+        "prompt": "Find the area of the region enclosed between $f(x)=x^3-2x$ and $g(x)=x^2-2x$ on $[-1,2]$. (Note: the curves touch without crossing at one of the intersection points — check whether you actually need to split there.)",
+        "choices": [
+          "$\\frac{25}{12}$",
+          "$\\frac{7}{4}$",
+          "2",
+          "$\\frac{13}{6}$",
+          "3"
+        ],
+        "correctAnswer": "$\\frac{25}{12}$",
+        "solution": "Step 1 — Solve $f(x)=g(x)$: $x^3-2x=x^2-2x \\Rightarrow x^3-x^2=0 \\Rightarrow x^2(x-1)=0$, giving $x=0$ (a double root) and $x=1$.\n\nStep 2 — Because $x=0$ is a double root, $h(x)=f(x)-g(x)=x^2(x-1)$ does not change sign there, since $x^2\\ge0$ always — only $(x-1)$ controls the sign. Testing $x=-1$: $h(-1)=1\\cdot(-2)=-2<0$, so $g\\ge f$ on $[-1,1]$. Testing $x=2$: $h(2)=4\\cdot1=4>0$, so $f\\ge g$ on $[1,2]$. Only $x=1$ is an actual split point.\n\nStep 3 — Evaluate each integral.\n\n$$\\int_{-1}^{1}(x^2-x^3)\\,dx=\\Big[\\frac{x^3}{3}-\\frac{x^4}{4}\\Big]_{-1}^{1}=\\frac{1}{12}-\\left(-\\frac{7}{12}\\right)=\\frac{2}{3}.$$\n\n$$\\int_{1}^{2}(x^3-x^2)\\,dx=\\Big[\\frac{x^4}{4}-\\frac{x^3}{3}\\Big]_{1}^{2}=\\frac{4}{3}-\\left(-\\frac{1}{12}\\right)=\\frac{17}{12}.$$\n\nStep 4 — Add the pieces: $A=\\frac{2}{3}+\\frac{17}{12}=\\frac{8}{12}+\\frac{17}{12}=\\frac{25}{12}$."
+      }
+    ]
+  },
   "lessonId": "area",
-  "generatedAt": "2026-07-12T06:24:35.346Z"
+  "generatedAt": "2026-07-17T06:13:11.281Z"
 }

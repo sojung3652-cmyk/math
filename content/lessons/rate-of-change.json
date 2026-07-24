@@ -62,6 +62,95 @@
       "solution": "Step 1 — Find $s(2)$ and $s(5)$.\n\n$$s(2) = 2^2+3(2) = 10, \\qquad s(5) = 5^2+3(5) = 40$$\n\n🗣 \"s of two equals ten, and s of five equals forty.\"\n\nStep 2 — Apply the average rate of change formula.\n\n$$\\frac{s(5)-s(2)}{5-2} = \\frac{40-10}{3} = 10$$\n\n🗣 \"The average rate of change equals forty minus ten, over three, which is ten.\"\n\nSince position is in kilometers and time is in hours, this average rate of change represents an average speed of $10$ km/h."
     }
   ],
+  "graphs": [
+    {
+      "id": "secant-approach-x2",
+      "captionEn": "As the interval width h shrinks, the secant line through (a, f(a)) rotates and hugs the curve y = x^2 more tightly near x = 1.",
+      "captionKo": "구간의 폭 h가 줄어들수록, 점 (a, f(a))를 지나는 할선이 x=1 근처에서 곡선 y = x^2에 점점 더 가까워진다.",
+      "xDomain": [
+        -1,
+        4
+      ],
+      "yDomain": [
+        0,
+        16
+      ],
+      "functions": [
+        {
+          "expression": "x^2",
+          "color": "ink",
+          "domain": [
+            -1,
+            4
+          ]
+        },
+        {
+          "expression": "4*x-3",
+          "color": "pen-blue",
+          "domain": [
+            0,
+            3.5
+          ]
+        },
+        {
+          "expression": "2.5*x-1.5",
+          "color": "red-pen",
+          "domain": [
+            0.5,
+            2
+          ],
+          "dashed": true
+        }
+      ],
+      "points": [
+        {
+          "x": 1,
+          "y": 1,
+          "style": "closed",
+          "color": "ink"
+        },
+        {
+          "x": 3,
+          "y": 9,
+          "style": "closed",
+          "color": "pen-blue"
+        },
+        {
+          "x": 1.5,
+          "y": 2.25,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "### Going deeper: a symbolic example\n\nConsider $f(x) = x^2$, and look at the average rate of change not over a fixed numeric interval, but over the general interval $[a, a+h]$, where $h$ is some nonzero step forward from $a$. This symbolic (기호적인) approach reveals a pattern instead of just a single number.\n\nStep 1 — Write out $f(a)$ and $f(a+h)$ using the rule for $f$.\n\n$$f(a) = a^2, \\qquad f(a+h) = (a+h)^2 = a^2 + 2ah + h^2$$\n\n🗣 \"f of a plus h equals a squared plus two a h plus h squared.\"\n\nStep 2 — Substitute into the average rate of change formula and simplify, treating $a$ as fixed and $h$ as the variable.\n\n$$\\frac{f(a+h)-f(a)}{h} = \\frac{(a^2+2ah+h^2)-a^2}{h} = \\frac{2ah+h^2}{h} = 2a+h$$\n\n🗣 \"The average rate of change simplifies to two a plus h.\"\n\nStep 3 — Interpret. Unlike the earlier numeric example, this result $2a+h$ is a formula, not a single number — it depends on both where you start ($a$) and how wide the interval is ($h$). Notice that as $h$ shrinks toward $0$, the value $2a+h$ gets closer and closer to $2a$, no matter what $a$ is. This is exactly the pattern that eventually becomes the instantaneous rate of change at $x=a$, but for now just notice that shrinking the interval produces a predictable, well-behaved trend rather than something chaotic.\n\n{{graph:secant-approach-x2}}\n\n❌ A common error is writing the average rate of change as $\\frac{f(a)-f(a+h)}{h}$ instead of $\\frac{f(a+h)-f(a)}{h}$, silently flipping the sign of the whole answer.\n\n✅ Always subtract in a consistent direction: whichever point you call 'later' or 'second' in the numerator must also come second in the denominator. For the interval $[a,b]$, that means always computing $\\frac{f(b)-f(a)}{b-a}$, never $\\frac{f(a)-f(b)}{b-a}$.\n\n❌ Another frequent mistake is stopping after computing $f(b)-f(a)$ and reporting that difference itself as 'the average rate of change,' forgetting to divide by $b-a$.\n\n✅ The quotient always needs both pieces: the change in output on top, and the change in input on the bottom. Without dividing, you only have the total change (총 변화량), not a rate.\n\nEdge cases (특수한 경우) are worth noticing too. If $b=a$, the formula $\\frac{f(b)-f(a)}{b-a}$ becomes $\\frac{0}{0}$, which is undefined (정의되지 않다) — you cannot compute an average rate of change over an interval with zero width, since there is no 'change in input' to divide by. This is precisely why the idea of an instantaneous rate of change needs a more careful process rather than simply plugging $b=a$ directly into the secant-slope formula. Likewise, if $f$ itself is undefined at $a$ or at $b$ — for instance if $f(x)=\\frac{1}{x}$ and the interval includes $x=0$ — the average rate of change over that interval cannot be computed at all.",
+  "advanced": {
+    "content": "### An exam-style problem\n\nLet $f(x) = x^3 - ax^2 + 2$ for a constant $a$. Suppose the average rate of change of $f$ over $[2,4]$ is exactly $12$ more than the average rate of change of $f$ over $[0,2]$. Find the value of $a$.\n\nStep 1 — Compute $f(0)$, $f(2)$, and $f(4)$ in terms of $a$.\n\n$$f(0) = 2, \\qquad f(2) = 8 - 4a + 2 = 10-4a, \\qquad f(4) = 64-16a+2 = 66-16a$$\n\n🗣 \"f of zero is two, f of two is ten minus four a, and f of four is sixty-six minus sixteen a.\"\n\nStep 2 — Write the average rate of change over each interval in terms of $a$.\n\n$$\\frac{f(2)-f(0)}{2-0} = \\frac{(10-4a)-2}{2} = 4-2a$$\n\n🗣 \"The average rate of change over zero to two is four minus two a.\"\n\n$$\\frac{f(4)-f(2)}{4-2} = \\frac{(66-16a)-(10-4a)}{2} = 28-6a$$\n\n🗣 \"The average rate of change over two to four is twenty-eight minus six a.\"\n\nStep 3 — Translate 'the second average is 12 more than the first' into an equation.\n\n$$28-6a = (4-2a) + 12$$\n\n🗣 \"Twenty-eight minus six a equals four minus two a plus twelve.\"\n\nStep 4 — Solve for $a$.\n\n$$28-6a = 16-2a \\implies 12 = 4a \\implies a = 3$$\n\n🗣 \"a equals three.\"\n\nAs a check, with $a=3$: the average over $[0,2]$ is $4-6=-2$, and the average over $[2,4]$ is $28-18=10$, and indeed $10 = -2+12$.\n\n### Why does this matter?\n\nA curious question worth asking is: does the average rate of change over an interval always equal the instantaneous rate of change (순간변화율) at *some* single point strictly inside that interval? The answer, remarkably, is yes for any continuous (연속인) and smooth enough function — this deep fact is called the Mean Value Theorem (평균값 정리), which you'll meet formally once derivatives are defined. Intuitively, it's the same reason your car's speedometer must have read exactly $100$ km/h at least once during a Seoul-to-Busan trip if your average speed was $100$ km/h: you can't have an average without the instantaneous rate 'catching up' to it somewhere along the way, as long as the motion is continuous and never jumps. The secant slope isn't just a rough summary — it's guaranteed to be *achieved* instantaneously somewhere in the interval, which is part of why the bridge from average to instantaneous rate of change is such a productive one to build.",
+    "practice": [
+      {
+        "id": "adv-1",
+        "type": "numeric",
+        "prompt": "For $f(x) = x^2 + kx$, the average rate of change of $f$ over the interval $[1,4]$ is $9$. Find the value of $k$.",
+        "correctAnswer": "4",
+        "solution": "Step 1 — Compute $f(1) = 1+k$ and $f(4) = 16+4k$.\n\nStep 2 — Form the average rate of change: $\\frac{f(4)-f(1)}{4-1} = \\frac{(16+4k)-(1+k)}{3} = \\frac{15+3k}{3} = 5+k$.\n\nStep 3 — Set this equal to $9$: $5+k=9$, so $k=4$."
+      },
+      {
+        "id": "adv-2",
+        "type": "multiple_choice",
+        "prompt": "A particle moves along a line so that its position at time $t$ (seconds) is $s(t) = t^3 - 3t^2$ (meters). Over which interval is the particle's average velocity equal to $0$ m/s?",
+        "choices": [
+          "[0,3]",
+          "[1,4]",
+          "[0,4]",
+          "[2,5]"
+        ],
+        "correctAnswer": "[0,3]",
+        "solution": "Step 1 — Compute $s(0)=0$, $s(1)=-2$, $s(2)=-4$, $s(3)=0$, $s(4)=16$, $s(5)=50$.\n\nStep 2 — Compute the average rate of change over each candidate interval: over $[0,3]$, $\\frac{s(3)-s(0)}{3}=\\frac{0-0}{3}=0$; over $[1,4]$, $\\frac{16-(-2)}{3}=6$; over $[0,4]$, $\\frac{16-0}{4}=4$; over $[2,5]$, $\\frac{50-(-4)}{3}=18$.\n\nStep 3 — Only $[0,3]$ gives an average velocity of $0$ m/s."
+      }
+    ]
+  },
   "lessonId": "rate-of-change",
-  "generatedAt": "2026-07-12T06:02:45.554Z"
+  "generatedAt": "2026-07-17T05:50:56.401Z"
 }

@@ -62,6 +62,126 @@
       "solution": "The definition requires the change in the input to be called $h$, and that same $h$ must appear in the denominator — never the variable $x$ itself, since $x$ is fixed at the point ($x=2$) where the derivative is being evaluated. The correct setup adds $h$ to the input, subtracts $f(2)$, and divides by that same $h$, giving $\\lim_{h\\to0}\\dfrac{f(2+h)-f(2)}{h}$. The other choices either put $x$ in the denominator, divide by the wrong constant, or reverse the subtraction order, all of which break the definition."
     }
   ],
+  "graphs": [
+    {
+      "id": "reciprocal-tangent",
+      "captionEn": "The tangent line to y = 1/x at x = 1, matching the derived slope f'(x) = -1/x².",
+      "captionKo": "x=1에서 y=1/x의 접선, 도함수 f'(x)=-1/x²의 기울기와 일치함",
+      "xDomain": [
+        -3,
+        3
+      ],
+      "yDomain": [
+        -4,
+        4
+      ],
+      "functions": [
+        {
+          "expression": "1/x",
+          "color": "pen-blue",
+          "domain": [
+            -3,
+            -0.2
+          ]
+        },
+        {
+          "expression": "1/x",
+          "color": "pen-blue",
+          "domain": [
+            0.2,
+            3
+          ]
+        },
+        {
+          "expression": "-x+2",
+          "color": "red-pen",
+          "domain": [
+            -1,
+            3
+          ],
+          "dashed": true
+        }
+      ],
+      "points": [
+        {
+          "x": 1,
+          "y": 1,
+          "style": "closed",
+          "color": "ink"
+        }
+      ],
+      "asymptotes": [
+        {
+          "axis": "x",
+          "value": 0
+        },
+        {
+          "axis": "y",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "piecewise-differentiable",
+      "captionEn": "The two branches of the advanced example meeting with equal value and equal slope at x = 2.",
+      "captionKo": "고급 예제의 두 조각이 x=2에서 값과 기울기가 모두 일치하며 만나는 모습",
+      "xDomain": [
+        -1,
+        5
+      ],
+      "yDomain": [
+        -15,
+        15
+      ],
+      "functions": [
+        {
+          "expression": "x^2+3*x+3",
+          "color": "ink",
+          "domain": [
+            -1,
+            2
+          ]
+        },
+        {
+          "expression": "7*x-1",
+          "color": "pen-blue",
+          "domain": [
+            2,
+            5
+          ]
+        }
+      ],
+      "points": [
+        {
+          "x": 2,
+          "y": 13,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "Let's apply the limit definition to a different kind of function — a rational function (유리함수) — where the algebra requires combining fractions rather than expanding a binomial. Consider $f(x) = \\dfrac{1}{x}$, defined for every $x \\neq 0$.\n\nStep 1 — Write the difference quotient by substituting $x+h$ wherever $x$ appears in $f$:\n\n$$\\frac{f(x+h)-f(x)}{h} = \\frac{\\dfrac{1}{x+h} - \\dfrac{1}{x}}{h}$$\n\n🗣 \"f of x plus h, minus f of x, over h, equals one over x plus h, minus one over x, all over h.\"\n\nStep 2 — Combine the two fractions in the numerator over a common denominator $x(x+h)$, keeping the subtracted numerator in parentheses so no sign gets lost:\n\n$$\\frac{1}{x+h} - \\frac{1}{x} = \\frac{x - (x+h)}{x(x+h)} = \\frac{-h}{x(x+h)}$$\n\n🗣 \"One over x plus h, minus one over x, equals x minus x plus h, all over x times x plus h, which is negative h over x times x plus h.\"\n\nStep 3 — Divide that whole fraction by $h$, which cancels the $h$ that now appears in both the numerator and the outer denominator:\n\n$$\\frac{-h}{x(x+h)} \\div h = \\frac{-1}{x(x+h)}$$\n\n🗣 \"Negative h over x times x plus h, divided by h, equals negative one over x times x plus h.\"\n\nStep 4 — Now let $h \\to 0$; since $x$ is fixed and nonzero, substitute $h=0$ directly into the simplified expression:\n\n$$f'(x) = \\lim_{h\\to 0} \\frac{-1}{x(x+h)} = -\\frac{1}{x^2}$$\n\n🗣 \"f prime of x equals the limit, as h approaches zero, of negative one over x times x plus h, which equals negative one over x squared.\"\n\nSo $f'(x) = -\\dfrac{1}{x^2}$ for every $x \\neq 0$ — the derivative itself is undefined right where $f$ was already undefined; a derivative can never rescue a function at a point where the function doesn't even exist.\n\n{{graph:reciprocal-tangent}}\n\nTwo errors show up constantly once fractions and the corrected formula both enter the picture.\n\n❌ Writing the definition with $x$ in the denominator instead of $h$, such as $f'(x) = \\lim_{h\\to 0}\\dfrac{f(x+h)-f(x)}{x}$.\n\n✅ The denominator must always be $h$ — the amount the input changed — never $x$; dividing by $x$ measures nothing meaningful, and the phrase \"as $h\\to 0$\" would no longer even make sense.\n\n❌ When combining $\\dfrac{1}{x+h}-\\dfrac{1}{x}$ over a common denominator, writing the numerator as $x+h-x$ instead of $x-(x+h)$, which drops a sign.\n\n✅ Keep the subtracted fraction's numerator in parentheses until it's fully distributed: $\\dfrac{1}{x+h}-\\dfrac{1}{x} = \\dfrac{x-(x+h)}{x(x+h)}$, which simplifies to $\\dfrac{-h}{x(x+h)}$, not $\\dfrac{h}{x(x+h)}$.\n\nThe limit definition quietly assumes the two-sided limit of the difference quotient actually exists as $h\\to 0$ — and it doesn't always. At a sharp corner, such as $f(x)=|x|$ at $x=0$, the quotient $\\frac{f(0+h)-f(0)}{h}$ equals $1$ for every $h>0$ but $-1$ for every $h<0$, so the two one-sided limits disagree and $f'(0)$ simply does not exist, even though $f$ is perfectly continuous (연속) there. This is a key asymmetry in calculus: every function differentiable (미분가능하다) at a point must be continuous there, but continuity alone never guarantees a derivative exists — the graph also has to avoid corners, cusps, and vertical tangents at that exact point.",
+  "advanced": {
+    "content": "Consider the piecewise function used in many exam settings, where a single unknown constant is planted in each branch and you must determine both from the requirement that $f$ be differentiable — not merely continuous — at the seam point:\n\n$$f(x) = \\begin{cases} x^2 + 3x + a, & x \\le 2 \\\\ bx - 1, & x > 2 \\end{cases}$$\n\nStep 1 — Differentiability always requires continuity first, so the two branch values must agree at $x=2$: the left branch gives $2^2+3(2)+a = 10+a$, and the right-hand limit of $bx-1$ as $x\\to2^{+}$ gives $2b-1$. Set them equal:\n\n$$10+a = 2b-1$$\n\nStep 2 — Now check the one-sided derivative from the left directly from the limit definition, using $f(x)=x^2+3x+a$ for inputs near and below $2$:\n\n$$\\lim_{h\\to 0^{-}}\\frac{f(2+h)-f(2)}{h} = \\lim_{h\\to 0^{-}}\\frac{\\left[(2+h)^2+3(2+h)+a\\right]-(10+a)}{h} = \\lim_{h\\to 0^{-}}\\frac{7h+h^2}{h} = \\lim_{h\\to 0^{-}}(7+h) = 7$$\n\n🗣 \"The limit, as h approaches zero from the left, of f of two plus h minus f of two, over h, simplifies to seven plus h, which approaches seven.\"\n\nStep 3 — Check the one-sided derivative from the right using $f(x)=bx-1$ for inputs near and above $2$:\n\n$$\\lim_{h\\to 0^{+}}\\frac{f(2+h)-f(2)}{h} = \\lim_{h\\to 0^{+}}\\frac{\\left[b(2+h)-1\\right]-(2b-1)}{h} = \\lim_{h\\to 0^{+}}\\frac{bh}{h} = b$$\n\nStep 4 — For $f$ to be differentiable at $x=2$, these one-sided limits must match each other: $7=b$. Substituting $b=7$ back into the continuity equation from Step 1 gives $10+a=2(7)-1=13$, so $a=3$.\n\nTherefore $a=3$, $b=7$, and $f'(2)=7$ — the common slope both branches share at the seam.\n\n{{graph:piecewise-differentiable}}\n\nA curious question worth sitting with: why does checking continuity separately even matter, when we're really only comparing two derivative limits? The answer is that the expression $f(2+h)-f(2)$ silently assumes $f(2)$ is a single, unambiguous number. If the two branches disagreed in value at the seam, $f(2)$ itself would be ill-defined (or defined by only one branch), and the 'derivative from the other side' would actually be measuring a jump discontinuity (불연속) disguised as a slope — the one-sided limits could even appear to exist and 'match' numerically by coincidence while the function itself tears apart at that point. That's precisely why differentiability is defined as a two-step guarantee: first the function must be continuous at the point, and only then does asking whether the secant slopes converge to a single tangent slope become a meaningful question at all.",
+    "practice": [
+      {
+        "id": "deriv-def-adv-1",
+        "type": "numeric",
+        "prompt": "Using the limit definition of the derivative, find the general derivative $f'(x)$ for $f(x)=x^3$, then evaluate $f'(-2)$.",
+        "correctAnswer": "12",
+        "solution": "Form the difference quotient: $\\frac{f(x+h)-f(x)}{h}=\\frac{(x+h)^3-x^3}{h}$. Expand $(x+h)^3=x^3+3x^2h+3xh^2+h^3$, so the numerator becomes $3x^2h+3xh^2+h^3$. Dividing every term by $h$ gives $3x^2+3xh+h^2$. Taking the limit as $h\\to0$ leaves $f'(x)=3x^2$. Evaluating at $x=-2$: $f'(-2)=3(-2)^2=3(4)=12$."
+      },
+      {
+        "id": "deriv-def-adv-2",
+        "type": "numeric",
+        "prompt": "A piecewise function is defined by $f(x) = \\begin{cases} x^2+ax+5, & x<2 \\\\ bx^2-3, & x\\ge 2\\end{cases}$. Find the value of $a+b$ such that $f$ is differentiable at $x=2$.",
+        "correctAnswer": "-9",
+        "solution": "Differentiability requires continuity first: the left branch at $x=2$ gives $4+2a+5=9+2a$, and the right branch gives $4b-3$. Setting them equal: $9+2a=4b-3$, i.e. $2a-4b=-12$, or $a-2b=-6$. Next, match the derivatives (using the limit definition on each piece, or equivalently the fact that each piece is a polynomial whose difference-quotient limit gives $2x+a$ on the left and $2bx$ on the right): at $x=2$ this is $4+a$ on the left and $4b$ on the right. Setting them equal: $4+a=4b$, i.e. $a-4b=-4$. Subtracting this from the continuity equation: $(a-2b)-(a-4b)=-6-(-4)$, so $2b=-2$, giving $b=-1$. Then $a-4(-1)=-4$ gives $a=-8$. Therefore $a+b=-8+(-1)=-9$."
+      }
+    ]
+  },
   "lessonId": "definition-of-the-derivative",
-  "generatedAt": "2026-07-12T06:04:35.196Z"
+  "generatedAt": "2026-07-17T05:53:15.446Z"
 }

@@ -74,6 +74,74 @@
       "solution": "The sign of $f'(x)$ changes from negative to positive as $x$ passes through $a$, meaning $f$ was decreasing just before $a$ and starts increasing right after $a$. By the first derivative test, that sign change ($-$ to $+$) means $f$ has a local minimum at $x = a$."
     }
   ],
+  "graphs": [
+    {
+      "id": "quartic-extrema",
+      "captionEn": "f(x) = x^4 - 8x^2 + 3, showing two local minima and one local maximum",
+      "captionKo": "f(x) = x^4 - 8x^2 + 3, 두 개의 극소와 하나의 극대를 보여줌",
+      "xDomain": [
+        -4,
+        4
+      ],
+      "yDomain": [
+        -16,
+        10
+      ],
+      "functions": [
+        {
+          "expression": "x^4 - 8*x^2 + 3",
+          "color": "ink"
+        }
+      ],
+      "points": [
+        {
+          "x": -2,
+          "y": -13,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "style": "closed",
+          "color": "red-pen"
+        },
+        {
+          "x": 2,
+          "y": -13,
+          "style": "closed",
+          "color": "red-pen"
+        }
+      ],
+      "asymptotes": []
+    }
+  ],
+  "goingDeeper": "A quartic function (사차함수) — a degree-4 polynomial — can have more than one local maximum or local minimum, since its derivative can have up to three critical points instead of just two. Let's work through $f(x) = x^4 - 8x^2 + 3$ to see how the sign-chart method extends naturally.\n\nStep 1 — Differentiate $f(x)$ and factor completely.\n\n$$f'(x) = 4x^3 - 16x = 4x(x^2-4) = 4x(x-2)(x+2)$$\n\n🗣 \"f prime of x equals four x, times the quantity x minus two, times the quantity x plus two.\"\n\nStep 2 — Solve $f'(x)=0$. The three factors give critical points at $x=-2$, $x=0$, and $x=2$, splitting the number line into four intervals to test.\n\nStep 3 — Pick a sample point in each interval and record the sign of $f'(x)$, then organize everything into a sign chart.\n\n| Interval | $(-\\infty,-2)$ | $x=-2$ | $(-2,0)$ | $x=0$ | $(0,2)$ | $x=2$ | $(2,\\infty)$ |\n|---|---|---|---|---|---|---|---|\n| Sign of $f'(x)$ | $-$ | $0$ | $+$ | $0$ | $-$ | $0$ | $+$ |\n| Behavior of $f$ | decreasing | local min | increasing | local max | decreasing | local min | increasing |\n\nFor example, at $x=-1$ (inside $(-2,0)$): $f'(-1) = 4(-1)(-1-2)(-1+2) = 4(-1)(-3)(1) = 12 > 0$, confirming $f$ increases there.\n\nStep 4 — Apply the first derivative test at each critical point, then evaluate $f$ there. At $x=-2$, $f'(x)$ changes from $-$ to $+$, giving a local minimum of $f(-2) = 16 - 32 + 3 = -13$. At $x=0$, $f'(x)$ changes from $+$ to $-$, giving a local maximum of $f(0) = 3$. At $x=2$, $f'(x)$ changes from $-$ to $+$, giving another local minimum of $f(2) = 16-32+3=-13$.\n\nSo this quartic has two local minima of equal value $-13$ and one local maximum of $3$ sandwiched between them — a shape a cubic could never produce, since a cubic's derivative supplies at most two critical points.\n\n{{graph:quartic-extrema}}\n\n❌ A common mix-up is treating $f'(c)=0$ as if it meant $f(c)=0$ — for instance, concluding $f(-2)=0$ simply because $f'(-2)=0$.\n\n✅ $f'(c)=0$ only says the slope is momentarily flat at $x=c$; the actual function value still has to be computed by substituting $c$ into $f(x)$ itself, which gives $f(-2)=-13$, not $0$.\n\n❌ Another frequent error is assuming the sign of $f'(x)$ must alternate $+,-,+,-,\\dots$ at every consecutive critical point without actually testing. For a derivative like $f'(x) = (x+1)^2(x-3)$, a student might guess a sign change — and therefore an extremum — at $x=-1$ just because it's a critical point.\n\n✅ You must test each interval directly: since $(x+1)^2 \\ge 0$ always, the sign of $f'(x)$ near $x=-1$ is controlled entirely by the factor $(x-3)$, which doesn't flip sign there — a double root (중근) like this leaves $f'(x)$ with the same sign on both sides, so only the simple root $x=3$ is an actual extremum.\n\nOne subtlety worth noticing: because a single point never violates a strict inequality, an interval of increase or decrease can be written with the critical point included or excluded — saying $f$ is decreasing on $(-\\infty,-2)$ or on $(-\\infty,-2]$ are both defensible, since continuity at $x=-2$ means the extra endpoint doesn't break the ordering $f(x_1)<f(x_2)$. A more serious edge case appears when $f$ is continuous but not differentiable at some point, such as a sharp corner — there $f'(x)$ simply doesn't exist, so no sign chart can be built through it, and increasing/decreasing behavior must be checked directly from the definition rather than from a derivative's sign.",
+  "advanced": {
+    "content": "Try this exam-style problem, which hides a critical point's value inside an unknown constant — a common 수능 setup.\n\nLet $f(x) = 2x^3 + 3x^2 - 12x + a$, where $a$ is a real constant, and suppose the local maximum value of $f$ is $20$. Find the local minimum value of $f$.\n\nStep 1 — Differentiate $f(x)$ and factor the result completely.\n\n$$f'(x) = 6x^2 + 6x - 12 = 6(x^2+x-2) = 6(x+2)(x-1)$$\n\n🗣 \"f prime of x equals six times the quantity x plus two, times the quantity x minus one.\"\n\nStep 2 — Determine which critical point is the maximum and which is the minimum by testing the sign of $f'(x)$ on each side of $x=-2$ and $x=1$. At $x=-3$: $f'(-3) = 6(-1)(-4) = 24 > 0$. At $x=0$: $f'(0) = 6(2)(-1) = -12 < 0$. At $x=2$: $f'(2) = 6(4)(1) = 24 > 0$. So $f'(x)$ goes $+\\to-$ at $x=-2$ (local maximum) and $-\\to+$ at $x=1$ (local minimum).\n\nStep 3 — Use the given local maximum value to solve for $a$.\n\n$$f(-2) = 2(-2)^3+3(-2)^2-12(-2)+a = -16+12+24+a = 20+a$$\n\n🗣 \"f of negative two equals twenty plus a.\"\n\nSince this local maximum value is given as $20$, we get $20+a=20$, so $a=0$.\n\nStep 4 — Compute the local minimum value $f(1)$ using $a=0$.\n\n$$f(1) = 2(1)^3+3(1)^2-12(1)+0 = 2+3-12 = -7$$\n\n🗣 \"f of one equals negative seven.\"\n\nSo the local minimum value of $f$ is $-7$.\n\nNotice that solving for $a$ was almost a detour: the gap between the local maximum and local minimum values never actually depended on $a$, because shifting a graph vertically by a constant shifts both extrema by exactly that same constant, leaving their difference untouched. In fact, for any cubic $f(x)=Ax^3+Bx^2+Cx+D$ with critical points $p<q$, integrating $f'(x)=3A(x-p)(x-q)$ from $p$ to $q$ gives the closed form\n\n$$f(p)-f(q) = \\frac{A}{2}(q-p)^3$$\n\n🗣 \"f of p minus f of q equals A over two, times the quantity q minus p, cubed.\"\n\nwhich depends only on the leading coefficient $A$ and the spacing between the critical points, not on $B$, $C$, or $D$. Check it against the example above: $A=2$ and $q-p=1-(-2)=3$, giving $\\frac{2}{2}(3)^3=27$, exactly $20-(-7)$.",
+    "practice": [
+      {
+        "id": "adv-1",
+        "type": "numeric",
+        "prompt": "A cubic function $f(x) = x^3 + px^2 + qx + 5$ has a local maximum at $x=-1$ and a local minimum at $x=3$. Find the value of $p+q$.",
+        "correctAnswer": "-12",
+        "solution": "Differentiating gives $f'(x) = 3x^2+2px+q$, a quadratic whose roots are exactly the critical points $x=-1$ and $x=3$. By Vieta's formulas, the sum of roots is $-1+3=2=-\\frac{2p}{3}$, so $p=-3$; the product of roots is $(-1)(3)=-3=\\frac{q}{3}$, so $q=-9$. Therefore $p+q=-3+(-9)=-12$."
+      },
+      {
+        "id": "adv-2",
+        "type": "multiple_choice",
+        "prompt": "Suppose $f'(x) = (x+1)(x-2)^2(x-4)$. Which statement correctly describes the extrema of $f$?",
+        "choices": [
+          "local max at x=-1, local min at x=2, local min at x=4",
+          "local max at x=-1, no extremum at x=2, local min at x=4",
+          "local min at x=-1, local max at x=2, local max at x=4",
+          "local max at x=-1, local max at x=2, local min at x=4"
+        ],
+        "correctAnswer": "local max at x=-1, no extremum at x=2, local min at x=4",
+        "solution": "Test a sample point in each of the four intervals split by $x=-1,2,4$. For $x<-1$ (e.g. $x=-2$): $(-1)(16)(-6)=96>0$. For $-1<x<2$ (e.g. $x=0$): $(1)(4)(-4)=-16<0$. For $2<x<4$ (e.g. $x=3$): $(4)(1)(-1)=-4<0$. For $x>4$ (e.g. $x=5$): $(6)(9)(1)=54>0$. So $f'(x)$ changes $+\\to-$ at $x=-1$ (local maximum), stays negative straight through $x=2$ since the even-power factor $(x-2)^2$ never flips sign (so there is no extremum there), then changes $-\\to+$ at $x=4$ (local minimum)."
+      }
+    ]
+  },
   "lessonId": "increasing-decreasing-extrema",
-  "generatedAt": "2026-07-12T06:09:22.277Z"
+  "generatedAt": "2026-07-17T06:00:43.826Z"
 }
