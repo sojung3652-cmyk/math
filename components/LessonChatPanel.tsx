@@ -17,6 +17,9 @@ type ChatMessage = {
 // Only the last N turns are sent to the model per request — persisted
 // history on disk is never truncated, only what's forwarded as context.
 const MAX_CONTEXT_MESSAGES = 20;
+// Mobile bottom-sheet drag-to-dismiss: how far down (px) counts as "let go
+// of it", vs. snapping back open.
+const DRAG_DISMISS_THRESHOLD = 90;
 
 function formatTime(iso: string): string {
   try {
@@ -40,8 +43,9 @@ export default function LessonChatPanel({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [confirmingClear, setConfirmingClear] = useState(false);
+  const [dragY, setDragY] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const dragStartRef = useRef<number | null>(null);
 
   useEffect(() => {
     fetch(`/api/chat-history?lessonId=${encodeURIComponent(lesson.id)}`)
@@ -62,8 +66,21 @@ export default function LessonChatPanel({
 
   function toggleOpen(next: boolean) {
     setOpen(next);
-    setConfirmingClear(false);
     onOpenChange?.(next);
+  }
+
+  function onHandlePointerDown(e: React.PointerEvent) {
+    dragStartRef.current = e.clientY;
+    (e.currentTarget as Element).setPointerCapture(e.pointerId);
+  }
+  function onHandlePointerMove(e: React.PointerEvent) {
+    if (dragStartRef.current == null) return;
+    setDragY(Math.max(0, e.clientY - dragStartRef.current));
+  }
+  function onHandlePointerUp() {
+    if (dragY > DRAG_DISMISS_THRESHOLD) toggleOpen(false);
+    setDragY(0);
+    dragStartRef.current = null;
   }
 
   async function sendText(text: string) {
@@ -115,8 +132,7 @@ export default function LessonChatPanel({
     }
   }
 
-  async function confirmClear() {
-    setConfirmingClear(false);
+  async function clearChat() {
     setMessages([]);
     setHasHistory(false);
     await fetch(`/api/chat-history?lessonId=${encodeURIComponent(lesson.id)}`, {
@@ -126,53 +142,66 @@ export default function LessonChatPanel({
 
   return (
     <>
-      {!open && (
-        <button
-          type="button"
-          className="chat-bubble-trigger"
-          onClick={() => toggleOpen(true)}
-          aria-label="Ask the tutor a question about this lesson"
-        >
-          <span className="chat-bubble-icon">질문?</span>
-          {loadedHistory && hasHistory && <span className="chat-bubble-badge" />}
-        </button>
-      )}
-
-      <div
-        className={`chat-panel-backdrop${open ? " open" : ""}`}
-        onClick={() => toggleOpen(false)}
-      />
+      <button
+        type="button"
+        className="chat-bubble-trigger"
+        onClick={() => toggleOpen(!open)}
+        aria-label={open ? "Close the tutor chat" : "Ask the tutor a question about this lesson"}
+        aria-expanded={open}
+      >
+        <span className="chat-bubble-icon">질문?</span>
+        {loadedHistory && hasHistory && <span className="chat-bubble-badge" />}
+      </button>
 
       <aside
         className={`chat-panel${open ? " open" : ""}`}
         role="dialog"
         aria-label="Tutor chat"
         aria-hidden={!open}
+        style={dragY ? { transform: `translateY(${dragY}px)`, transition: "none" } : undefined}
       >
+        <div
+          className="chat-panel-drag-handle"
+          onPointerDown={onHandlePointerDown}
+          onPointerMove={onHandlePointerMove}
+          onPointerUp={onHandlePointerUp}
+          onPointerCancel={onHandlePointerUp}
+        >
+          <span className="chat-panel-drag-bar" />
+        </div>
+
         <div className="chat-panel-header">
-          {confirmingClear ? (
-            <span className="chat-panel-clear-confirm">
-              Clear this chat?
-              <button type="button" onClick={() => setConfirmingClear(false)}>
-                Cancel
-              </button>
-              <button type="button" onClick={confirmClear}>
-                Clear
-              </button>
-            </span>
-          ) : (
+          <span className="chat-panel-title">수학 튜터 · Math Tutor</span>
+          <div className="chat-panel-header-actions">
             <button
               type="button"
-              className="chat-panel-clear"
-              onClick={() => setConfirmingClear(true)}
+              className="chat-panel-icon-btn"
+              onClick={clearChat}
               disabled={messages.length === 0}
+              title="Clear chat · 대화 삭제"
+              aria-label="Clear chat"
             >
-              Clear chat · 대화 삭제
+              ⟲
             </button>
-          )}
-          <button type="button" className="chat-panel-close" onClick={() => toggleOpen(false)}>
-            ✕ Close
-          </button>
+            <button
+              type="button"
+              className="chat-panel-icon-btn"
+              onClick={() => toggleOpen(false)}
+              title="Minimize"
+              aria-label="Minimize"
+            >
+              —
+            </button>
+            <button
+              type="button"
+              className="chat-panel-icon-btn"
+              onClick={() => toggleOpen(false)}
+              title="Close"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         <div className="chat-panel-messages" ref={scrollRef}>
@@ -216,26 +245,28 @@ export default function LessonChatPanel({
         </div>
 
         <div className="chat-panel-composer">
-          <div className="composer-inner">
-            <textarea
-              rows={1}
+          <div className="chat-panel-input-row">
+            <input
+              type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   sendText(input.trim());
                 }
               }}
-              placeholder="Ask about this lesson… 무엇이든 물어보세요"
+              placeholder="이 수업에 대해 물어보세요…"
               aria-label="Message the tutor"
             />
             <button
-              className="btn-send"
+              type="button"
+              className="chat-panel-send"
               onClick={() => sendText(input.trim())}
               disabled={loading || !input.trim()}
+              aria-label="Send"
             >
-              Send
+              ➤
             </button>
           </div>
         </div>
