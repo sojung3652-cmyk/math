@@ -29,15 +29,21 @@ function formatTime(iso: string): string {
   }
 }
 
+// The same floating trigger + popup widget serves two contexts:
+// - on a lesson page, `lesson` is passed: replies stay on-topic
+//   (buildLessonSystemSuffix) and the conversation persists per lesson.
+// - on the bookshelf, `lesson` is omitted: a plain free-question chat,
+//   same as /chat's TutorChat but as a popup — ephemeral, no persistence,
+//   since there's no lessonId to key it by.
 export default function LessonChatPanel({
   lesson,
   onOpenChange,
 }: {
-  lesson: Lesson;
+  lesson?: Lesson;
   onOpenChange?: (open: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [loadedHistory, setLoadedHistory] = useState(false);
+  const [loadedHistory, setLoadedHistory] = useState(!lesson);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [hasHistory, setHasHistory] = useState(false);
   const [input, setInput] = useState("");
@@ -48,6 +54,7 @@ export default function LessonChatPanel({
   const dragStartRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (!lesson) return;
     fetch(`/api/chat-history?lessonId=${encodeURIComponent(lesson.id)}`)
       .then((res) => res.json())
       .then((data) => {
@@ -57,7 +64,10 @@ export default function LessonChatPanel({
       })
       .catch(() => {})
       .finally(() => setLoadedHistory(true));
-  }, [lesson.id]);
+    // Keyed on lesson.id, not the lesson object, so this only re-fetches
+    // when the actual lesson changes, not on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lesson?.id]);
 
   useEffect(() => {
     if (!open) return;
@@ -106,7 +116,7 @@ export default function LessonChatPanel({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: apiMessages,
-          systemPromptSuffix: buildLessonSystemSuffix(lesson),
+          ...(lesson ? { systemPromptSuffix: buildLessonSystemSuffix(lesson) } : {}),
         }),
       });
       const data = await res.json();
@@ -119,12 +129,14 @@ export default function LessonChatPanel({
       };
       const full = [...next, assistantMessage];
       setMessages(full);
-      setHasHistory(true);
-      fetch("/api/chat-history", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lessonId: lesson.id, messages: full }),
-      }).catch(() => {});
+      if (lesson) {
+        setHasHistory(true);
+        fetch("/api/chat-history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ lessonId: lesson.id, messages: full }),
+        }).catch(() => {});
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
@@ -135,9 +147,11 @@ export default function LessonChatPanel({
   async function clearChat() {
     setMessages([]);
     setHasHistory(false);
-    await fetch(`/api/chat-history?lessonId=${encodeURIComponent(lesson.id)}`, {
-      method: "DELETE",
-    }).catch(() => {});
+    if (lesson) {
+      await fetch(`/api/chat-history?lessonId=${encodeURIComponent(lesson.id)}`, {
+        method: "DELETE",
+      }).catch(() => {});
+    }
   }
 
   return (
@@ -146,7 +160,13 @@ export default function LessonChatPanel({
         type="button"
         className="chat-bubble-trigger"
         onClick={() => toggleOpen(!open)}
-        aria-label={open ? "Close the tutor chat" : "Ask the tutor a question about this lesson"}
+        aria-label={
+          open
+            ? "Close the tutor chat"
+            : lesson
+              ? "Ask the tutor a question about this lesson"
+              : "Ask the tutor a question"
+        }
         aria-expanded={open}
       >
         <svg
@@ -185,7 +205,9 @@ export default function LessonChatPanel({
         </div>
 
         <div className="chat-panel-header">
-          <span className="chat-panel-title">수학 튜터 · Math Tutor</span>
+          <span className="chat-panel-title">
+            {lesson ? "수학 튜터 · Math Tutor" : "자유 질문 · Free questions"}
+          </span>
           <div className="chat-panel-header-actions">
             <button
               type="button"
@@ -221,7 +243,9 @@ export default function LessonChatPanel({
         <div className="chat-panel-messages" ref={scrollRef}>
           {messages.length === 0 && loadedHistory && (
             <p className="hint">
-              Ask anything about {lesson.titleEn} ({lesson.titleKo}).
+              {lesson
+                ? `Ask anything about ${lesson.titleEn} (${lesson.titleKo}).`
+                : "Ask anything about 수학Ⅰ or 수학Ⅱ · 무엇이든 물어보세요."}
             </p>
           )}
           {messages.map((m, i) =>
@@ -270,7 +294,7 @@ export default function LessonChatPanel({
                   sendText(input.trim());
                 }
               }}
-              placeholder="이 수업에 대해 물어보세요…"
+              placeholder={lesson ? "이 수업에 대해 물어보세요…" : "무엇이든 물어보세요…"}
               aria-label="Message the tutor"
             />
             <button

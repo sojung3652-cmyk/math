@@ -1,4 +1,5 @@
 import BookCover from "@/components/BookCover";
+import LessonChatPanel from "@/components/LessonChatPanel";
 import { COURSES } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
 
@@ -35,6 +36,7 @@ export default function HomePage() {
           );
         })}
       </div>
+      <LessonChatPanel />
     </main>
   );
 }
