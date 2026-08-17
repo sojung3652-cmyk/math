@@ -2,19 +2,24 @@ import Link from "next/link";
 
 type ActivePage = "course" | "tutor" | "notes";
 
+export type Breadcrumb = {
+  label: string;
+  // Omit href on the last (current-page) segment.
+  href?: string;
+};
+
 export default function SiteHeader({
   active,
-  subtitle = "Unit 1 — 함수의 극한과 연속 · Limits & Continuity",
+  breadcrumbs = [],
 }: {
   active: ActivePage;
-  subtitle?: string;
+  breadcrumbs?: Breadcrumb[];
 }) {
   return (
     <>
       <header>
         <span className="eyebrow">Study Notebook</span>
-        <h1>수학 Ⅱ · Math Tutor</h1>
-        <span className="unit-chip">{subtitle}</span>
+        <h1>내 수학 노트 · My Math Notebook</h1>
       </header>
       <nav aria-label="Pages">
         <Link href="/" aria-current={active === "course" ? "page" : undefined}>
@@ -27,6 +32,20 @@ export default function SiteHeader({
           Notes 노트
         </span>
       </nav>
+      {breadcrumbs.length > 0 && (
+        <div className="breadcrumbs" aria-label="Breadcrumb">
+          {breadcrumbs.map((crumb, i) => (
+            <span className="breadcrumb-segment" key={`${crumb.label}-${i}`}>
+              {crumb.href ? (
+                <Link href={crumb.href}>{crumb.label}</Link>
+              ) : (
+                <span className="breadcrumb-current">{crumb.label}</span>
+              )}
+              {i < breadcrumbs.length - 1 && <span className="breadcrumb-sep">›</span>}
+            </span>
+          ))}
+        </div>
+      )}
     </>
   );
 }

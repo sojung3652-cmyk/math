@@ -11,13 +11,13 @@ export const dynamic = "force-dynamic";
 export default async function UnitPage({
   params,
 }: {
-  params: Promise<{ unitId: string }>;
+  params: Promise<{ courseId: string; unitId: string }>;
 }) {
-  const { unitId } = await params;
-  const found = findUnit(unitId);
+  const { courseId, unitId } = await params;
+  const found = findUnit(courseId, unitId);
   if (!found) notFound();
 
-  const { unit, index } = found;
+  const { course, unit, index } = found;
   const progress = getAllProgress();
   const lessons = unit.lessons.map((lesson) => ({
     lesson,
@@ -42,7 +42,14 @@ export default async function UnitPage({
 
   return (
     <>
-      <SiteHeader active="course" subtitle={`${unit.titleKo} · ${unit.titleEn}`} />
+      <SiteHeader
+        active="course"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: course.titleKo, href: `/course/${course.id}` },
+          { label: `UNIT ${index + 1} · ${unit.titleKo}` },
+        ]}
+      />
       <main className="unit-main">
         <div className="unit-cover">
           <span className="unit-cover-number">UNIT {index + 1}</span>

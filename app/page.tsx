@@ -1,50 +1,65 @@
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
-import ProgressRing from "@/components/ProgressRing";
-import { CURRICULUM } from "@/lib/curriculum";
+import { COURSES } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
 
 export const dynamic = "force-dynamic";
 
-export default function CoursePage() {
+export default function HomePage() {
   const progress = getAllProgress();
 
   return (
     <>
-      <SiteHeader active="course" subtitle="수학 Ⅱ · 3 Units · 19 Lessons" />
-      <main className="course-main">
-        <div className="day-rule">— TABLE OF CONTENTS · 목차 —</div>
+      <SiteHeader active="course" />
+      <main className="course-select-main">
+        <div className="day-rule">— 내 수학 노트 · MY MATH NOTEBOOK —</div>
+        <div className="course-select-grid">
+          {COURSES.map((course) => {
+            const lessons = course.units.flatMap((unit) => unit.lessons);
+            const total = lessons.length;
+            const masteredCount = lessons.filter(
+              (l) => progress[l.id]?.status === "mastered",
+            ).length;
+            const started = lessons.some(
+              (l) => (progress[l.id]?.status ?? "not_started") !== "not_started",
+            );
 
-        {CURRICULUM.map((unit, unitIndex) => (
-          <div className="unit-block" key={unit.id}>
-            <Link href={`/unit/${unit.id}`} className="unit-heading unit-heading-link">
-              <span className="unit-number">UNIT {unitIndex + 1}</span>
-              <h2>{unit.titleEn}</h2>
-              <span className="unit-title-ko">{unit.titleKo}</span>
-            </Link>
+            const inProgress = lessons.find((l) => progress[l.id]?.status === "in_progress");
+            const nextUnstarted = lessons.find(
+              (l) => (progress[l.id]?.status ?? "not_started") === "not_started",
+            );
+            const targetLesson = inProgress ?? nextUnstarted ?? lessons[0];
 
-            {unit.lessons.map((lesson) => {
-              const record = progress[lesson.id];
-              const status = record?.status ?? "not_started";
-              return (
-                <Link
-                  key={lesson.id}
-                  href={`/lesson/${lesson.id}`}
-                  className={`lesson-row ${status}`}
-                >
-                  <ProgressRing lessonId={lesson.id} percent={record?.percent ?? 0} status={status} />
-                  <span className="lesson-titles">
-                    <span className="lesson-title-en">{lesson.titleEn}</span>
-                    <span className="lesson-title-ko">{lesson.titleKo}</span>
-                  </span>
-                  {status === "mastered" && record?.score != null && (
-                    <span className="lesson-score">{record.score}%</span>
-                  )}
+            const cta = started
+              ? { href: `/lesson/${targetLesson.id}`, label: "Continue · 이어서" }
+              : { href: `/lesson/${lessons[0].id}`, label: "Start · 시작하기" };
+
+            return (
+              <div className="course-card" key={course.id}>
+                <Link href={`/course/${course.id}`} className="course-card-link">
+                  <h2 className="course-card-title">
+                    {course.titleKo} <span className="course-card-title-en">· {course.titleEn}</span>
+                  </h2>
+                  <p className="course-card-subtitle">{course.subtitle}</p>
                 </Link>
-              );
-            })}
-          </div>
-        ))}
+                <div className="unit-progress-summary course-card-progress">
+                  <span className="unit-progress-text">
+                    {masteredCount} of {total} lessons mastered · {masteredCount}/{total} 완료
+                  </span>
+                  <div className="unit-progress-bar">
+                    <div
+                      className="unit-progress-fill"
+                      style={{ width: `${total > 0 ? (masteredCount / total) * 100 : 0}%` }}
+                    />
+                  </div>
+                </div>
+                <Link href={cta.href} className="btn-unit-cta course-card-cta">
+                  {cta.label}
+                </Link>
+              </div>
+            );
+          })}
+        </div>
       </main>
     </>
   );

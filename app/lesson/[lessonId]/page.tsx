@@ -16,14 +16,20 @@ export default async function LessonPage({
   const found = findLesson(lessonId);
   if (!found) notFound();
 
-  const { unit, lesson } = found;
+  const { course, unit, lesson } = found;
+  const unitIndex = course.units.findIndex((u) => u.id === unit.id);
   const content = loadLessonContent(lessonId);
 
   return (
     <>
       <SiteHeader
         active="course"
-        subtitle={`${unit.titleKo} · ${lesson.titleEn} (${lesson.titleKo})`}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: course.titleKo, href: `/course/${course.id}` },
+          { label: `UNIT ${unitIndex + 1} · ${unit.titleKo}`, href: `/course/${course.id}/unit/${unit.id}` },
+          { label: lesson.titleKo },
+        ]}
       />
       {content ? (
         <LessonScreen
