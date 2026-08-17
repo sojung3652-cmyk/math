@@ -1621,8 +1621,8 @@ main.course-main,
 /* ---------- lesson chat: compact floating widget (not a sidebar) ---------- */
 .chat-bubble-trigger {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: 24px;
+  bottom: 24px;
   z-index: 60;
   width: 56px;
   height: 56px;
