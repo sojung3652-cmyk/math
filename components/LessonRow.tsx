@@ -13,6 +13,7 @@ export default function LessonRow({
   titleKo,
   percent,
   score,
+  hasChat = false,
   // Set only on the one row matching an incoming ?gotoLesson= param — it
   // immediately turns itself (fast) and finishes the walkthrough instead
   // of waiting for a click.
@@ -25,6 +26,7 @@ export default function LessonRow({
   titleKo: string;
   percent: number;
   score: number | null;
+  hasChat?: boolean;
   autoGotoHref?: string;
 }) {
   const { flipping, trigger } = useCardFlip();
@@ -40,7 +42,10 @@ export default function LessonRow({
       className={`lesson-row ${status}${flipping ? " turning" : ""}${autoGotoHref ? " fast" : ""}`}
       onClick={() => trigger(href, FLIP_SLOW_MS)}
     >
-      <ProgressRing lessonId={lessonId} percent={percent} status={status} />
+      <span className="ring-slot">
+        <ProgressRing lessonId={lessonId} percent={percent} status={status} />
+        {hasChat && <span className="chat-history-dot" title="You've asked questions here" />}
+      </span>
       <span className="lesson-titles">
         <span className="lesson-title-en">{titleEn}</span>
         <span className="lesson-title-ko">{titleKo}</span>

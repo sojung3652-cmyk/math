@@ -5,6 +5,7 @@ import LessonRow from "@/components/LessonRow";
 import Prose from "@/components/Prose";
 import { findUnit } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
+import { getChatHistoryFlags } from "@/lib/chat-history";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,7 @@ export default async function UnitPage({
 
   const { course, unit, index } = found;
   const progress = getAllProgress();
+  const chatFlags = getChatHistoryFlags();
   const lessons = unit.lessons.map((lesson) => ({
     lesson,
     record: progress[lesson.id],
@@ -96,6 +98,7 @@ export default async function UnitPage({
                 titleKo={lesson.titleKo}
                 percent={record?.percent ?? 0}
                 score={record?.score ?? null}
+                hasChat={chatFlags[lesson.id] ?? false}
                 autoGotoHref={lesson.id === gotoLesson ? href : undefined}
               />
             );

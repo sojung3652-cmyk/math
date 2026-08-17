@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Prose from "@/components/Prose";
 import ResetLessonButton from "@/components/ResetLessonButton";
 import LessonNav, { type NavSection } from "@/components/LessonNav";
+import LessonChatPanel from "@/components/LessonChatPanel";
 import type { Lesson } from "@/lib/curriculum";
 import type { AdvancedSection as AdvancedSectionData, LessonContent, Question } from "@/lib/lesson-content";
 import type { GraphSpec } from "@/lib/graph-spec";
@@ -357,6 +358,7 @@ export default function LessonScreen({
   const practiceCompletedRef = useRef(0);
   const practiceFiredRef = useRef(false);
   const [percent, setPercent] = useState(initialPercent);
+  const [chatOpen, setChatOpen] = useState(false);
 
   function postMilestone(milestone: Milestone) {
     fetch("/api/progress", {
@@ -418,7 +420,8 @@ export default function LessonScreen({
 
   return (
     <>
-      <LessonNav sections={sections} percent={percent} />
+      <LessonNav sections={sections} percent={percent} hidden={chatOpen} />
+      <LessonChatPanel lesson={lesson} onOpenChange={setChatOpen} />
       <main className="lesson-main">
         <div className="lesson-top-bar">
           <ResetLessonButton lessonId={lesson.id} />

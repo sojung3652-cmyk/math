@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-type ActivePage = "course" | "tutor" | "notes";
+type ActivePage = "course" | "notes";
 
 export type Breadcrumb = {
   label: string;
@@ -12,7 +12,7 @@ export default function SiteHeader({
   active,
   breadcrumbs = [],
 }: {
-  active: ActivePage;
+  active?: ActivePage;
   breadcrumbs?: Breadcrumb[];
 }) {
   return (
@@ -24,9 +24,6 @@ export default function SiteHeader({
       <nav aria-label="Pages">
         <Link href="/" aria-current={active === "course" ? "page" : undefined}>
           Course 코스
-        </Link>
-        <Link href="/chat" aria-current={active === "tutor" ? "page" : undefined}>
-          Tutor 튜터
         </Link>
         <span className="nav-disabled" title="Coming in a future update">
           Notes 노트

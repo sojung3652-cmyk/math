@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import UnitSelectCard from "@/components/UnitSelectCard";
 import { findCourse } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
+import { getChatHistoryFlags } from "@/lib/chat-history";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,7 @@ export default async function CoursePage({
 
   const { course } = found;
   const progress = getAllProgress();
+  const chatFlags = getChatHistoryFlags();
 
   return (
     <>
@@ -61,6 +63,7 @@ export default async function CoursePage({
                   titleEn: lesson.titleEn,
                   percent: record?.percent ?? 0,
                   status: record?.status ?? "not_started",
+                  hasChat: chatFlags[lesson.id] ?? false,
                 };
               })}
             />

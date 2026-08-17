@@ -36,8 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
-# local progress store (Phase 4 swaps this for real D1)
+# local progress + chat history store (Phase 4 swaps this for real D1)
 /data/progress.json
+/data/chat-history.json
 
 # local Claude Code tool state, not part of the app
 /.claude/

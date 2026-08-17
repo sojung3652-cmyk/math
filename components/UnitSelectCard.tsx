@@ -11,6 +11,7 @@ type RingData = {
   titleEn: string;
   percent: number;
   status: LessonStatus;
+  hasChat: boolean;
 };
 
 export default function UnitSelectCard({
@@ -72,8 +73,9 @@ export default function UnitSelectCard({
       </div>
       <div className="unit-select-rings">
         {rings.map((r) => (
-          <span key={r.lessonId} title={r.titleEn}>
+          <span key={r.lessonId} className="ring-slot" title={r.titleEn}>
             <ProgressRing lessonId={r.lessonId} percent={r.percent} status={r.status} />
+            {r.hasChat && <span className="chat-history-dot" title="You've asked questions here" />}
           </span>
         ))}
       </div>

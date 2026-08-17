@@ -17,9 +17,11 @@ const ACTIVE_OFFSET = 96;
 export default function LessonNav({
   sections,
   percent,
+  hidden = false,
 }: {
   sections: NavSection[];
   percent: number;
+  hidden?: boolean;
 }) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
 
@@ -74,10 +76,16 @@ export default function LessonNav({
 
   return (
     <>
-      <nav className="lesson-nav lesson-nav-mobile" aria-label="Lesson sections">
+      <nav
+        className={`lesson-nav lesson-nav-mobile${hidden ? " lesson-nav-hidden" : ""}`}
+        aria-label="Lesson sections"
+      >
         <div className="lesson-nav-scroll">{items}</div>
       </nav>
-      <nav className="lesson-nav lesson-nav-desktop" aria-label="Lesson sections">
+      <nav
+        className={`lesson-nav lesson-nav-desktop${hidden ? " lesson-nav-hidden" : ""}`}
+        aria-label="Lesson sections"
+      >
         {items}
       </nav>
     </>
