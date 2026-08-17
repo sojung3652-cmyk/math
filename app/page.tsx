@@ -14,25 +14,24 @@ export default function HomePage() {
       <main className="course-select-main">
         <div className="day-rule">— 내 수학 노트 · MY MATH NOTEBOOK —</div>
         <div className="bookshelf">
-          {COURSES.map((course) => {
-            const lessons = course.units.flatMap((unit) => unit.lessons);
-            const total = lessons.length;
-            const masteredCount = lessons.filter(
-              (l) => progress[l.id]?.status === "mastered",
+          {COURSES.map((course, courseIndex) => {
+            const entries = course.units.flatMap((unit) =>
+              unit.lessons.map((lesson) => ({ unit, lesson })),
+            );
+            const total = entries.length;
+            const masteredCount = entries.filter(
+              (e) => progress[e.lesson.id]?.status === "mastered",
             ).length;
-            const started = lessons.some(
-              (l) => (progress[l.id]?.status ?? "not_started") !== "not_started",
+            const started = entries.some(
+              (e) => (progress[e.lesson.id]?.status ?? "not_started") !== "not_started",
             );
 
-            const inProgress = lessons.find((l) => progress[l.id]?.status === "in_progress");
-            const nextUnstarted = lessons.find(
-              (l) => (progress[l.id]?.status ?? "not_started") === "not_started",
+            const inProgress = entries.find((e) => progress[e.lesson.id]?.status === "in_progress");
+            const nextUnstarted = entries.find(
+              (e) => (progress[e.lesson.id]?.status ?? "not_started") === "not_started",
             );
-            const targetLesson = inProgress ?? nextUnstarted ?? lessons[0];
-
-            const cta = started
-              ? { href: `/lesson/${targetLesson.id}`, label: "Continue · 이어서" }
-              : { href: `/lesson/${lessons[0].id}`, label: "Start · 시작하기" };
+            const target = inProgress ?? nextUnstarted ?? entries[0];
+            const ctaLabel = started ? "Continue · 이어서" : "Start · 시작하기";
 
             return (
               <BookCover
@@ -43,8 +42,10 @@ export default function HomePage() {
                 subtitle={course.subtitle}
                 masteredCount={masteredCount}
                 total={total}
-                ctaHref={cta.href}
-                ctaLabel={cta.label}
+                ctaLabel={ctaLabel}
+                ctaUnitId={target.unit.id}
+                ctaLessonId={target.lesson.id}
+                themeIndex={courseIndex}
               />
             );
           })}

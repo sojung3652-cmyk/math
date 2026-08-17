@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
-import ProgressRing from "@/components/ProgressRing";
-import Prose from "@/components/Prose";
+import UnitSelectCard from "@/components/UnitSelectCard";
 import { findCourse } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
 
@@ -10,10 +8,13 @@ export const dynamic = "force-dynamic";
 
 export default async function CoursePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ courseId: string }>;
+  searchParams: Promise<{ gotoUnit?: string; gotoLesson?: string }>;
 }) {
   const { courseId } = await params;
+  const { gotoUnit, gotoLesson } = await searchParams;
   const found = findCourse(courseId);
   if (!found) notFound();
 
@@ -36,50 +37,33 @@ export default async function CoursePage({
             (l) => progress[l.id]?.status === "mastered",
           ).length;
           const total = unit.lessons.length;
+          const href = `/course/${course.id}/unit/${unit.id}`;
+          const autoGotoHref =
+            unit.id === gotoUnit
+              ? `${href}${gotoLesson ? `?gotoLesson=${gotoLesson}` : ""}`
+              : undefined;
 
           return (
-            <Link
+            <UnitSelectCard
               key={unit.id}
-              href={`/course/${course.id}/unit/${unit.id}`}
-              className="unit-select-card"
-            >
-              <div className="unit-select-heading">
-                <span className="unit-select-number">UNIT {unitIndex + 1}</span>
-                <div className="unit-select-titles">
-                  <span className="unit-select-title-en">{unit.titleEn}</span>
-                  <span className="unit-select-title-ko">{unit.titleKo}</span>
-                </div>
-              </div>
-              <div className="unit-select-overview">
-                <Prose>{unit.overview}</Prose>
-              </div>
-              <div className="unit-select-progress">
-                <span className="unit-select-progress-text">
-                  {masteredCount} of {total} mastered · {masteredCount}/{total} 완료
-                </span>
-                <div className="unit-progress-bar">
-                  <div
-                    className="unit-progress-fill"
-                    style={{ width: `${total > 0 ? (masteredCount / total) * 100 : 0}%` }}
-                  />
-                </div>
-              </div>
-              <div className="unit-select-rings">
-                {unit.lessons.map((lesson) => {
-                  const record = progress[lesson.id];
-                  const status = record?.status ?? "not_started";
-                  return (
-                    <span key={lesson.id} title={lesson.titleEn}>
-                      <ProgressRing
-                        lessonId={lesson.id}
-                        percent={record?.percent ?? 0}
-                        status={status}
-                      />
-                    </span>
-                  );
-                })}
-              </div>
-            </Link>
+              href={href}
+              unitIndex={unitIndex}
+              titleEn={unit.titleEn}
+              titleKo={unit.titleKo}
+              overview={unit.overview}
+              masteredCount={masteredCount}
+              total={total}
+              autoGotoHref={autoGotoHref}
+              rings={unit.lessons.map((lesson) => {
+                const record = progress[lesson.id];
+                return {
+                  lessonId: lesson.id,
+                  titleEn: lesson.titleEn,
+                  percent: record?.percent ?? 0,
+                  status: record?.status ?? "not_started",
+                };
+              })}
+            />
           );
         })}
       </main>

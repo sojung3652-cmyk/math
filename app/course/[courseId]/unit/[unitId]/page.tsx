@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
-import ProgressRing from "@/components/ProgressRing";
+import LessonRow from "@/components/LessonRow";
 import Prose from "@/components/Prose";
 import { findUnit } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
@@ -10,10 +10,13 @@ export const dynamic = "force-dynamic";
 
 export default async function UnitPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ courseId: string; unitId: string }>;
+  searchParams: Promise<{ gotoLesson?: string }>;
 }) {
   const { courseId, unitId } = await params;
+  const { gotoLesson } = await searchParams;
   const found = findUnit(courseId, unitId);
   if (!found) notFound();
 
@@ -82,21 +85,19 @@ export default async function UnitPage({
         <div className="unit-lesson-list">
           {lessons.map(({ lesson, record }) => {
             const status = record?.status ?? "not_started";
+            const href = `/lesson/${lesson.id}`;
             return (
-              <Link
+              <LessonRow
                 key={lesson.id}
-                href={`/lesson/${lesson.id}`}
-                className={`lesson-row ${status}`}
-              >
-                <ProgressRing lessonId={lesson.id} percent={record?.percent ?? 0} status={status} />
-                <span className="lesson-titles">
-                  <span className="lesson-title-en">{lesson.titleEn}</span>
-                  <span className="lesson-title-ko">{lesson.titleKo}</span>
-                </span>
-                {status === "mastered" && record?.score != null && (
-                  <span className="lesson-score">{record.score}%</span>
-                )}
-              </Link>
+                href={href}
+                status={status}
+                lessonId={lesson.id}
+                titleEn={lesson.titleEn}
+                titleKo={lesson.titleKo}
+                percent={record?.percent ?? 0}
+                score={record?.score ?? null}
+                autoGotoHref={lesson.id === gotoLesson ? href : undefined}
+              />
             );
           })}
         </div>

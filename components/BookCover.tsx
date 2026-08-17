@@ -1,8 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FLIP_FAST_MS, FLIP_SLOW_MS, useCardFlip } from "@/components/useCardFlip";
+
+// Two clearly distinct cover palettes so the books read apart on the shelf
+// at a glance — light blue for 수학Ⅰ, soft green for 수학Ⅱ. Both use dark
+// ink text (the covers are light, unlike the earlier dark-cover version).
+const THEMES = [
+  { bg: "#b8d4e8", bg2: "#9cc0da", spine: "#7fa9c7" },
+  { bg: "#cfe6d3", bg2: "#addfb6", spine: "#7fae8c" },
+] as const;
 
 export default function BookCover({
   courseId,
@@ -11,8 +18,10 @@ export default function BookCover({
   subtitle,
   masteredCount,
   total,
-  ctaHref,
   ctaLabel,
+  ctaUnitId,
+  ctaLessonId,
+  themeIndex,
 }: {
   courseId: string;
   titleKo: string;
@@ -20,35 +29,45 @@ export default function BookCover({
   subtitle: string;
   masteredCount: number;
   total: number;
-  ctaHref: string;
   ctaLabel: string;
+  ctaUnitId: string;
+  ctaLessonId: string;
+  themeIndex: number;
 }) {
-  const router = useRouter();
-  const [opening, setOpening] = useState(false);
+  const { flipping, trigger } = useCardFlip();
+  const [fast, setFast] = useState(false);
+  const theme = THEMES[themeIndex % THEMES.length];
   const href = `/course/${courseId}`;
+  const ctaGotoHref = `/course/${courseId}?gotoUnit=${ctaUnitId}&gotoLesson=${ctaLessonId}`;
   const percent = total > 0 ? (masteredCount / total) * 100 : 0;
 
-  function openBook() {
-    if (opening) return;
-    const reduceMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
-      router.push(href);
-      return;
-    }
-    setOpening(true);
-    window.setTimeout(() => router.push(href), 600);
+  function openCover() {
+    setFast(false);
+    trigger(href, FLIP_SLOW_MS);
+  }
+
+  function openCoverFast() {
+    setFast(true);
+    trigger(ctaGotoHref, FLIP_FAST_MS);
   }
 
   return (
-    <div className={`book${opening ? " opening" : ""}`}>
+    <div
+      className={`book${flipping ? " opening" : ""}${flipping && fast ? " fast" : ""}`}
+      style={
+        {
+          "--book-bg": theme.bg,
+          "--book-bg2": theme.bg2,
+          "--book-spine": theme.spine,
+        } as React.CSSProperties
+      }
+    >
       <div className="book-spine" />
       <div className="book-page" />
       <button
         type="button"
         className="book-cover"
-        onClick={openBook}
+        onClick={openCover}
         aria-label={`Open ${titleKo} · ${titleEn}`}
       >
         <span className="book-cover-eyebrow">STUDY NOTEBOOK</span>
@@ -64,9 +83,9 @@ export default function BookCover({
           </div>
         </div>
       </button>
-      <Link href={ctaHref} className="btn-unit-cta book-cta">
+      <button type="button" className="btn-unit-cta book-cta" onClick={openCoverFast}>
         {ctaLabel}
-      </Link>
+      </button>
     </div>
   );
 }

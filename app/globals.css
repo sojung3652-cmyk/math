@@ -709,10 +709,16 @@ main.course-main {
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
   color: var(--ink);
+  cursor: pointer;
 }
 .lesson-row:hover {
   background: #eef1f5;
@@ -1184,6 +1190,7 @@ main.unit-main {
   padding: 12px 28px;
   text-decoration: none;
   display: inline-block;
+  cursor: pointer;
 }
 .btn-unit-cta:hover {
   background: #1f3a78;
@@ -1245,8 +1252,8 @@ main.course-select-main {
   inset: 0 auto 0 0;
   width: 18px;
   border-radius: 4px 0 0 4px;
-  background: linear-gradient(90deg, #16264a, #23386f);
-  box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.35);
+  background: var(--book-spine);
+  box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.3);
 }
 .book-page {
   position: absolute;
@@ -1263,8 +1270,8 @@ main.course-select-main {
   align-items: flex-start;
   text-align: left;
   font: inherit;
-  color: #f4f0e4;
-  background: linear-gradient(155deg, #2b4c9b, #1c3468 78%);
+  color: var(--ink);
+  background: linear-gradient(155deg, var(--book-bg), var(--book-bg2) 78%);
   border: none;
   border-radius: 3px 8px 8px 3px;
   padding: 26px 20px 20px;
@@ -1272,24 +1279,27 @@ main.course-select-main {
   transform-style: preserve-3d;
   transform-origin: left center;
   transform: rotateY(-6deg);
-  box-shadow: 10px 14px 24px rgba(20, 28, 45, 0.28);
+  box-shadow: 10px 14px 24px rgba(20, 28, 45, 0.22);
   transition: transform 220ms ease, box-shadow 220ms ease;
   backface-visibility: hidden;
 }
 .book:hover .book-cover {
   transform: rotateY(-12deg) translateY(-6px);
-  box-shadow: 14px 22px 34px rgba(20, 28, 45, 0.32);
+  box-shadow: 14px 22px 34px rgba(20, 28, 45, 0.26);
 }
 .book.opening .book-cover {
   transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
   transform: rotateY(-135deg);
-  box-shadow: 2px 10px 20px rgba(20, 28, 45, 0.2);
+  box-shadow: 2px 10px 20px rgba(20, 28, 45, 0.16);
+}
+.book.opening.fast .book-cover {
+  transition-duration: 300ms;
 }
 .book-cover-eyebrow {
   font-family: var(--font-mono), monospace;
   font-size: 10px;
   letter-spacing: 0.2em;
-  color: rgba(244, 240, 228, 0.7);
+  color: rgba(31, 43, 61, 0.62);
   margin-bottom: 14px;
 }
 .book-cover-title {
@@ -1303,13 +1313,13 @@ main.course-select-main {
   font-family: var(--font-mono), monospace;
   font-size: 11.5px;
   letter-spacing: 0.08em;
-  color: rgba(244, 240, 228, 0.75);
+  color: rgba(31, 43, 61, 0.62);
   margin-top: 4px;
 }
 .book-cover-subtitle {
   font-family: var(--font-mono), monospace;
   font-size: 11px;
-  color: rgba(244, 240, 228, 0.75);
+  color: rgba(31, 43, 61, 0.62);
   margin-top: 14px;
   line-height: 1.6;
 }
@@ -1321,14 +1331,14 @@ main.course-select-main {
   display: block;
   font-family: var(--font-mono), monospace;
   font-size: 10px;
-  color: rgba(244, 240, 228, 0.75);
+  color: rgba(31, 43, 61, 0.62);
   margin-bottom: 6px;
 }
 .book-cover-progress-bar {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(31, 43, 61, 0.14);
 }
 .book-cover-progress-bar .unit-progress-fill {
-  background: #f4f0e4;
+  background: var(--pen-blue);
 }
 .book-cta {
   position: absolute;
@@ -1347,16 +1357,48 @@ main.course-select-main {
   }
 }
 
+/* ---------- page turn: level 2 unit cards & level 3 lesson rows ---------- */
+main.course-main,
+.unit-lesson-list {
+  perspective: 1200px;
+}
+.unit-select-card,
+.lesson-row {
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1), opacity 600ms ease;
+}
+.unit-select-card.turning,
+.lesson-row.turning {
+  transform: rotateY(-100deg);
+  opacity: 0.3;
+}
+.unit-select-card.turning.fast,
+.lesson-row.turning.fast {
+  transition-duration: 300ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .unit-select-card,
+  .lesson-row {
+    transition: none;
+  }
+}
+
 /* ---------- level 2: unit select (within a course) ---------- */
 .unit-select-card {
   display: block;
+  width: 100%;
   background: #fff;
   border: 1px solid #e2e7ef;
   border-radius: 12px;
   padding: 20px 22px;
   margin-bottom: 18px;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 .unit-select-card:hover {
   border-color: var(--pen-blue);
