@@ -149,7 +149,21 @@ export default function LessonChatPanel({
         aria-label={open ? "Close the tutor chat" : "Ask the tutor a question about this lesson"}
         aria-expanded={open}
       >
-        <span className="chat-bubble-icon">질문?</span>
+        <svg
+          className="chat-bubble-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 3.5v-3.5H5.5C4.67 15 4 14.33 4 13.5v-8Z"
+            stroke="#fff"
+            strokeWidth="1.7"
+            strokeLinejoin="round"
+          />
+        </svg>
         {loadedHistory && hasHistory && <span className="chat-bubble-badge" />}
       </button>
 
