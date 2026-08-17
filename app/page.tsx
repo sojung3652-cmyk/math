@@ -1,4 +1,3 @@
-import Link from "next/link";
 import BookCover from "@/components/BookCover";
 import { COURSES } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
@@ -36,9 +35,6 @@ export default function HomePage() {
           );
         })}
       </div>
-      <Link href="/chat" className="free-chat-link" transitionTypes={["nav-forward"]}>
-        자유 질문 · Free questions
-      </Link>
     </main>
   );
 }

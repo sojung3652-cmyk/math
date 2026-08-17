@@ -1606,18 +1606,6 @@ main.course-main,
 }
 
 /* ---------- free-question link on the bookshelf ---------- */
-.free-chat-link {
-  display: block;
-  margin-top: 28px;
-  font-family: var(--font-mono), monospace;
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: none;
-}
-.free-chat-link:hover {
-  color: var(--pen-blue);
-}
-
 /* ---------- lesson chat: compact floating widget (not a sidebar) ---------- */
 .chat-bubble-trigger {
   position: fixed;
