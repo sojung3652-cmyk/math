@@ -66,7 +66,7 @@ export default async function UnitPage({
             <Prose>{unit.overview}</Prose>
           </div>
           <div className="unit-cta-row">
-            <Link href={cta.href} className="btn-unit-cta">
+            <Link href={cta.href} className="btn-unit-cta" transitionTypes={["nav-forward"]}>
               {cta.label}
             </Link>
           </div>

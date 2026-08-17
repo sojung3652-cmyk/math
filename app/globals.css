@@ -16,6 +16,122 @@
   box-sizing: border-box;
 }
 
+/* ---------- page-to-page transitions (React ViewTransition, see
+   app/layout.tsx + next.config.ts experimental.viewTransition) ----------
+   Book-flow navigations (BookCover, UnitSelectCard, LessonRow) push routes
+   with no transitionTypes, so they fall into the wrapping ViewTransition's
+   default="none" bucket and keep their own JS/CSS flip animation
+   untouched — only links explicitly tagged nav-forward/nav-back below get
+   this fade+slide. */
+::view-transition-old(.nav-forward),
+::view-transition-old(.nav-back) {
+  animation: 150ms ease-in both vt-fade reverse, 300ms ease-in-out both vt-slide reverse;
+}
+::view-transition-new(.nav-forward),
+::view-transition-new(.nav-back) {
+  animation: 180ms ease-out 100ms both vt-fade, 300ms ease-in-out both vt-slide;
+}
+::view-transition-old(.nav-forward) {
+  --vt-slide-offset: -24px;
+}
+::view-transition-new(.nav-forward) {
+  --vt-slide-offset: 24px;
+}
+::view-transition-old(.nav-back) {
+  --vt-slide-offset: 24px;
+}
+::view-transition-new(.nav-back) {
+  --vt-slide-offset: -24px;
+}
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes vt-slide {
+  from {
+    translate: var(--vt-slide-offset);
+  }
+  to {
+    translate: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ---------- scroll reveal: lesson content floats in as you reach it ----------
+   Markup carries the hidden starting state from first paint (no JS-added
+   flash); components/ScrollReveal.tsx just toggles .in-view via a
+   once-only IntersectionObserver per matched element. */
+.reveal,
+.reveal-card,
+.reveal-graph {
+  transition: opacity 450ms ease-out, transform 450ms ease-out;
+  will-change: opacity, transform;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.reveal-card {
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+}
+.reveal-graph {
+  opacity: 0;
+  transform: scale(0.97);
+}
+.reveal.in-view,
+.reveal-card.in-view,
+.reveal-graph.in-view {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 450ms ease-out, transform 450ms ease-out;
+}
+.reveal-stagger.in-view > * {
+  opacity: 1;
+  transform: none;
+}
+.reveal-stagger.in-view > *:nth-child(1) {
+  transition-delay: 0ms;
+}
+.reveal-stagger.in-view > *:nth-child(2) {
+  transition-delay: 70ms;
+}
+.reveal-stagger.in-view > *:nth-child(3) {
+  transition-delay: 140ms;
+}
+.reveal-stagger.in-view > *:nth-child(4) {
+  transition-delay: 210ms;
+}
+.reveal-stagger.in-view > *:nth-child(n + 5) {
+  transition-delay: 260ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-card,
+  .reveal-graph,
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 html,
 body {
   height: 100%;
@@ -807,6 +923,8 @@ main.course-main {
   scroll-margin-top: 90px;
 }
 .lesson-nav-item {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -820,15 +938,14 @@ main.course-main {
   cursor: pointer;
   text-align: left;
   white-space: nowrap;
+  transition: color 200ms ease;
 }
 .lesson-nav-item:hover {
   color: var(--ink);
-  background: #eef1f5;
 }
 .lesson-nav-item.active {
   color: var(--pen-blue);
   font-weight: 600;
-  background: rgba(43, 76, 155, 0.08);
 }
 .lesson-nav-dot {
   flex: none;
@@ -842,6 +959,27 @@ main.course-main {
   background: var(--pen-blue);
   border-color: var(--pen-blue);
 }
+/* The sliding highlight behind the active item — one shared element that
+   animates its transform between item positions instead of a hard class
+   swap. Sits behind the buttons (z-index 0 vs. their z-index 1). */
+.lesson-nav-list {
+  position: relative;
+}
+.lesson-nav-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background: rgba(43, 76, 155, 0.08);
+  border-radius: 6px;
+  pointer-events: none;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1), width 250ms ease, height 250ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lesson-nav-indicator {
+    transition: none;
+  }
+}
 /* mobile / narrow desktop: thin sticky bar under the header, horizontally
    scrollable so it never wraps or covers content */
 .lesson-nav-mobile {
@@ -851,7 +989,7 @@ main.course-main {
   background: var(--card);
   border-bottom: 1px solid #e2e7ef;
 }
-.lesson-nav-scroll {
+.lesson-nav-list-mobile {
   display: flex;
   gap: 2px;
   overflow-x: auto;
@@ -876,14 +1014,17 @@ main.course-main {
     display: none;
   }
   .lesson-nav-desktop {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
+    display: block;
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
     left: calc(50vw + 380px + 20px);
     width: 170px;
+  }
+  .lesson-nav-list-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
   }
 }
 
@@ -1753,7 +1894,7 @@ main.course-main,
   .unit-cover-title-ko {
     font-size: 15px;
   }
-  .lesson-nav-scroll {
+  .lesson-nav-list-mobile {
     padding: 6px 8px;
   }
   .bookshelf {

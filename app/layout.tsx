@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import { Gowun_Batang, IBM_Plex_Sans_KR, IBM_Plex_Mono } from "next/font/google";
 import "katex/dist/katex.min.css";
 import "./globals.css";
@@ -36,7 +37,15 @@ export default function RootLayout({
       lang="en"
       className={`${gowunBatang.variable} ${ibmPlexSansKR.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ViewTransition
+          enter={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
+          exit={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
+          default="none"
+        >
+          {children}
+        </ViewTransition>
+      </body>
     </html>
   );
 }

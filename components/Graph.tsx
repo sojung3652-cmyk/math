@@ -91,7 +91,7 @@ export default function Graph({ spec }: { spec: GraphSpec }) {
   }
 
   return (
-    <div className="graph-box">
+    <div className="graph-box reveal-graph">
       <div ref={containerRef} className="graph-canvas" />
       <p className="graph-caption">
         {spec.captionEn} <span className="graph-caption-ko">· {spec.captionKo}</span>

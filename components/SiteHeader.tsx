@@ -22,7 +22,7 @@ export default function SiteHeader({
         <h1>내 수학 노트 · My Math Notebook</h1>
       </header>
       <nav aria-label="Pages">
-        <Link href="/" aria-current={active === "course" ? "page" : undefined}>
+        <Link href="/" aria-current={active === "course" ? "page" : undefined} transitionTypes={["nav-back"]}>
           Course 코스
         </Link>
         <span className="nav-disabled" title="Coming in a future update">
@@ -34,7 +34,9 @@ export default function SiteHeader({
           {breadcrumbs.map((crumb, i) => (
             <span className="breadcrumb-segment" key={`${crumb.label}-${i}`}>
               {crumb.href ? (
-                <Link href={crumb.href}>{crumb.label}</Link>
+                <Link href={crumb.href} transitionTypes={["nav-back"]}>
+                  {crumb.label}
+                </Link>
               ) : (
                 <span className="breadcrumb-current">{crumb.label}</span>
               )}

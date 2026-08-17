@@ -36,7 +36,7 @@ export default function HomePage() {
           );
         })}
       </div>
-      <Link href="/chat" className="free-chat-link">
+      <Link href="/chat" className="free-chat-link" transitionTypes={["nav-forward"]}>
         자유 질문 · Free questions
       </Link>
     </main>

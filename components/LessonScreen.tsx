@@ -5,6 +5,7 @@ import Prose from "@/components/Prose";
 import ResetLessonButton from "@/components/ResetLessonButton";
 import LessonNav, { type NavSection } from "@/components/LessonNav";
 import LessonChatPanel from "@/components/LessonChatPanel";
+import ScrollReveal from "@/components/ScrollReveal";
 import type { Lesson } from "@/lib/curriculum";
 import type { AdvancedSection as AdvancedSectionData, LessonContent, Question } from "@/lib/lesson-content";
 import type { GraphSpec } from "@/lib/graph-spec";
@@ -99,7 +100,7 @@ function PracticeItem({
   const isCorrect = checked && normalize(value) === normalize(question.correctAnswer);
 
   return (
-    <div className="question-card">
+    <div className="question-card reveal-card">
       <span className="label">
         {labelPrefix} {index + 1}
       </span>
@@ -214,7 +215,7 @@ function QuizSection({
       {questions.map((q, i) => {
         const isCorrect = submitted && normalize(answers[i]) === normalize(q.correctAnswer);
         return (
-          <div className="question-card" key={q.id}>
+          <div className="question-card reveal-card" key={q.id}>
             <span className="label">문제 {i + 1}</span>
             <div className="question-prompt">
               <Prose graphs={graphs}>{q.prompt}</Prose>
@@ -279,7 +280,7 @@ function GoingDeeperSection({
   graphs?: GraphSpec[];
 }) {
   return (
-    <div id={id} className="going-deeper-section">
+    <div id={id} className="going-deeper-section reveal-card">
       <div className="going-deeper-header">
         🔍 <b>더 알아보기 · Going deeper</b>
       </div>
@@ -314,7 +315,7 @@ function AdvancedSection({
   }
 
   return (
-    <div id={id} className="advanced-section">
+    <div id={id} className="advanced-section reveal-card">
       <button
         type="button"
         className="advanced-toggle"
@@ -422,13 +423,14 @@ export default function LessonScreen({
     <>
       <LessonNav sections={sections} percent={percent} hidden={chatOpen} />
       <LessonChatPanel lesson={lesson} onOpenChange={setChatOpen} />
+      <ScrollReveal />
       <main className="lesson-main">
         <div className="lesson-top-bar">
           <ResetLessonButton lessonId={lesson.id} />
         </div>
         <div className="day-rule">— {lesson.titleEn.toUpperCase()} —</div>
 
-        <div className="msg-tutor">
+        <div className="msg-tutor reveal-stagger">
           <h3 id="section-intuition">
             <span className="section-num">1 ·</span> Intuition
           </h3>
@@ -439,7 +441,7 @@ export default function LessonScreen({
           <Prose graphs={content.graphs}>{content.definition}</Prose>
         </div>
 
-        <div id="section-example" className="example-box">
+        <div id="section-example" className="example-box reveal-card">
           <div className="example-header">
             📖 <b>예제 · Example</b>
           </div>
@@ -448,12 +450,12 @@ export default function LessonScreen({
           </div>
         </div>
 
-        <div className="teaching-note-card">
+        <div className="teaching-note-card reveal-card">
           <span className="teaching-note-label">선생님 노트 · Teaching note</span>
           <Prose graphs={content.graphs}>{content.teachingNote}</Prose>
         </div>
 
-        <div className="note-card">
+        <div className="note-card reveal-card">
           <div className="note-tab">
             📌 <b>NOTE</b> · {lesson.titleEn}
           </div>
