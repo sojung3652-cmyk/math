@@ -1221,59 +1221,130 @@ main.unit-main {
   margin-bottom: 10px;
 }
 
-/* ---------- level 1: course select (home) ---------- */
+/* ---------- level 1: bookshelf (home) ---------- */
 main.course-select-main {
   max-width: 900px;
-  padding-bottom: 48px;
+  padding-bottom: 64px;
 }
-.course-select-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.bookshelf {
+  perspective: 1600px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 64px;
+  padding: 36px 20px 40px;
 }
-.course-card {
+.book {
+  position: relative;
+  width: 230px;
+  height: 320px;
+}
+.book-spine {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 18px;
+  border-radius: 4px 0 0 4px;
+  background: linear-gradient(90deg, #16264a, #23386f);
+  box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.35);
+}
+.book-page {
+  position: absolute;
+  inset: 3px 3px 3px 16px;
+  background: #fbf8f0;
+  border-radius: 2px 6px 6px 2px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+.book-cover {
+  position: absolute;
+  inset: 0 0 0 14px;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  border: 1px solid #e2e7ef;
-  border-radius: 12px;
-  padding: 28px 24px;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
+  font: inherit;
+  color: #f4f0e4;
+  background: linear-gradient(155deg, #2b4c9b, #1c3468 78%);
+  border: none;
+  border-radius: 3px 8px 8px 3px;
+  padding: 26px 20px 20px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transform: rotateY(-6deg);
+  box-shadow: 10px 14px 24px rgba(20, 28, 45, 0.28);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  backface-visibility: hidden;
 }
-.course-card-link {
-  text-decoration: none;
-  color: inherit;
-  border-radius: 8px;
-  padding: 4px;
-  margin: -4px -4px 18px;
+.book:hover .book-cover {
+  transform: rotateY(-12deg) translateY(-6px);
+  box-shadow: 14px 22px 34px rgba(20, 28, 45, 0.32);
 }
-.course-card-link:hover .course-card-title {
-  color: var(--pen-blue);
+.book.opening .book-cover {
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotateY(-135deg);
+  box-shadow: 2px 10px 20px rgba(20, 28, 45, 0.2);
 }
-.course-card-title {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.3;
-}
-.course-card-title-en {
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--muted);
-}
-.course-card-subtitle {
+.book-cover-eyebrow {
   font-family: var(--font-mono), monospace;
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 8px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(244, 240, 228, 0.7);
+  margin-bottom: 14px;
 }
-.course-card-progress {
-  max-width: none;
-  margin: auto auto 20px;
+.book-cover-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
 }
-.course-card-cta {
-  align-self: center;
+.book-cover-title-en {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: rgba(244, 240, 228, 0.75);
+  margin-top: 4px;
+}
+.book-cover-subtitle {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: rgba(244, 240, 228, 0.75);
+  margin-top: 14px;
+  line-height: 1.6;
+}
+.book-cover-progress {
+  margin-top: auto;
+  width: 100%;
+}
+.book-cover-progress-text {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  color: rgba(244, 240, 228, 0.75);
+  margin-bottom: 6px;
+}
+.book-cover-progress-bar {
+  background: rgba(255, 255, 255, 0.18);
+}
+.book-cover-progress-bar .unit-progress-fill {
+  background: #f4f0e4;
+}
+.book-cta {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%);
+  transition: opacity 150ms ease;
+}
+.book.opening .book-cta {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .book-cover {
+    transition: none;
+  }
 }
 
 /* ---------- level 2: unit select (within a course) ---------- */
@@ -1372,8 +1443,34 @@ main.course-select-main {
   .lesson-nav-scroll {
     padding: 6px 8px;
   }
-  .course-select-grid {
-    grid-template-columns: 1fr;
+  .bookshelf {
+    perspective: 900px;
+    gap: 44px;
+    padding: 20px 12px 32px;
+  }
+  .book {
+    width: 100%;
+    max-width: 320px;
+    height: 220px;
+  }
+  .book-cover {
+    transform: rotateY(-2deg);
+    padding: 18px 16px 14px;
+  }
+  .book:hover .book-cover {
+    transform: rotateY(-2deg);
+  }
+  .book.opening .book-cover {
+    transform: rotateY(-90deg);
+  }
+  .book-cover-title {
+    font-size: 24px;
+  }
+  .book-cover-eyebrow {
+    margin-bottom: 8px;
+  }
+  .book-cover-subtitle {
+    margin-top: 8px;
   }
   .unit-select-heading {
     flex-wrap: wrap;

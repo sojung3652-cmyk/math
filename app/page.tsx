@@ -1,5 +1,5 @@
-import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
+import BookCover from "@/components/BookCover";
 import { COURSES } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
 
@@ -13,7 +13,7 @@ export default function HomePage() {
       <SiteHeader active="course" />
       <main className="course-select-main">
         <div className="day-rule">— 내 수학 노트 · MY MATH NOTEBOOK —</div>
-        <div className="course-select-grid">
+        <div className="bookshelf">
           {COURSES.map((course) => {
             const lessons = course.units.flatMap((unit) => unit.lessons);
             const total = lessons.length;
@@ -35,28 +35,17 @@ export default function HomePage() {
               : { href: `/lesson/${lessons[0].id}`, label: "Start · 시작하기" };
 
             return (
-              <div className="course-card" key={course.id}>
-                <Link href={`/course/${course.id}`} className="course-card-link">
-                  <h2 className="course-card-title">
-                    {course.titleKo} <span className="course-card-title-en">· {course.titleEn}</span>
-                  </h2>
-                  <p className="course-card-subtitle">{course.subtitle}</p>
-                </Link>
-                <div className="unit-progress-summary course-card-progress">
-                  <span className="unit-progress-text">
-                    {masteredCount} of {total} lessons mastered · {masteredCount}/{total} 완료
-                  </span>
-                  <div className="unit-progress-bar">
-                    <div
-                      className="unit-progress-fill"
-                      style={{ width: `${total > 0 ? (masteredCount / total) * 100 : 0}%` }}
-                    />
-                  </div>
-                </div>
-                <Link href={cta.href} className="btn-unit-cta course-card-cta">
-                  {cta.label}
-                </Link>
-              </div>
+              <BookCover
+                key={course.id}
+                courseId={course.id}
+                titleKo={course.titleKo}
+                titleEn={course.titleEn}
+                subtitle={course.subtitle}
+                masteredCount={masteredCount}
+                total={total}
+                ctaHref={cta.href}
+                ctaLabel={cta.label}
+              />
             );
           })}
         </div>
