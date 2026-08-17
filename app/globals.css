@@ -1242,6 +1242,18 @@ main.course-select-main {
   justify-content: center;
   align-items: center;
 }
+/* This page has no header/nav (see app/page.tsx) — this is its title,
+   standing in for the one the header would otherwise show. */
+.notebook-title {
+  text-align: center;
+}
+.notebook-title-heading {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 6px;
+}
 .bookshelf {
   perspective: 1600px;
   display: flex;
@@ -1253,8 +1265,8 @@ main.course-select-main {
 }
 .book {
   position: relative;
-  width: 180px;
-  height: 240px;
+  width: 260px;
+  height: 340px;
 }
 /* The page underneath, revealed only once the cover rotates open —
    exactly matches the cover's footprint so nothing peeks out at rest. */
@@ -1279,7 +1291,7 @@ main.course-select-main {
   background: linear-gradient(90deg, var(--book-spine) 0 12px, var(--book-bg) 12px 100%);
   border: none;
   border-radius: 3px;
-  padding: 30px 14px 16px;
+  padding: 44px 22px 24px;
   cursor: pointer;
   transform-style: preserve-3d;
   transform-origin: left center;
@@ -1302,17 +1314,17 @@ main.course-select-main {
 }
 .book-cover-title {
   font-family: var(--font-display), Georgia, serif;
-  font-size: 26px;
+  font-size: 36px;
   font-weight: 700;
   line-height: 1.2;
 }
 .book-cover-title-en {
   display: block;
   font-family: var(--font-mono), monospace;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.06em;
   color: rgba(31, 43, 61, 0.6);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 .book-cover-bottom {
   margin-top: auto;
@@ -1320,15 +1332,15 @@ main.course-select-main {
 }
 .book-cover-subtitle {
   font-family: var(--font-mono), monospace;
-  font-size: 10px;
+  font-size: 11.5px;
   color: rgba(31, 43, 61, 0.6);
-  line-height: 1.5;
-  margin-bottom: 8px;
+  line-height: 1.6;
+  margin-bottom: 10px;
 }
 .book-cover-progress-text {
   display: block;
   font-family: var(--font-mono), monospace;
-  font-size: 9.5px;
+  font-size: 10.5px;
   color: rgba(31, 43, 61, 0.5);
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1472,12 +1484,12 @@ main.course-main,
     padding: 20px 0;
   }
   .book {
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 270px;
   }
   .book-cover {
     transform: rotateY(-3deg);
-    padding: 22px 12px 14px;
+    padding: 30px 16px 18px;
   }
   .book:hover .book-cover {
     transform: rotateY(-5deg) translateY(-4px);
@@ -1486,7 +1498,7 @@ main.course-main,
     transform: rotateY(-100deg);
   }
   .book-cover-title {
-    font-size: 21px;
+    font-size: 27px;
   }
   .unit-select-heading {
     flex-wrap: wrap;
