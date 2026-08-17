@@ -75,8 +75,7 @@
 .reveal,
 .reveal-card,
 .reveal-graph {
-  transition: opacity 450ms ease-out, transform 450ms ease-out;
-  will-change: opacity, transform;
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
 }
 .reveal {
   opacity: 0;
@@ -95,12 +94,11 @@
 .reveal-graph.in-view {
   opacity: 1;
   transform: none;
-  will-change: auto;
 }
 .reveal-stagger > * {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 450ms ease-out, transform 450ms ease-out;
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
 }
 .reveal-stagger.in-view > * {
   opacity: 1;
@@ -110,16 +108,16 @@
   transition-delay: 0ms;
 }
 .reveal-stagger.in-view > *:nth-child(2) {
-  transition-delay: 70ms;
+  transition-delay: 50ms;
 }
 .reveal-stagger.in-view > *:nth-child(3) {
-  transition-delay: 140ms;
+  transition-delay: 100ms;
 }
 .reveal-stagger.in-view > *:nth-child(4) {
-  transition-delay: 210ms;
+  transition-delay: 150ms;
 }
 .reveal-stagger.in-view > *:nth-child(n + 5) {
-  transition-delay: 260ms;
+  transition-delay: 200ms;
 }
 @media (prefers-reduced-motion: reduce) {
   .reveal,
@@ -197,6 +195,9 @@ nav a {
   border-bottom: 2px solid transparent;
   display: inline-block;
 }
+nav a {
+  transition: color 200ms ease, border-bottom-color 200ms ease;
+}
 nav a[aria-current="page"] {
   color: var(--pen-blue);
   border-bottom-color: var(--pen-blue);
@@ -239,6 +240,58 @@ textarea:focus-visible {
 }
 .breadcrumb-sep {
   color: #b7bfcb;
+}
+@keyframes breadcrumb-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.breadcrumb-segment {
+  animation: breadcrumb-in 300ms ease-out both;
+}
+.breadcrumb-segment:nth-child(2) {
+  animation-delay: 40ms;
+}
+.breadcrumb-segment:nth-child(3) {
+  animation-delay: 80ms;
+}
+.breadcrumb-segment:nth-child(n + 4) {
+  animation-delay: 120ms;
+}
+
+/* ---------- gentle page-load entrance: header, then nav/breadcrumbs,
+   then the main content card, staggered 50ms apart ---------- */
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+header {
+  animation: page-fade-in 400ms ease-out both;
+}
+nav {
+  animation: page-fade-in 400ms ease-out both;
+  animation-delay: 50ms;
+}
+.breadcrumbs {
+  animation: page-fade-in 400ms ease-out both;
+  animation-delay: 100ms;
+}
+main {
+  animation: page-fade-in 400ms ease-out both;
+  animation-delay: 100ms;
+}
+.composer {
+  animation: page-fade-in 400ms ease-out both;
+  animation-delay: 150ms;
 }
 
 /* ---------- chat column: the page-on-desk card ---------- */
@@ -873,17 +926,20 @@ main.course-main {
   line-height: 1;
 }
 .progress-ring.pop {
-  animation: ring-pop 0.45s ease;
+  animation: ring-pop 0.6s ease;
 }
 @keyframes ring-pop {
   0% {
-    transform: scale(0.6);
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(198, 56, 46, 0));
   }
-  60% {
-    transform: scale(1.18);
+  50% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px rgba(198, 56, 46, 0.55));
   }
   100% {
     transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(198, 56, 46, 0));
   }
 }
 .lesson-titles {
@@ -1623,12 +1679,17 @@ main.course-main,
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 200ms ease, box-shadow 200ms ease;
-  animation: chat-bubble-breathe 3.2s ease-in-out infinite;
+  animation: chat-bubble-breathe 3s ease-in-out infinite;
+  will-change: transform;
 }
 .chat-bubble-trigger:hover {
   animation-play-state: paused;
   transform: scale(1.08);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+.chat-bubble-trigger:active {
+  animation-play-state: paused;
+  transform: scale(1.02);
 }
 .chat-bubble-icon {
   display: block;
@@ -1647,10 +1708,10 @@ main.course-main,
 @keyframes chat-bubble-breathe {
   0%,
   100% {
-    transform: scale(1);
+    transform: translateY(0);
   }
   50% {
-    transform: scale(1.07);
+    transform: translateY(-4px);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1677,15 +1738,16 @@ main.course-main,
   border-radius: 16px;
   box-shadow: 0 14px 34px rgba(20, 28, 45, 0.2);
   transform-origin: bottom right;
-  transform: scale(0.85) translateY(10px);
+  transform: scale(0.9);
   opacity: 0;
   pointer-events: none;
-  transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease;
+  transition: transform 200ms ease, opacity 200ms ease;
 }
 .chat-panel.open {
-  transform: scale(1) translateY(0);
+  transform: scale(1);
   opacity: 1;
   pointer-events: auto;
+  transition: transform 250ms ease-out, opacity 250ms ease-out;
 }
 @media (prefers-reduced-motion: reduce) {
   .chat-panel {
@@ -1756,9 +1818,36 @@ main.course-main,
   gap: 6px;
   max-width: 88%;
 }
+/* Plays once on mount — existing bubbles keep their React key across
+   re-renders so only a newly appended message actually mounts and
+   animates in; older ones never replay this. */
+@keyframes msg-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes msg-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.chat-bubble-tutor {
+  animation: msg-in-left 200ms ease-out;
+}
 .chat-bubble-student {
   align-self: flex-end;
   flex-direction: row-reverse;
+  animation: msg-in-right 200ms ease-out;
 }
 .chat-avatar {
   flex: none;
@@ -1941,5 +2030,133 @@ main.course-main,
     height: 4px;
     border-radius: 999px;
     background: #d8dee8;
+  }
+}
+
+/* ==========================================================================
+   Universal interactive motion — every clickable "lifts" on hover and
+   "presses" on click; every card-like container gets a subtler hover lift
+   even when it isn't clickable. Declared last so it wins the cascade for
+   `transition` on these selectors without disturbing color/background
+   transitions declared earlier for the same classes (this list folds those
+   back in). transform/box-shadow only — no layout properties animate.
+   Deliberately excludes elements with their own bespoke hover treatment
+   (book covers, the chat trigger, the chat popup) so nothing fights over
+   `transform`.
+   ========================================================================== */
+.btn-check,
+.btn-save,
+.btn-send,
+.btn-unit-cta,
+.btn-reset-lesson,
+.btn-reset-cancel,
+.btn-reset-confirm,
+.choice-btn,
+.unit-select-card,
+.lesson-row,
+.chat-panel-icon-btn,
+.chat-panel-send,
+.advanced-toggle,
+.unit-heading-link,
+.lesson-nav-item,
+nav a,
+.breadcrumb-segment a {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease,
+    color 0.2s ease, border-color 0.2s ease;
+}
+.btn-check:hover:not(:disabled),
+.btn-save:hover:not(:disabled),
+.btn-send:hover:not(:disabled),
+.btn-unit-cta:hover,
+.btn-reset-lesson:hover,
+.btn-reset-cancel:hover,
+.btn-reset-confirm:hover,
+.choice-btn:hover:not(:disabled),
+.unit-select-card:hover,
+.lesson-row:hover,
+.chat-panel-icon-btn:hover:not(:disabled),
+.chat-panel-send:hover:not(:disabled),
+.advanced-toggle:hover,
+.unit-heading-link:hover,
+.lesson-nav-item:hover,
+nav a:hover,
+.breadcrumb-segment a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(31, 43, 61, 0.14);
+}
+.btn-check:active:not(:disabled),
+.btn-save:active:not(:disabled),
+.btn-send:active:not(:disabled),
+.btn-unit-cta:active,
+.btn-reset-lesson:active,
+.btn-reset-cancel:active,
+.btn-reset-confirm:active,
+.choice-btn:active:not(:disabled),
+.unit-select-card:active,
+.lesson-row:active,
+.chat-panel-icon-btn:active:not(:disabled),
+.chat-panel-send:active:not(:disabled),
+.advanced-toggle:active,
+.unit-heading-link:active,
+.lesson-nav-item:active,
+nav a:active,
+.breadcrumb-segment a:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Non-clickable cards still read as "alive" objects on the page — a
+   subtler lift, no press state (they don't do anything on click). */
+.example-box,
+.key-idea,
+.question-card,
+.solution-box,
+.teaching-note-card,
+.note-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.example-box:hover,
+.key-idea:hover,
+.question-card:hover,
+.solution-box:hover,
+.teaching-note-card:hover,
+.note-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(31, 43, 61, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn-check:hover,
+  .btn-save:hover,
+  .btn-send:hover,
+  .btn-unit-cta:hover,
+  .btn-reset-lesson:hover,
+  .btn-reset-cancel:hover,
+  .btn-reset-confirm:hover,
+  .choice-btn:hover,
+  .unit-select-card:hover,
+  .lesson-row:hover,
+  .chat-panel-icon-btn:hover,
+  .chat-panel-send:hover,
+  .advanced-toggle:hover,
+  .unit-heading-link:hover,
+  .lesson-nav-item:hover,
+  nav a:hover,
+  .breadcrumb-segment a:hover,
+  .example-box:hover,
+  .key-idea:hover,
+  .question-card:hover,
+  .solution-box:hover,
+  .teaching-note-card:hover,
+  .note-card:hover {
+    transform: none;
   }
 }
