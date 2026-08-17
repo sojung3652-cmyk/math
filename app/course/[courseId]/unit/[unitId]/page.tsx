@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import LessonRow from "@/components/LessonRow";
 import Prose from "@/components/Prose";
+import LessonChatPanel from "@/components/LessonChatPanel";
 import { findUnit } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
 import { getChatHistoryFlags } from "@/lib/chat-history";
@@ -105,6 +106,7 @@ export default async function UnitPage({
           })}
         </div>
       </main>
+      <LessonChatPanel />
     </>
   );
 }

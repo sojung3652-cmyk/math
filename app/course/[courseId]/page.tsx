@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import UnitSelectCard from "@/components/UnitSelectCard";
+import LessonChatPanel from "@/components/LessonChatPanel";
 import { findCourse } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
 import { getChatHistoryFlags } from "@/lib/chat-history";
@@ -70,6 +71,7 @@ export default async function CoursePage({
           );
         })}
       </main>
+      <LessonChatPanel />
     </>
   );
 }
