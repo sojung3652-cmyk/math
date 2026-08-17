@@ -424,9 +424,13 @@ export default function LessonScreen({
       <div className="day-rule">— {lesson.titleEn.toUpperCase()} —</div>
 
       <div className="msg-tutor">
-        <h3>1 · Intuition</h3>
+        <h3>
+          <span className="section-num">1 ·</span> Intuition
+        </h3>
         <Prose graphs={content.graphs}>{content.intuition}</Prose>
-        <h3>2 · Definition</h3>
+        <h3>
+          <span className="section-num">2 ·</span> Definition
+        </h3>
         <Prose graphs={content.graphs}>{content.definition}</Prose>
       </div>
 

@@ -3,8 +3,10 @@ import type { Element, ElementContent, Root, RootContent, Text } from "hast";
 // Matches a single English word (optionally hyphenated) directly followed by
 // its Korean gloss in parentheses, e.g. "limit (극한)" or "left-hand (좌측)".
 // Deliberately excludes spaces from the word so a preceding, unrelated word
-// (e.g. the "A" in "A limit (극한)") is never pulled into the match.
-const TERM_PATTERN = /\b([A-Za-z][A-Za-z'-]*)\s\(([ㄱ-㆏가-힣]+)\)/g;
+// (e.g. the "A" in "A limit (극한)") is never pulled into the match. The
+// whitespace between them is captured (group 2) so it can be preserved
+// verbatim when the term is split into separate English/Korean nodes.
+const TERM_PATTERN = /\b([A-Za-z][A-Za-z'-]*)(\s+)\(([ㄱ-㆏가-힣]+)\)/g;
 
 const STEP_PATTERN = /^Step\s+(\d+)\s*[—-]\s*/i;
 const CIRCLED_DIGITS = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"];
@@ -36,13 +38,21 @@ function splitTerms(value: string): ElementContent[] {
     if (start > cursor) {
       out.push({ type: "text", value: value.slice(cursor, start) });
     }
+    const [full, word, space, korean] = match;
     out.push({
       type: "element",
-      tagName: "mark",
-      properties: { className: ["term"] },
-      children: [{ type: "text", value: match[0] }],
+      tagName: "strong",
+      properties: { className: ["term-en"] },
+      children: [{ type: "text", value: word }],
     });
-    cursor = start + match[0].length;
+    out.push({ type: "text", value: space });
+    out.push({
+      type: "element",
+      tagName: "span",
+      properties: { className: ["term-ko"] },
+      children: [{ type: "text", value: `(${korean})` }],
+    });
+    cursor = start + full.length;
   }
   if (cursor < value.length) {
     out.push({ type: "text", value: value.slice(cursor) });
@@ -384,7 +394,8 @@ function wrapSections(tree: Root): void {
 }
 
 /**
- * Rehype plugin: highlights bilingual terms like "limit (극한)"; guarantees
+ * Rehype plugin: renders bilingual terms like "limit (극한)" as a bold
+ * English word plus a smaller, muted Korean gloss; guarantees
  * read-aloud lines (🗣 ...) always render on their own line in the red-pen
  * style, splitting the paragraph if the model ran it into surrounding
  * prose; turns "Step N — ..." paragraphs into numbered-badge blocks; and

@@ -7,7 +7,6 @@
   --ink: #1f2b3d;
   --pen-blue: #2b4c9b;
   --red-pen: #c6382e;
-  --highlight: #fff1a8;
   --card: #ffffff;
   --muted: #6b7686;
   --radius: 10px;
@@ -161,29 +160,51 @@ main {
   display: block;
   margin-bottom: 8px;
 }
+/* textbook-style section headers ("1 · Intuition", "2 · Definition"): a
+   thin rule and generous top margin separate each section, except the
+   first one, which already sits right under the day-rule divider. */
 .msg-tutor h1,
 .msg-tutor h2,
 .msg-tutor h3 {
   font-family: var(--font-display), Georgia, serif;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
-  margin: 18px 0 6px;
+  color: var(--ink);
+  border-top: 1px solid #e2e7ef;
+  margin: 32px 0 14px;
+  padding-top: 18px;
 }
-/* generic tutor-generated prose spacing/highlighting — applies wherever
-   markdown from the tutor or the static lesson content renders, not just
-   chat bubbles (practice/quiz prompts, solutions, the note card, etc.) */
+.msg-tutor h1:first-child,
+.msg-tutor h2:first-child,
+.msg-tutor h3:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+.section-num {
+  color: var(--pen-blue);
+}
+/* generic tutor-generated prose spacing — applies wherever markdown from
+   the tutor or the static lesson content renders, not just chat bubbles
+   (practice/quiz prompts, solutions, the note card, etc.). Math-heavy text
+   gets extra air: taller line-height, roomier paragraph gaps. */
+main {
+  line-height: 1.8;
+}
 main p {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 main ul,
 main ol {
-  margin: 0 0 10px 1.25em;
+  margin: 0 0 16px 1.25em;
 }
-main mark.term {
-  background: var(--highlight);
-  color: inherit;
-  padding: 0 3px;
-  border-radius: 2px;
+main .term-en {
+  font-weight: 700;
+  color: var(--ink);
+}
+main .term-ko {
+  font-size: 0.85em;
+  color: var(--muted);
 }
 main table {
   border-collapse: collapse;
@@ -209,7 +230,7 @@ main .katex-display {
   display: block;
   max-width: 100%;
   text-align: center;
-  margin: 16px 0 6px;
+  margin: 24px 0;
   font-size: 1.15em;
   overflow-x: auto;
 }
@@ -280,7 +301,7 @@ main p.read-aloud {
   font-size: 15px;
   border-left: 3px solid var(--red-pen);
   padding: 2px 0 2px 12px;
-  margin: 6px 0 16px;
+  margin: 20px 0;
 }
 
 /* ---------- 예제 · Example box (worked examples) ---------- */
@@ -333,8 +354,8 @@ main p.read-aloud {
 
 /* ---------- 핵심 · Key idea callout ---------- */
 .key-idea {
-  background: #fffbea;
-  border-left: 4px solid var(--highlight);
+  background: #f8fafc;
+  border-left: 4px solid var(--pen-blue);
   border-radius: 0 8px 8px 0;
   padding: 10px 16px;
   margin: 14px 0;
@@ -344,7 +365,7 @@ main p.read-aloud {
   font-family: var(--font-mono), monospace;
   font-size: 10.5px;
   letter-spacing: 0.14em;
-  color: #8a7a1f;
+  color: var(--pen-blue);
   margin-bottom: 4px;
 }
 .key-idea-body p:last-child {
