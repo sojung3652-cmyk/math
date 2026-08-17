@@ -9,6 +9,10 @@ export type Unit = {
   id: string;
   titleEn: string;
   titleKo: string;
+  // 2-3 sentences for the unit's chapter-cover page. Written with inline
+  // "word (한글)" bilingual terms so it renders through the same Prose
+  // pipeline as lesson content (bold English term, muted Korean gloss).
+  overview: string;
   lessons: Lesson[];
 };
 
@@ -17,6 +21,8 @@ export const CURRICULUM: Unit[] = [
     id: "limits-continuity",
     titleEn: "Limits and Continuity",
     titleKo: "함수의 극한과 연속",
+    overview:
+      "In this unit you will build the foundation for all of calculus: what it means for a function to approach a limit (극한) as x approaches a point, from one side or both. You'll learn the algebraic limit laws, what continuity (연속) really requires, and the Intermediate Value Theorem — the guarantee that a continuous function can't skip over a value on its way from f(a) to f(b). These ideas are the bedrock every later unit leans on.",
     lessons: [
       {
         id: "what-is-a-limit",
@@ -66,6 +72,8 @@ export const CURRICULUM: Unit[] = [
     id: "differentiation",
     titleEn: "Differentiation",
     titleKo: "미분",
+    overview:
+      "In this unit you will learn how the derivative (도함수) captures instantaneous rate of change — the slope of a curve at a single point, built up from the limit of a difference quotient. You'll master the differentiation rules that make finding derivatives fast, use them to find tangent lines (접선), and read a function's shape directly from the sign of its derivative to locate every local extremum (극값). By the end, you'll connect derivatives to real motion through velocity and acceleration.",
     lessons: [
       {
         id: "rate-of-change",
@@ -122,6 +130,8 @@ export const CURRICULUM: Unit[] = [
     id: "integration",
     titleEn: "Integration",
     titleKo: "적분",
+    overview:
+      "In this unit you will learn integration (적분) as the reverse of differentiation: finding an antiderivative (부정적분) that undoes a derivative, then extending that idea to the definite integral (정적분), which measures signed area under a curve. The Fundamental Theorem of Calculus is the bridge that ties these two ideas together, letting you compute area exactly instead of estimating it. You'll finish by using integration to solve area-between-curves and motion problems, reversing the velocity/acceleration relationships from the previous unit.",
     lessons: [
       {
         id: "antiderivatives",
@@ -177,6 +187,12 @@ export function findLesson(
     if (lesson) return { unit, lesson };
   }
   return null;
+}
+
+export function findUnit(unitId: string): { unit: Unit; index: number } | null {
+  const index = CURRICULUM.findIndex((u) => u.id === unitId);
+  if (index === -1) return null;
+  return { unit: CURRICULUM[index], index };
 }
 
 export function allLessonIds(): string[] {

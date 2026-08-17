@@ -17,11 +17,11 @@ export default function CoursePage() {
 
         {CURRICULUM.map((unit, unitIndex) => (
           <div className="unit-block" key={unit.id}>
-            <div className="unit-heading">
+            <Link href={`/unit/${unit.id}`} className="unit-heading unit-heading-link">
               <span className="unit-number">UNIT {unitIndex + 1}</span>
               <h2>{unit.titleEn}</h2>
               <span className="unit-title-ko">{unit.titleKo}</span>
-            </div>
+            </Link>
 
             {unit.lessons.map((lesson) => {
               const record = progress[lesson.id];

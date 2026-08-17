@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import LessonScreen from "@/components/LessonScreen";
 import { findLesson } from "@/lib/curriculum";
 import { loadLessonContent } from "@/lib/lesson-content";
+import { getProgress } from "@/lib/progress-store";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,11 @@ export default async function LessonPage({
         subtitle={`${unit.titleKo} · ${lesson.titleEn} (${lesson.titleKo})`}
       />
       {content ? (
-        <LessonScreen lesson={lesson} content={content} />
+        <LessonScreen
+          lesson={lesson}
+          content={content}
+          initialPercent={getProgress(lessonId).percent}
+        />
       ) : (
         <main className="lesson-main">
           <div className="day-rule">— {lesson.titleEn.toUpperCase()} —</div>

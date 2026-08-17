@@ -1,67 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import ReactMarkdown, { type Components } from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
-import { rehypeInlineFormatting } from "@/lib/tutor-markdown";
-import Graph from "@/components/Graph";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Prose from "@/components/Prose";
 import ResetLessonButton from "@/components/ResetLessonButton";
+import LessonNav, { type NavSection } from "@/components/LessonNav";
 import type { Lesson } from "@/lib/curriculum";
 import type { AdvancedSection as AdvancedSectionData, LessonContent, Question } from "@/lib/lesson-content";
 import type { GraphSpec } from "@/lib/graph-spec";
 import type { Milestone } from "@/lib/progress-store";
 
-function postMilestone(lessonId: string, milestone: Milestone) {
-  fetch("/api/progress", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ lessonId, event: "milestone", milestone }),
-  }).catch(() => {});
-}
-
 const CHOICE_LETTERS = ["A", "B", "C", "D", "E", "F"];
-
-// `inline` swaps the markdown renderer's block-level <p> wrapper for a
-// <span>, so short strings (choice text, an answer quoted mid-sentence) can
-// render safely inside a <button> or another paragraph. `graphs` lets a
-// {{graph:id}} placeholder in the text resolve to an actual <Graph>.
-function Prose({
-  children,
-  inline = false,
-  graphs,
-}: {
-  children: string;
-  inline?: boolean;
-  graphs?: GraphSpec[];
-}) {
-  const components: Record<string, unknown> = {};
-  if (inline) components.p = "span";
-  if (graphs) {
-    components["lesson-graph"] = (props: { "data-graph-id"?: string }) => {
-      const spec = graphs.find((g) => g.id === props["data-graph-id"]);
-      if (!spec) {
-        return (
-          <p className="graph-unavailable">
-            📉 그래프를 표시할 수 없어요 · Graph unavailable
-          </p>
-        );
-      }
-      return <Graph spec={spec} />;
-    };
-  }
-
-  return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeKatex, rehypeInlineFormatting]}
-      components={components as Components}
-    >
-      {children}
-    </ReactMarkdown>
-  );
-}
 
 function normalize(value: string): string {
   return value.trim().toLowerCase().replace(/\s+/g, " ").replace(/\$/g, "");
@@ -206,10 +154,12 @@ function QuizSection({
   lessonId,
   questions,
   graphs,
+  onSubmitted,
 }: {
   lessonId: string;
   questions: Question[];
   graphs?: GraphSpec[];
+  onSubmitted?: (percent: number) => void;
 }) {
   const [answers, setAnswers] = useState<string[]>(() => questions.map(() => ""));
   const [submitted, setSubmitted] = useState(false);
@@ -240,6 +190,10 @@ function QuizSection({
         }),
       });
       if (!res.ok) throw new Error("Could not save your progress.");
+      const data = await res.json();
+      if (typeof data?.record?.percent === "number") {
+        onSubmitted?.(data.record.percent);
+      }
     } catch (err) {
       setSaveError(err instanceof Error ? err.message : "Could not save your progress.");
     } finally {
@@ -314,9 +268,17 @@ function QuizSection({
   );
 }
 
-function GoingDeeperSection({ content, graphs }: { content: string; graphs?: GraphSpec[] }) {
+function GoingDeeperSection({
+  id,
+  content,
+  graphs,
+}: {
+  id?: string;
+  content: string;
+  graphs?: GraphSpec[];
+}) {
   return (
-    <div className="going-deeper-section">
+    <div id={id} className="going-deeper-section">
       <div className="going-deeper-header">
         🔍 <b>더 알아보기 · Going deeper</b>
       </div>
@@ -328,10 +290,12 @@ function GoingDeeperSection({ content, graphs }: { content: string; graphs?: Gra
 }
 
 function AdvancedSection({
+  id,
   advanced,
   graphs,
   onComplete,
 }: {
+  id?: string;
   advanced: AdvancedSectionData;
   graphs?: GraphSpec[];
   onComplete?: () => void;
@@ -349,7 +313,7 @@ function AdvancedSection({
   }
 
   return (
-    <div className="advanced-section">
+    <div id={id} className="advanced-section">
       <button
         type="button"
         className="advanced-toggle"
@@ -382,14 +346,32 @@ function AdvancedSection({
 export default function LessonScreen({
   lesson,
   content,
+  initialPercent,
 }: {
   lesson: Lesson;
   content: LessonContent;
+  initialPercent: number;
 }) {
   const teachingEndRef = useRef<HTMLDivElement>(null);
   const teachingFiredRef = useRef(false);
   const practiceCompletedRef = useRef(0);
   const practiceFiredRef = useRef(false);
+  const [percent, setPercent] = useState(initialPercent);
+
+  function postMilestone(milestone: Milestone) {
+    fetch("/api/progress", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lessonId: lesson.id, event: "milestone", milestone }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data?.record?.percent === "number") {
+          setPercent((p) => Math.max(p, data.record.percent));
+        }
+      })
+      .catch(() => {});
+  }
 
   useEffect(() => {
     const el = teachingEndRef.current;
@@ -398,7 +380,7 @@ export default function LessonScreen({
       ([entry]) => {
         if (entry.isIntersecting && !teachingFiredRef.current) {
           teachingFiredRef.current = true;
-          postMilestone(lesson.id, "teaching_read");
+          postMilestone("teaching_read");
           observer.disconnect();
         }
       },
@@ -406,90 +388,125 @@ export default function LessonScreen({
     );
     observer.observe(el);
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lesson.id]);
 
   function handlePracticeComplete() {
     practiceCompletedRef.current += 1;
     if (!practiceFiredRef.current && practiceCompletedRef.current >= content.practice.length) {
       practiceFiredRef.current = true;
-      postMilestone(lesson.id, "practice_complete");
+      postMilestone("practice_complete");
     }
   }
 
+  const sections = useMemo<NavSection[]>(() => {
+    const list: NavSection[] = [
+      { id: "section-intuition", label: "1 · Intuition", threshold: 25 },
+      { id: "section-definition", label: "2 · Definition", threshold: 25 },
+      { id: "section-example", label: "3 · Worked example", threshold: 25 },
+      { id: "section-practice", label: "Practice · 연습문제", threshold: 50 },
+    ];
+    if (content.goingDeeper) {
+      list.push({ id: "section-going-deeper", label: "더 알아보기", threshold: null });
+    }
+    if (content.advanced) {
+      list.push({ id: "section-advanced", label: "심화", threshold: 75 });
+    }
+    list.push({ id: "section-quiz", label: "Mastery Quiz", threshold: 100 });
+    return list;
+  }, [content.goingDeeper, content.advanced]);
+
   return (
-    <main className="lesson-main">
-      <div className="lesson-top-bar">
-        <ResetLessonButton lessonId={lesson.id} />
-      </div>
-      <div className="day-rule">— {lesson.titleEn.toUpperCase()} —</div>
-
-      <div className="msg-tutor">
-        <h3>
-          <span className="section-num">1 ·</span> Intuition
-        </h3>
-        <Prose graphs={content.graphs}>{content.intuition}</Prose>
-        <h3>
-          <span className="section-num">2 ·</span> Definition
-        </h3>
-        <Prose graphs={content.graphs}>{content.definition}</Prose>
-      </div>
-
-      <div className="example-box">
-        <div className="example-header">
-          📖 <b>예제 · Example</b>
+    <>
+      <LessonNav sections={sections} percent={percent} />
+      <main className="lesson-main">
+        <div className="lesson-top-bar">
+          <ResetLessonButton lessonId={lesson.id} />
         </div>
-        <div className="example-body">
-          <Prose graphs={content.graphs}>{content.workedExample}</Prose>
-        </div>
-      </div>
+        <div className="day-rule">— {lesson.titleEn.toUpperCase()} —</div>
 
-      <div className="teaching-note-card">
-        <span className="teaching-note-label">선생님 노트 · Teaching note</span>
-        <Prose graphs={content.graphs}>{content.teachingNote}</Prose>
-      </div>
-
-      <div className="note-card">
-        <div className="note-tab">
-          📌 <b>NOTE</b> · {lesson.titleEn}
+        <div className="msg-tutor">
+          <h3 id="section-intuition">
+            <span className="section-num">1 ·</span> Intuition
+          </h3>
+          <Prose graphs={content.graphs}>{content.intuition}</Prose>
+          <h3 id="section-definition">
+            <span className="section-num">2 ·</span> Definition
+          </h3>
+          <Prose graphs={content.graphs}>{content.definition}</Prose>
         </div>
-        <div className="note-body">
-          <Prose graphs={content.graphs}>{content.note}</Prose>
-        </div>
-        <div className="note-actions">
-          <button className="btn-save" disabled title="Saving notes is coming in a future update">
-            Save note
-          </button>
-        </div>
-      </div>
 
-      {/* Marks the end of the teaching section — reaching it is the 25% milestone. */}
-      <div ref={teachingEndRef} />
+        <div id="section-example" className="example-box">
+          <div className="example-header">
+            📖 <b>예제 · Example</b>
+          </div>
+          <div className="example-body">
+            <Prose graphs={content.graphs}>{content.workedExample}</Prose>
+          </div>
+        </div>
 
-      <h2 className="section-heading">Practice · 연습문제</h2>
-      {content.practice.map((q, i) => (
-        <PracticeItem
-          key={q.id}
-          question={q}
-          index={i}
+        <div className="teaching-note-card">
+          <span className="teaching-note-label">선생님 노트 · Teaching note</span>
+          <Prose graphs={content.graphs}>{content.teachingNote}</Prose>
+        </div>
+
+        <div className="note-card">
+          <div className="note-tab">
+            📌 <b>NOTE</b> · {lesson.titleEn}
+          </div>
+          <div className="note-body">
+            <Prose graphs={content.graphs}>{content.note}</Prose>
+          </div>
+          <div className="note-actions">
+            <button className="btn-save" disabled title="Saving notes is coming in a future update">
+              Save note
+            </button>
+          </div>
+        </div>
+
+        {/* Marks the end of the teaching section — reaching it is the 25% milestone. */}
+        <div ref={teachingEndRef} />
+
+        <h2 id="section-practice" className="section-heading">
+          Practice · 연습문제
+        </h2>
+        {content.practice.map((q, i) => (
+          <PracticeItem
+            key={q.id}
+            question={q}
+            index={i}
+            graphs={content.graphs}
+            onComplete={handlePracticeComplete}
+          />
+        ))}
+
+        {content.goingDeeper && (
+          <GoingDeeperSection
+            id="section-going-deeper"
+            content={content.goingDeeper}
+            graphs={content.graphs}
+          />
+        )}
+
+        {content.advanced && (
+          <AdvancedSection
+            id="section-advanced"
+            advanced={content.advanced}
+            graphs={content.graphs}
+            onComplete={() => postMilestone("advanced_complete")}
+          />
+        )}
+
+        <h2 id="section-quiz" className="section-heading">
+          Mastery quiz · 단원 평가
+        </h2>
+        <QuizSection
+          lessonId={lesson.id}
+          questions={content.quiz}
           graphs={content.graphs}
-          onComplete={handlePracticeComplete}
+          onSubmitted={(p) => setPercent((cur) => Math.max(cur, p))}
         />
-      ))}
-
-      {content.goingDeeper && (
-        <GoingDeeperSection content={content.goingDeeper} graphs={content.graphs} />
-      )}
-
-      {content.advanced && (
-        <AdvancedSection
-          advanced={content.advanced}
-          graphs={content.graphs}
-          onComplete={() => postMilestone(lesson.id, "advanced_complete")}
-        />
-      )}
-
-      <h2 className="section-heading">Mastery quiz · 단원 평가</h2>
-      <QuizSection lessonId={lesson.id} questions={content.quiz} graphs={content.graphs} />
-    </main>
+      </main>
+    </>
   );
 }
