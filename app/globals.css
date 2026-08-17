@@ -1611,7 +1611,7 @@ main.course-main,
   position: fixed;
   right: 24px;
   bottom: 24px;
-  z-index: 60;
+  z-index: 50;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -1621,14 +1621,14 @@ main.course-main,
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(43, 76, 155, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 200ms ease, box-shadow 200ms ease;
   animation: chat-bubble-breathe 3.2s ease-in-out infinite;
 }
 .chat-bubble-trigger:hover {
   animation-play-state: paused;
-  transform: scale(1.05);
-  box-shadow: 0 10px 26px rgba(43, 76, 155, 0.45);
+  transform: scale(1.08);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
 }
 .chat-bubble-icon {
   display: block;
@@ -1664,8 +1664,8 @@ main.course-main,
    this is entirely out of document flow. */
 .chat-panel {
   position: fixed;
-  right: 20px;
-  bottom: 80px;
+  right: 24px;
+  bottom: 90px;
   z-index: 59;
   width: 340px;
   max-width: calc(100vw - 40px);
