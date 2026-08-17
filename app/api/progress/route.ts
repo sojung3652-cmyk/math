@@ -1,23 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import { findLesson } from "@/lib/curriculum";
-import { getAllProgress, getProgress, setProgress } from "@/lib/progress-store";
+import {
+  applyMilestone,
+  applyQuizResult,
+  getAllProgress,
+  resetProgress,
+  type Milestone,
+} from "@/lib/progress-store";
+
+const MILESTONES: Milestone[] = ["teaching_read", "practice_complete", "advanced_complete"];
 
 export async function GET() {
   return NextResponse.json({ progress: getAllProgress() });
 }
 
-type StartBody = { lessonId: string; event: "start" };
+type MilestoneBody = { lessonId: string; event: "milestone"; milestone: Milestone };
 type QuizResultBody = {
   lessonId: string;
   event: "quiz_result";
   correct: number;
   total: number;
 };
+type ResetBody = { lessonId: string; event: "reset" };
 
 export async function POST(req: NextRequest) {
   const body = (await req.json().catch(() => null)) as
-    | StartBody
+    | MilestoneBody
     | QuizResultBody
+    | ResetBody
     | null;
 
   if (!body || typeof body.lessonId !== "string") {
@@ -27,12 +37,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unknown lessonId." }, { status: 404 });
   }
 
-  if (body.event === "start") {
-    const current = getProgress(body.lessonId);
-    const record =
-      current.status === "not_started"
-        ? setProgress(body.lessonId, "in_progress", null)
-        : current;
+  if (body.event === "milestone") {
+    if (!MILESTONES.includes(body.milestone)) {
+      return NextResponse.json({ error: "Unknown milestone." }, { status: 400 });
+    }
+    const record = applyMilestone(body.lessonId, body.milestone);
     return NextResponse.json({ record });
   }
 
@@ -51,8 +60,12 @@ export async function POST(req: NextRequest) {
       );
     }
     const percentage = Math.round((correct / total) * 100);
-    const status = percentage >= 80 ? "mastered" : "in_progress";
-    const record = setProgress(body.lessonId, status, percentage);
+    const record = applyQuizResult(body.lessonId, percentage);
+    return NextResponse.json({ record });
+  }
+
+  if (body.event === "reset") {
+    const record = resetProgress(body.lessonId);
     return NextResponse.json({ record });
   }
 

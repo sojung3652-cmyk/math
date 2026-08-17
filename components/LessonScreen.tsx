@@ -1,15 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { rehypeInlineFormatting } from "@/lib/tutor-markdown";
 import Graph from "@/components/Graph";
+import ResetLessonButton from "@/components/ResetLessonButton";
 import type { Lesson } from "@/lib/curriculum";
 import type { AdvancedSection as AdvancedSectionData, LessonContent, Question } from "@/lib/lesson-content";
 import type { GraphSpec } from "@/lib/graph-spec";
+import type { Milestone } from "@/lib/progress-store";
+
+function postMilestone(lessonId: string, milestone: Milestone) {
+  fetch("/api/progress", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ lessonId, event: "milestone", milestone }),
+  }).catch(() => {});
+}
 
 const CHOICE_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -126,11 +136,13 @@ function PracticeItem({
   index,
   graphs,
   labelPrefix = "문제",
+  onComplete,
 }: {
   question: Question;
   index: number;
   graphs?: GraphSpec[];
   labelPrefix?: string;
+  onComplete?: () => void;
 }) {
   const [value, setValue] = useState("");
   const [checked, setChecked] = useState(false);
@@ -156,7 +168,10 @@ function PracticeItem({
         <button
           type="button"
           className="btn-check"
-          onClick={() => setChecked(true)}
+          onClick={() => {
+            setChecked(true);
+            onComplete?.();
+          }}
           disabled={!value || checked}
         >
           Check answer
@@ -315,11 +330,23 @@ function GoingDeeperSection({ content, graphs }: { content: string; graphs?: Gra
 function AdvancedSection({
   advanced,
   graphs,
+  onComplete,
 }: {
   advanced: AdvancedSectionData;
   graphs?: GraphSpec[];
+  onComplete?: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  const completedRef = useRef(0);
+  const firedRef = useRef(false);
+
+  function handleItemComplete() {
+    completedRef.current += 1;
+    if (!firedRef.current && completedRef.current >= advanced.practice.length) {
+      firedRef.current = true;
+      onComplete?.();
+    }
+  }
 
   return (
     <div className="advanced-section">
@@ -343,6 +370,7 @@ function AdvancedSection({
               index={i}
               graphs={graphs}
               labelPrefix="심화 문제"
+              onComplete={handleItemComplete}
             />
           ))}
         </div>
@@ -358,8 +386,41 @@ export default function LessonScreen({
   lesson: Lesson;
   content: LessonContent;
 }) {
+  const teachingEndRef = useRef<HTMLDivElement>(null);
+  const teachingFiredRef = useRef(false);
+  const practiceCompletedRef = useRef(0);
+  const practiceFiredRef = useRef(false);
+
+  useEffect(() => {
+    const el = teachingEndRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !teachingFiredRef.current) {
+          teachingFiredRef.current = true;
+          postMilestone(lesson.id, "teaching_read");
+          observer.disconnect();
+        }
+      },
+      { threshold: 0 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [lesson.id]);
+
+  function handlePracticeComplete() {
+    practiceCompletedRef.current += 1;
+    if (!practiceFiredRef.current && practiceCompletedRef.current >= content.practice.length) {
+      practiceFiredRef.current = true;
+      postMilestone(lesson.id, "practice_complete");
+    }
+  }
+
   return (
     <main className="lesson-main">
+      <div className="lesson-top-bar">
+        <ResetLessonButton lessonId={lesson.id} />
+      </div>
       <div className="day-rule">— {lesson.titleEn.toUpperCase()} —</div>
 
       <div className="msg-tutor">
@@ -397,9 +458,18 @@ export default function LessonScreen({
         </div>
       </div>
 
+      {/* Marks the end of the teaching section — reaching it is the 25% milestone. */}
+      <div ref={teachingEndRef} />
+
       <h2 className="section-heading">Practice · 연습문제</h2>
       {content.practice.map((q, i) => (
-        <PracticeItem key={q.id} question={q} index={i} graphs={content.graphs} />
+        <PracticeItem
+          key={q.id}
+          question={q}
+          index={i}
+          graphs={content.graphs}
+          onComplete={handlePracticeComplete}
+        />
       ))}
 
       {content.goingDeeper && (
@@ -407,7 +477,11 @@ export default function LessonScreen({
       )}
 
       {content.advanced && (
-        <AdvancedSection advanced={content.advanced} graphs={content.graphs} />
+        <AdvancedSection
+          advanced={content.advanced}
+          graphs={content.graphs}
+          onComplete={() => postMilestone(lesson.id, "advanced_complete")}
+        />
       )}
 
       <h2 className="section-heading">Mastery quiz · 단원 평가</h2>

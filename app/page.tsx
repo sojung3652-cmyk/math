@@ -1,15 +1,10 @@
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
+import ProgressRing from "@/components/ProgressRing";
 import { CURRICULUM } from "@/lib/curriculum";
 import { getAllProgress } from "@/lib/progress-store";
 
 export const dynamic = "force-dynamic";
-
-const STATUS_ICON: Record<string, string> = {
-  mastered: "✓",
-  in_progress: "…",
-  not_started: "",
-};
 
 export default function CoursePage() {
   const progress = getAllProgress();
@@ -37,9 +32,7 @@ export default function CoursePage() {
                   href={`/lesson/${lesson.id}`}
                   className={`lesson-row ${status}`}
                 >
-                  <span className={`lesson-status ${status}`}>
-                    {STATUS_ICON[status]}
-                  </span>
+                  <ProgressRing lessonId={lesson.id} percent={record?.percent ?? 0} status={status} />
                   <span className="lesson-titles">
                     <span className="lesson-title-en">{lesson.titleEn}</span>
                     <span className="lesson-title-ko">{lesson.titleKo}</span>

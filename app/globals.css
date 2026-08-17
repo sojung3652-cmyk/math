@@ -661,27 +661,57 @@ main.course-main {
 .lesson-row:hover {
   background: #eef1f5;
 }
-.lesson-status {
+.progress-ring {
+  position: relative;
   flex: none;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+.progress-ring svg {
+  position: absolute;
+  inset: 0;
+}
+.ring-track {
+  fill: none;
+  stroke: #cbd5e1;
+  stroke-width: 2;
+}
+.progress-ring.mastered .ring-track {
+  stroke: transparent;
+}
+.ring-fill {
+  fill: none;
+  stroke: var(--red-pen);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+.ring-mastered-fill {
+  fill: var(--red-pen);
+}
+.ring-check {
+  position: relative;
+  color: #fff;
   font-size: 12px;
   font-weight: 700;
-  border: 1.5px solid #cbd5e1;
-  color: transparent;
+  line-height: 1;
 }
-.lesson-status.mastered {
-  background: var(--pen-blue);
-  border-color: var(--pen-blue);
-  color: #fff;
+.progress-ring.pop {
+  animation: ring-pop 0.45s ease;
 }
-.lesson-status.in_progress {
-  border-color: var(--red-pen);
-  color: var(--red-pen);
+@keyframes ring-pop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .lesson-titles {
   display: flex;
@@ -711,6 +741,80 @@ main.course-main {
 /* ---------- static lesson screen: practice & quiz ---------- */
 main.lesson-main {
   padding-bottom: 48px;
+}
+.lesson-top-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -8px;
+}
+.btn-reset-lesson {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--muted);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.btn-reset-lesson:hover {
+  color: var(--ink);
+  border-color: #e2e7ef;
+}
+.reset-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 43, 61, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+.reset-confirm-card {
+  background: #fff;
+  border: 1px solid #e2e7ef;
+  border-radius: 12px;
+  padding: 20px 22px;
+  max-width: 360px;
+  box-shadow: 0 14px 32px rgba(31, 43, 61, 0.16);
+}
+.reset-confirm-card p {
+  font-size: 14.5px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.reset-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.btn-reset-cancel {
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+.btn-reset-cancel:hover {
+  background: #eef1f5;
+}
+.btn-reset-confirm {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--red-pen);
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+.btn-reset-confirm:hover {
+  background: #a92e26;
 }
 .section-heading {
   font-family: var(--font-display), Georgia, serif;
